@@ -1,6 +1,8 @@
-using Classware.Data;
+using Classware.Infrastructure.Data;
+using Classware.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace Classware
 {
@@ -12,12 +14,16 @@ namespace Classware
 
 			// Add services to the container.
 			var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-			builder.Services.AddDbContext<ApplicationDbContext>(options =>
+
+			builder.Services.AddDbContext<ClasswareDbContext>(options =>
 				options.UseSqlServer(connectionString));
+
 			builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-			builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-				.AddEntityFrameworkStores<ApplicationDbContext>();
+			builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+				.AddRoles<IdentityRole>()
+				.AddEntityFrameworkStores<ClasswareDbContext>();
+
 			builder.Services.AddControllersWithViews();
 
 			var app = builder.Build();
