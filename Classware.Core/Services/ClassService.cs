@@ -38,12 +38,75 @@ namespace Classware.Core.Services
         /// <exception cref="NotImplementedException"></exception>
 		public async Task<bool> ClassExistsByNameAsync(string name)
 		{
-            if (await repo.AllReadonly<Class>().AnyAsync(c=>c.Name == name))
+            if (await repo.AllReadonly<Class>().Where(c=>c.IsActive).AnyAsync(c=>c.Name == name))
             {
                 return true;
             }
 
             return false;
+		}
+
+        /// <summary>
+        /// Sets the given class to not active
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+		public async Task DeleteClassByIdAsync(int id)
+		{
+            var _class = await GetClassByIdAsync(id);
+
+            _class.IsActive = false;
+
+            await repo.SaveChangesAsync();
+		}
+
+
+		/// <summary>
+		/// Gets all active classes
+		/// </summary>
+		/// <returns></returns>
+		/// <exception cref="NotImplementedException"></exception>
+		public async Task<IEnumerable<Class>> GetAllClassesAsync()
+		{
+            IEnumerable<Class> classes =await repo.All<Class>()
+                .Include(c=>c.Students)
+                .Where(c => c.IsActive)
+                .ToListAsync();
+
+            return classes;
+		}
+
+        /// <summary>
+        /// Gets all classes' names
+        /// </summary>
+        /// <returns></returns>
+		public async Task<IEnumerable<string>> GetAllClassNamesAsync()
+		{
+            IEnumerable<string> classNames = await repo.AllReadonly<Class>()
+                .Where(c => c.IsActive)
+                .Select(c => c.Name)
+                .ToListAsync();
+
+            return classNames;
+		}
+
+        /// <summary>
+        /// Gets the class with the corresponding id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+		public async Task<Class> GetClassByIdAsync(int id)
+		{
+            var _class =await repo.All<Class>()
+                .FirstOrDefaultAsync(c => c.IsActive && c.Id == id);
+
+            if (_class == null)
+            {
+                return null;
+            }
+
+            return _class;
 		}
 	}
 }
