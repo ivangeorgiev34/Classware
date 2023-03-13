@@ -22,5 +22,7 @@ namespace Classware.Core.Contracts
 		Task<IEnumerable<Student>> GetStudentsByClassIdAndSubjectName(int classId,string subjectName);
 
 		Task<bool> StudentHasASubjectAsync(Student student,string subjectName);
+
+		Task<Student> GetStudentByUserIdAsync(string id);
 	}
 }

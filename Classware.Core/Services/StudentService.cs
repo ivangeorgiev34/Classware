@@ -96,6 +96,19 @@ namespace Classware.Core.Services
 			return student;
 		}
 
+		public async Task<Student> GetStudentByUserIdAsync(string id)
+		{
+			var student = await repo.All<Student>()
+				.Where(s => s.IsActive == true && s.Userid == id)
+				.FirstOrDefaultAsync();
+
+			if (student == null)
+			{
+				throw new NullReferenceException("Such student doesn't exits");
+			}
+
+			return student;
+		}
 
 		public async Task<IEnumerable<Student>> GetStudentsByClassIdAndSubjectName(int classId, string subjectName)
 		{
