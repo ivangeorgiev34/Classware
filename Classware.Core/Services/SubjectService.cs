@@ -58,6 +58,20 @@ namespace Classware.Core.Services
 			return subjects;
 		}
 
+		public async Task<Subject> GetSubjectByNameAsync(string subjectName)
+		{
+			var subject = await repo.All<Subject>()
+				.Where(s => s.IsActive == true && s.Name == subjectName)
+				.FirstOrDefaultAsync();
+
+			if (subject == null)
+			{
+				throw new NullReferenceException("Subject with such name doesn't exist");
+			}
+
+			return subject;
+		}
+
 		public async Task<bool> SubjectExistsByNameAsync(string name)
 		{
 			if (await repo.AllReadonly<Subject>().AnyAsync(s => s.Name == name && s.IsActive == true))

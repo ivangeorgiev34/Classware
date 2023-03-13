@@ -1,0 +1,22 @@
+﻿@using Classware.Areas.Teacher.Models.Class;
+@model ICollection<AllClassesViewModel>
+
+<table class="table table-light table-hover table-striped table-bordered">
+	<thead>
+		<tr>
+			<th class="text-center" scope="col">Name</th>
+			<th class="text-center" scope="col">StudentsCount</th>
+		</tr>
+	</thead>
+	<tbody>
+
+			@foreach (var item in Model)
+			{
+				<tr>
+				<td class="text-center" scope="col">@item.Name</td>
+				<td class="text-center" scope="col">@item.StudentsCount</td>
+				<td class="text-center" scope="col"><a class="btn btn-secondary" style="margin:auto;" asp-area="Teacher" asp-controller="Class" asp-action="ClassStudents" asp-route-id="@item.Id">View all students</a></td>
+				</tr>
+			}
+	</tbody>
+</table>

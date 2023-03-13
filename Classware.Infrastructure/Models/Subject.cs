@@ -11,15 +11,15 @@ namespace Classware.Infrastructure.Models
 {
 	public class Subject
 	{
-        public Subject()
-        {
-            this.Grades = new List<Grade>();
-        }
-        /// <summary>
-        /// Subject's primary key
-        /// </summary>
-        [Key]
-        public int Id { get; set; }
+		public Subject()
+		{
+			StudentSubjects = new List<StudentSubject>();
+		}
+		/// <summary>
+		/// Subject's primary key
+		/// </summary>
+		[Key]
+		public int Id { get; set; }
 
 		/// <summary>
 		/// Subject's name
@@ -35,27 +35,9 @@ namespace Classware.Infrastructure.Models
 		public bool IsActive { get; set; } = true;
 
 		/// <summary>
-		/// Grades of the specific subject
+		/// Subject's students
 		/// </summary>
-        public ICollection<Grade> Grades { get; set; }
+		public ICollection<StudentSubject> StudentSubjects { get; set; }
 
-		/// <summary>
-		/// Remarks of the specific subject
-		/// </summary>
-		public ICollection<Remark> Remarks { get; set; }
-
-
-		/// <summary>
-		/// Compliments of the specific subject
-		/// </summary>
-		public ICollection<Compliment> Compliments { get; set; }
-
-		/// <summary>
-		/// Subject's teacher
-		/// </summary>
-		[Required]
-		[ForeignKey(nameof(Teacher))]
-		public int TeacherId { get; set; }
-		public Teacher Teacher { get; set; } = null!;
 	}
 }

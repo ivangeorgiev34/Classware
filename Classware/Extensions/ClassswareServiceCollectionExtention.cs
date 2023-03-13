@@ -1,4 +1,9 @@
-﻿namespace Classware.Extensions
+﻿using Classware.Core.Contracts;
+using Classware.Core.Services;
+using Classware.Infrastructure.Common;
+using Classware.Infrastructure.Models;
+
+namespace Classware.Extensions
 {
 	public static class ClassswareServiceCollectionExtention
 	{
@@ -9,6 +14,15 @@
 		/// <returns></returns>
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{
+			services.AddScoped<IRepository, Repository>();
+			services.AddScoped<IStudentService, StudentService>();
+			services.AddScoped<IClassService, ClassService>();
+			services.AddScoped<ISubjectService, SubjectService>();
+			services.AddScoped<ITeacherService, TeacherService>();
+			services.AddScoped<IProfileService, ProfileService>();
+			services.AddScoped<IGradeService, GradeService>();
+			services.AddScoped<IRemarkService, RemarkService>();
+			services.AddScoped<IComplimentService, ComplimentService>();
 
 			return services;
 		}

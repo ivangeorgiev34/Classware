@@ -1,0 +1,95 @@
+﻿@using Classware.Areas.Administrator.Models.Student;
+@model AddStudentViewModel
+
+<form class="row" method="post" asp-action="Add" asp-controller="Student" asp-area="Administrator">
+	<div class="card">
+		<h3 class="mt-3" style="text-align:center">Add student</h3>
+		<hr />
+		<div class="row mb-3" style="width:250px; margin:auto">
+			<label asp-for="@Model.FirstName">First name:</label>
+			<input placeholder="First name..." asp-for="@Model.FirstName" />
+		</div>
+		<div class="row mb-3" style="width:250px; margin:auto">
+			<label asp-for="@Model.MiddleName">Middle name:</label>
+			<input placeholder="Middle name..." asp-for="@Model.MiddleName" />
+		</div>
+		<div class="row mb-3" style="width:250px; margin:auto">
+			<label asp-for="@Model.LastName">Last name:</label>
+			<input placeholder="Last name..." asp-for="@Model.LastName" />
+		</div>
+		<div class="row mb-3" style="width:250px; margin:auto">
+			<label asp-for="@Model.Age">Age:</label>
+			<input placeholder="Age..." asp-for="@Model.Age" />
+		</div>
+		<div class="row mb-3" style="width:250px; margin:auto">
+			<label asp-for="@Model.Gender">Gender:</label>
+			<input placeholder="Gender..." asp-for="@Model.Gender" />
+		</div>
+		<div class="row mb-3" style="width:250px; margin:auto">
+			<label asp-for="@Model.ClassId" class="form-label">Class:</label>
+			<select asp-for="@Model.ClassId" class="form-control">
+				@foreach (var _class in Model.Classes)
+				{
+					<option value="@_class.Id">@_class.Name</option>
+				}
+			</select>
+			<span asp-validation-for="@Model.ClassId" class="text-danger"></span>
+		</div>
+		<div class="row mb-3" style="width:250px; margin:auto">
+			<label asp-for="@Model.Username">Username:</label>
+			<input placeholder="Username..." asp-for="@Model.Username" />
+		</div>
+		<div class="row mb-3" style="width:250px; margin:auto">
+			<label asp-for="@Model.Email">Email:</label>
+			<input placeholder="Email..." asp-for="@Model.Email" />
+		</div>
+		<div class="row mb-3" style="width:250px; margin:auto">
+			<label asp-for="@Model.Password">Password:</label>
+			<input placeholder="Password..." asp-for="@Model.Password" />
+		</div>
+		<div class="row mb-3" style="width:250px;  margin:auto">
+			<label asp-for="@Model.ConfirmPassword"> Confirm Password:</label>
+			<input placeholder="Confirm password..." asp-for="@Model.ConfirmPassword" />
+		</div>
+		<div style="margin:auto">
+			<ul style="list-style-type:none">
+				@foreach (var error in ViewContext.ViewData.ModelState.Values.SelectMany(v => v.Errors))
+				{
+					<li>
+						<span class="text-danger">@error.ErrorMessage</span>
+					</li>
+				}
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.FirstName"></span>
+				</li>
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.MiddleName"></span>
+				</li>
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.LastName"></span>
+				</li>
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.Age"></span>
+				</li>
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.Gender"></span>
+				</li>
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.Username"></span>
+				</li>
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.Email"></span>
+				</li>
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.Password"></span>
+				</li>
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.ConfirmPassword"></span>
+				</li>
+			</ul>
+		</div>
+		<div class="mb-3" style="margin:auto">
+			<button class="btn btn-success" asp-area="Administrator" asp-controller="Student" asp-action="Add">Add</button>
+		</div>
+	</div>
+</form>

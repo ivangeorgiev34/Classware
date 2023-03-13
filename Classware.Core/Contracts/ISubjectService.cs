@@ -17,5 +17,7 @@ namespace Classware.Core.Contracts
 		Task<IEnumerable<Subject>> GetAllSubjectsAsync();
 
 		Task<ICollection<Subject>> GetAllSubjectsByIdsAsync(ICollection<int> subjectIds);
-	}
+
+		Task<Subject> GetSubjectByNameAsync(string subjectName);
+	} 
 }

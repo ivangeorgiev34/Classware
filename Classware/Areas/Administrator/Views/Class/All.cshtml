@@ -1,0 +1,23 @@
+﻿@using Classware.Areas.Administrator.Models.Class;
+@model ICollection<AllClassesViewModel>
+
+<form method="post" asp-area="Administrator" asp-controller="Class" asp-action="Delete">
+	<table class="table table-light table-hover table-striped table-bordered ">
+		<thead>
+			<tr>
+				<th scope="col">Name</th>
+				<th scope="col">Students Count</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var _class in Model)
+			{
+				<tr>
+					<td>@_class.Name</td>
+					<td>@_class.StudentsCount</td>
+					<td><button class="btn btn-danger" asp-area="Administrator" asp-controller="Class" asp-action="Delete" asp-route-id="@_class.Id">Delete</button></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	</form>

@@ -1,0 +1,33 @@
+﻿@using Classware.Areas.Administrator.Models.Subject;
+@model AddSubjectViewModel
+
+<form class="row" method="post" asp-area="Administrator" asp-controller="Subject" asp-action="Add">
+	<div class="card">
+		<h3 class="text-center">Add subject</h3>
+		<hr />
+		<div class="row mb-3" style="margin:auto">
+			<label asp-for="@Model.Name">Name:</label>
+			<input placeholder="Subject name..." asp-for="@Model.Name" />
+		</div>
+		<div>
+			<ul style="list-style-type:none">
+				@foreach (var error in ViewContext.ViewData.ModelState.Values.SelectMany(v => v.Errors))
+				{
+					<li>
+						<span class="text-danger">@error.ErrorMessage</span>
+					</li>
+				}
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.Name"></span>
+				</li>
+			</ul>
+		</div>
+		<div class="row mb-3"style="margin:auto">
+			<button class="btn btn-success" asp-area="Administrator" asp-controller="Subject" asp-action="Add">Add</button>
+		</div>
+	</div>
+</form>
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial" />
+}

@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Classware.Infrastructure.Models
 {
-	public class Teacher
-	{
+    public class Teacher
+    {
         /// <summary>
         /// Teacher's primary key
         /// </summary>
@@ -21,21 +21,20 @@ namespace Classware.Infrastructure.Models
         /// </summary>
         [Required]
         [ForeignKey(nameof(User))]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public ApplicationUser User { get; set; } = null!;
 
-		/// <summary>
-		/// Is teacher active
-		/// </summary>
-		[Required]
-		public bool IsActive { get; set; } = true;
-		
-		/// <summary>
-		/// Teacher's subject
-		/// </summary>
-		[Required]
-		[ForeignKey(nameof(Subject))]
-		public int SubjectId { get; set; }
-		public Subject Subject { get; set; } = null!;
-	}
+        /// <summary>
+        /// Is teacher active
+        /// </summary>
+        [Required]
+        public bool IsActive { get; set; } = true;
+
+        /// <summary>
+        /// Teacher's subject
+        /// </summary>
+        [ForeignKey(nameof(Subject))]
+        public int? SubjectId { get; set; }
+        public Subject? Subject { get; set; }
+    }
 }

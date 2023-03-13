@@ -1,0 +1,18 @@
+﻿@using Classware.Areas.Administrator.Models.Class;
+@model ICollection<DeleteClassViewModel>
+
+<form method="post" asp-area="Administrator" asp-controller="Class" asp-action="Delete">
+	<div class="card">
+		<h2>Delete class</h2>
+		<hr />
+		<div>
+			<select class="form-select">
+				<option  selected >Choose the class' name</option>
+				@foreach (var _class in Model)
+				{
+					<option >@_class.Name</option>
+				}
+			</select>
+		</div>
+	</div>
+</form>

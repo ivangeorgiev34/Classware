@@ -19,6 +19,8 @@ namespace Classware.Core.Contracts
 
 		Task AssignSubjectsAsync(ICollection<int> subjectIds,int studentId);
 
-		bool AddGradeToStudentAsync(Student student,string subjectName,int grade);
+		Task<IEnumerable<Student>> GetStudentsByClassIdAndSubjectName(int classId,string subjectName);
+
+		Task<bool> StudentHasASubjectAsync(Student student,string subjectName);
 	}
 }

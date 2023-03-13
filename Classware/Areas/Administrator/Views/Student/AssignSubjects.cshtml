@@ -1,0 +1,33 @@
+﻿@using Classware.Areas.Administrator.Models.Student;
+@model AssignSubjectsToStudentViewModel
+
+<form method="post" asp-area="Administrator" asp-controller="Student" asp-action="AssignSubjects">
+	<div class="card">
+		<h3 class="text-center mt-3">Assign subjects</h3>
+		<hr />
+		<div style="width:200px;margin:auto;">
+			<label asp-for="@Model.StudentId" class="form-label">Student:</label>
+			<select asp-for="@Model.StudentId" class="form-control">
+				@foreach (var student in Model.Students)
+				{
+					<option value="@student.Id">@student.User.FirstName @student.User.MiddleName @student.User.LastName</option>
+				}
+			</select>
+			<span asp-validation-for="@Model.StudentId" class="text-danger"></span>
+		</div>
+		<div style="width:200px; margin:auto;">
+			@foreach (var subject in Model.Subjects)
+			{
+				<div class="mt-3" style="width:200px; margin:auto;">
+					<input class="form-check-input" type="checkbox" value="@subject.Id" name="SubjectsId" id="@subject.Id">
+					<label class="form-check-label" for="@subject.Id">
+						@subject.Name
+					</label>
+				</div>
+			}
+		</div>
+		<div class="mb-3 mt-3" style="width:200px; margin:auto;">
+			<button class="btn btn-success" asp-area="Administrator" asp-controller="Student" asp-action="AssignSubjects">Assign</button>
+		</div>
+	</div>
+</form>

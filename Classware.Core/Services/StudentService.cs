@@ -39,9 +39,9 @@ namespace Classware.Core.Services
 
 			var student = await GetStudentByIdAsync(studentId);
 
-			foreach ( var subject in subjects)
+			foreach (var subject in subjects)
 			{
-				if (student.StudentSubjects.Any(ss=>ss.SubjectId == subject.Id))
+				if (student.StudentSubjects.Any(ss => ss.SubjectId == subject.Id))
 				{
 					continue;
 				}
@@ -81,10 +81,12 @@ namespace Classware.Core.Services
 		public async Task<Student> GetStudentByIdAsync(int id)
 		{
 			var student = await repo.All<Student>()
+				.Include(s=>s.Remarks)
+				.Include(s => s.Compliments)
 				.Include(s => s.User)
 				.Include(s => s.Class)
-				.Include(s=>s.StudentSubjects)
-				.ThenInclude(ss=>ss.Subject)
+				.Include(s => s.StudentSubjects)
+				.ThenInclude(ss => ss.Subject)
 				.FirstOrDefaultAsync(s => s.Id == id && s.IsActive == true);
 
 			if (student == null)
@@ -94,22 +96,26 @@ namespace Classware.Core.Services
 			return student;
 		}
 
-		public bool AddGradeToStudentAsync(Student student,string subjectName,int grade)
+
+		public async Task<IEnumerable<Student>> GetStudentsByClassIdAndSubjectName(int classId, string subjectName)
 		{
-			foreach (var item in student.StudentSubjects)
+			var students =await repo.All<Student>()
+				.Include(s=>s.Grades)
+				.Include(s=>s.User)
+				.Include(s => s.StudentSubjects)
+				.ThenInclude(ss => ss.Subject)
+				.Where(s => s.ClassId == classId && s.StudentSubjects.Any(s => s.Subject.Name == subjectName))
+				.ToListAsync();
+
+			return students;
+		}
+
+		public async Task<bool> StudentHasASubjectAsync(Student student,string subjectName)
+		{
+			if (student.StudentSubjects.Any(s=>s.Subject.Name == subjectName))
 			{
-				if (item.Subject?.Name == subjectName)
-				{
-					item.Subject.Grades.Add(new Grade()
-					{
-						Type = grade,
-						Subject = item.Subject
-					});
-
-					return true;
-				}
+				return true;
 			}
-
 			return false;
 		}
 	}

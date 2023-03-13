@@ -1,1 +1,37 @@
-﻿<p>admin area home index view</p>
+﻿<div class="text-center">
+	<h2>Hello!</h2>
+	<h3>This is the administration area where you can manage all sorts of things</h3>
+	<hr />
+
+</div>
+<div class="row row-cols-3 text-center">
+	<div class="card ">
+		<h4 class="mt-2" >Classes</h4>
+		<hr />
+		<h6>All the actions you are permited to do:</h6>
+		<div class="mt-2 mb-2">
+			<a class="btn mb-2" style="background-color:#c2d6d6;" asp-area="Administrator" asp-controller="Class" asp-action="Add">Add a class</a>
+			<a class="btn mb-2" style="background-color:#c2d6d6;" asp-area="Administrator" asp-controller="Class" asp-action="All">All classes</a>
+		</div>
+	</div>
+	<div class="card">
+		<h4 class="mt-2">Teachers</h4>
+		<hr />
+		<h6>All the actions you are permited to do:</h6>
+		<div class="mt-2 mb-2">
+			<a class="btn mb-2" style="background-color:#c2d6d6;" asp-area="Administrator" asp-controller="Teacher" asp-action="Add">Add a teacher</a>
+			<a class="btn mb-2" style="background-color:#c2d6d6;" asp-area="Administrator" asp-controller="Teacher" asp-action="All">All teachers</a>
+			<a class="btn mb-2" style="background-color:#c2d6d6;" asp-area="Administrator" asp-controller="Teacher" asp-action="AssignSubject">Assign a subject to a teacher</a>
+		</div>
+	</div>
+	<div class="card">
+		<h4 class="mt-2">Students</h4>
+		<hr />
+		<h6>All the actions you are permited to do:</h6>
+		<div class="mt-2 mb-2">
+			<a class="btn mb-2" style="background-color:#c2d6d6;" asp-area="Administrator" asp-controller="Student" asp-action="Add">Add a student</a>
+			<a class="btn mb-2" style="background-color:#c2d6d6;" asp-area="Administrator" asp-controller="Student" asp-action="All">All students</a>
+			<a class="btn mb-2" style="background-color:#c2d6d6;" asp-area="Administrator" asp-controller="Student" asp-action="AssignSubjects">Assign subjects to a student</a>
+		</div>
+	</div>
+</div>

@@ -9,41 +9,40 @@ using System.Threading.Tasks;
 
 namespace Classware.Infrastructure.Models
 {
-	public class Grade
-	{
-		/// <summary>
-		/// Grade's primary key
-		/// </summary>
-		[Key]
-		public int Id { get; set; }
+    public class Grade
+    {
+        /// <summary>
+        /// Grade's primary key
+        /// </summary>
+        [Key]
+        public int Id { get; set; }
 
-		/// <summary>
-		/// Grade's type
-		/// </summary>
-		[Required]
-		[Range(InfrastructureConstants.Grade.GRADE_TYPE_MIN_VALUE,InfrastructureConstants.Grade.GRADE_TYPE_MAX_VALUE)]
+        /// <summary>
+        /// Grade's type
+        /// </summary>
+        [Required]
+        [Range(InfrastructureConstants.Grade.GRADE_TYPE_MIN_VALUE, InfrastructureConstants.Grade.GRADE_TYPE_MAX_VALUE)]
         public int Type { get; set; }
 
-		/// <summary>
-		/// Grade's description
-		/// </summary>
-		[Required]
-		public string Description { get; set; } = null!;
+        /// <summary>
+        /// Is grade active
+        /// </summary>
+        [Required]
+        public bool IsActive { get; set; } = true;
 
-		/// <summary>
-		/// Is grade active
-		/// </summary>
-		[Required]
-		public bool IsActive { get; set; } = true;
-
-		/// <summary>
-		/// Grade's subject
-		/// </summary>
-		[Required]
-		[ForeignKey(nameof(Subject))]
+        /// <summary>
+        /// Grade's subject
+        /// </summary>
+        [ForeignKey(nameof(Subject))]
         public int SubjectId { get; set; }
-		public Subject Subject { get; set; } = null!;
+        public Subject? Subject { get; set; }
 
+        /// <summary>
+        /// Grade to the given student
+        /// </summary>
+		[ForeignKey(nameof(Student))]
+		public int StudentId { get; set; }
+		public Student? Student { get; set; }
 
-    }
+	}
 }

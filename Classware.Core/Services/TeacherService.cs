@@ -80,6 +80,7 @@ namespace Classware.Core.Services
 		public async Task<Teacher> GetTeacherByUserIdAsync(string id)
 		{
 			var teacher = await repo.All<Teacher>()
+				.Include(t=>t.Subject)
 				.Where(t => t.IsActive && t.UserId == id)
 				.FirstOrDefaultAsync();
 

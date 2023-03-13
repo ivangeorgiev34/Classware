@@ -1,0 +1,34 @@
+﻿@using Classware.Models.Account
+@model AccountLogInViewModel
+
+<form class="row" method="post" asp-action="LogIn" asp-controller="Account">
+	<div class="card">
+		<h3 class="text-center mt-3">Log In</h3>
+		<hr />
+		<div class="row mb-2" style=" margin:auto; width:200px;" >
+			<label asp-for="@Model.Email">Email:</label>
+			<input placeholder="Email..." asp-for="@Model.Email" />
+		</div>
+		<div class=" row mb-2" style="margin:auto; width:200px;">
+			<label asp-for="@Model.Password">Password:</label>
+			<input placeholder="Password..." asp-for="@Model.Password" />
+		</div>
+		<div class="row mb-2" style="margin:auto;">
+			<ul style="list-style-type:none">
+				@foreach (var item in ViewContext.ViewData.ModelState.Values.SelectMany(v => v.Errors))
+				{
+					<li><span class="text-danger">@item.ErrorMessage</span></li>
+				}
+				<li><span class="text-danger" asp-validation-for="@Model.Email"></span></li>
+				<li><span class="text-danger" asp-validation-for="@Model.Password"></span></li>
+			</ul>
+		</div>
+		<div class="row mb-2" style="margin:auto">
+			<button class="btn btn-primary" asp-action="LogIn" asp-controller="Account">Log In</button>
+		</div>
+	</div>
+</form>
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial" />
+}

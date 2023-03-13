@@ -1,0 +1,65 @@
+﻿@using Classware.Areas.Teacher.Models.Grade;
+@model GradeInformationViewModel
+
+<form class="row" method="post" asp-area="Teacher" asp-controller="Grade" asp-action="Delete">
+	<div class="card">
+		<h3 class="text-center mt-3">Grade information</h3>
+		<hr />
+		<div class="mt-3" style="margin:auto;">
+			<label asp-for="@Model.FirstName"><b>Student first name:</b> @Model.FirstName</label>
+		</div>
+		<div class="mt-3" style="margin:auto;">
+			<label asp-for="@Model.MiddleName"><b>Student middle name:</b> @Model.MiddleName</label>
+		</div>
+		<div class="mt-3" style="margin:auto;">
+			<label asp-for="@Model.LastName"><b>Student last name:</b> @Model.LastName</label>
+		</div>
+		<div class="mt-3" style="margin:auto;">
+			<label asp-for="@Model.ClassName"><b>Student class:</b> @Model.ClassName</label>
+		</div>
+		@if (Model.Grade == 2)
+		{
+			<div class="mt-3" style="margin:auto;">
+				<label asp-for="@Model.Grade"><b>Grade:</b></label>
+				<div style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:red; color:white; border:1px solid black">2</div>
+			</div>
+		}
+		else if (Model.Grade == 3)
+		{
+			<div class="mt-3" style="margin:auto;">
+				<label asp-for="@Model.Grade"><b>Grade:</b></label>
+				<div style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:#ff6600; color:white; border:1px solid black">3</div>
+			</div>
+		}
+		else if (Model.Grade == 4)
+		{
+			<div class="mt-3" style="margin:auto;">
+				<label asp-for="@Model.Grade"><b>Grade:</b></label>
+				<div style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:darkorange; color:white; border:1px solid black">4</div>
+			</div>
+		}
+		else if (Model.Grade == 5)
+		{
+			<div class="mt-3" style="margin:auto;">
+				<label asp-for="@Model.Grade"><b>Grade:</b></label>
+				<div style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:dodgerblue; color:white; border:1px solid black">5</div>
+			</div>
+		}
+		else if (Model.Grade == 6)
+		{
+			<div class="mt-3" style="margin:auto;">
+				<label asp-for="@Model.Grade"><b>Grade:</b></label>
+				<div style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:forestgreen; color:white; border:1px solid black">6</div>
+			</div>
+		}
+		<div class="mt-3" style="margin:auto;">
+			<label asp-for="@Model.SubjectName"><b>Grade subject:</b> @Model.SubjectName</label>
+		</div>
+		<div class="mt-3" style="margin:auto;">
+			<a style="margin:auto;" class="btn btn-warning" asp-area="Teacher" asp-controller="Grade" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+		</div>
+		<div class ="mt-3 mb-3" style="margin:auto;">
+			<button class="btn btn-danger" asp-area="Teacher" asp-controller="Grade" asp-action="Delete" asp-route-id="@Model.Id">Delete</button>
+		</div>
+	</div>
+</form>

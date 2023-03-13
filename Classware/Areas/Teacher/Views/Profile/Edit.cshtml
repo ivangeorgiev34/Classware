@@ -1,0 +1,35 @@
+﻿@using Classware.Areas.Teacher.Models.Profile;
+@model ProfileInformationViewModel
+
+<form class="row" method="post" asp-area="Teacher" asp-controller="Profile" asp-action="Edit" enctype="multipart/form-data">
+	<div class="card">
+		<div class=" rowmb-4" style="margin:auto; width:300px;">
+			<label asp-for="@Model.ProfilePicture" class="control-label"></label>
+			<input type="file" asp-for="@Model.ProfilePicture" />
+		</div>
+		<div class=" row mb-4" style="margin:auto; width:300px;">
+			<label asp-for="@Model.FirstName">First Name:</label>
+			<input asp-for="@Model.FirstName" value="@Model.FirstName"/>
+		</div>
+		<div class=" row mb-4" style="margin:auto; width:300px;">
+			<label asp-for="@Model.MiddleName">Middle Name:</label>
+			<input asp-for="@Model.MiddleName" value="@Model.MiddleName" />
+		</div>
+		<div class=" row mb-4" style="margin:auto; width:300px;">
+			<label asp-for="@Model.LastName">Last Name:</label>
+			<input asp-for="@Model.LastName" value="@Model.LastName" />
+		</div>
+		<div class="row mb-4" style="margin:auto; width:300px;">
+			<label asp-for="@Model.Age">Age:</label>
+			<input asp-for="@Model.Age" value="@Model.Age" />
+		</div>
+		<div class="row mb-4" style="margin:auto; width:300px;">
+			<label asp-for="@Model.Gender">Gender:</label>
+			<input asp-for="@Model.Gender" value="@Model.Gender" />
+		</div>
+		<div class ="row mb-4" style="margin:auto;">
+			<button class="btn btn-warning" asp-area="Teacher" asp-controller="Profile" asp-action="Edit">Edit</button>
+		</div>
+	</div>
+</form>
+

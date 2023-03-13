@@ -8,7 +8,7 @@
             public const int CLASS_NAME_MAX_LENGTH = 3;
             public const string CLASS_NAME_REGULAR_EXPRESSION = @"[1-9][0-2]{0,1}[A-Z]";
 
-
+            public const int SUBJECT_NAME_MAX_LENGTH = 40;
         }
     }
 }

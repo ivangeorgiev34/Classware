@@ -1,0 +1,40 @@
+﻿@using Classware.Areas.Teacher.Models.Compliment;
+@model EditComplimentViewModel
+
+<form class="row" method="post" asp-area="Teacher" asp-controller="Compliment" asp-action="Edit">
+	<div class="card">
+		<h3 class="text-center mt-3">Edit compliment</h3>
+		<hr />
+		<div class="row" style="margin:auto; width:300px;">
+			<label asp-for="@Model.Title">Title:</label>
+			<input asp-for="@Model.Title" value="@Model.Title" />
+		</div>
+		<div class="row mt-3" style="margin:auto; width:300px;">
+			<label asp-for="@Model.Description">Description:</label>
+			<textarea asp-for="@Model.Description" value="@Model.Description" style="height:150px;"></textarea>
+		</div>
+		<div class="row mt-3 " style="margin:auto; width:300px;">
+			<ul style="list-style-type:none">
+				@foreach (var error in ViewContext.ViewData.ModelState.Values.SelectMany(v => v.Errors))
+				{
+					<li>
+						<span class="text-danger">@error.ErrorMessage</span>
+					</li>
+				}
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.Title"></span>
+				</li>
+				<li>
+					<span class="text-danger" asp-validation-for="@Model.Description"></span>
+				</li>
+			</ul>
+		</div>
+		<div class="row mb-3 mt-3" style="margin:auto;">
+			<button class="btn btn-warning" asp-area="Teacher" asp-controller="Compliment" asp-action="Edit">Edit</button>
+		</div>
+	</div>
+</form>
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial" />
+}

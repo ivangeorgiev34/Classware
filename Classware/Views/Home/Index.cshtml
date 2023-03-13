@@ -3,6 +3,13 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1>Welcome to Classware!</h1>
+    <hr />
+    <h3 class="mb-5">The best school managment system on planet earth!</h3>
+    <form method="post" asp-action="LogIn" asp-controller="Account">
+        <div class="card" style="width: 25rem; margin:auto">
+            <h5>If you have an account consider loggin in!</h5>
+            <a class="btn btn-primary mb-2" style="margin:auto" asp-action="LogIn" asp-controller="Account">Log In</a>
+        </div>
+    </form>
 </div>

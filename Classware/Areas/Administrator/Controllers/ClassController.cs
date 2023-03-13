@@ -1,4 +1,5 @@
 ﻿using Classware.Areas.Administrator.Models.Class;
+using Classware.Core.Constants;
 using Classware.Core.Contracts;
 using Classware.Infrastructure.Common;
 using Classware.Infrastructure.Models;
@@ -18,42 +19,122 @@ namespace Classware.Areas.Administrator.Controllers
 			logger = _logger;
         }
         /// <summary>
-        /// adds class 
+        /// Adds a class 
         /// </summary>
         /// <returns></returns>
         [HttpGet]
 		public IActionResult Add()
 		{
-			var model = new AddClassViewModel();
+			try
+			{
+				var model = new AddClassViewModel();
 
-			return View(model);
+				return View(model);
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Add(AddClassViewModel model)
 		{
-			if (!ModelState.IsValid)
+			try
 			{
-				return View();
+				if (!ModelState.IsValid)
+				{
+					return View();
+				}
+
+				if (await classService.ClassExistsByNameAsync(model.Name))
+				{
+					ModelState.AddModelError("", "A class with this name already exists!");
+
+					return View(model);
+				}
+
+				var _class = new Class()
+				{
+					Name = model.Name
+				};
+
+				await classService.AddClassAsync(_class);
+
+				logger.LogInformation("Class with name:{0} has been added!", _class.Name);
+
+				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = $"Class {_class.Name} has been added successfully!";
+
+				return RedirectToAction("All", "Class", new { area = "Administrator" });
 			}
-
-			if (await classService.ClassExistsByNameAsync(model.Name))
+			catch (Exception)
 			{
-				ModelState.AddModelError("", "A class with this name already exists!");
 
-				return View(model);
+				throw;
 			}
+			
+		}
 
-			var _class = new Class()
+		/// <summary>
+		/// Gets all classes and gets the name of the class and number of their students in that class
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		public async Task<IActionResult> All()
+		{
+			try
 			{
-				Name = model.Name
-			};
+				ICollection<AllClassesViewModel> models = new List<AllClassesViewModel>();
 
-			await classService.AddClassAsync(_class);
+				var classes = await classService.GetAllClassesAsync();
 
-			logger.LogInformation("Class with name:{0} has been added!",_class.Name);
+				foreach (var _class in classes)
+				{
+					models.Add(new AllClassesViewModel()
+					{
+						Id = _class.Id,
+						Name = _class.Name,
+						StudentsCount = _class.Students.Count
+					});
+				}
 
-			return RedirectToAction("Index","Home",new {area="Administrator"});
+				return View(models);
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+			
+		}
+		
+		/// <summary>
+		/// Sets the given class to not active
+		/// </summary>
+		/// <returns></returns>
+
+		[HttpPost]
+		public async Task<IActionResult> Delete(int id)
+		{
+			try
+			{
+				await classService.DeleteClassByIdAsync(id);
+
+
+				logger.LogInformation("Class with id:{0} has been deleted!", id);
+
+				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Class deleted successfully";
+
+				return RedirectToAction("Index", "Home", new { area = "Administrator" });
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+			
 		}
 	}
 }
