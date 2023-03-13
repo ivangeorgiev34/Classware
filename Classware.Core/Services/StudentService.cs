@@ -99,6 +99,13 @@ namespace Classware.Core.Services
 		public async Task<Student> GetStudentByUserIdAsync(string id)
 		{
 			var student = await repo.All<Student>()
+				.Include(s=>s.Class)
+				.Include(s=>s.User)
+				.Include(s=>s.Compliments)
+				.Include(s => s.Grades)
+				.Include(s => s.Remarks)
+				.Include(s => s.StudentSubjects)
+				.ThenInclude(ss=>ss.Subject)
 				.Where(s => s.IsActive == true && s.Userid == id)
 				.FirstOrDefaultAsync();
 
