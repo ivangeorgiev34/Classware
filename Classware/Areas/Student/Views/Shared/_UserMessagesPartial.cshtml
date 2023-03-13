@@ -1,0 +1,22 @@
+﻿@using Classware.Core.Constants;
+
+@if(TempData[UserMessagesConstants.ERROR_MESSAGE]!=null)
+{
+	<script>
+		$(function () { toastr.error('@TempData[UserMessagesConstants.ERROR_MESSAGE].ToString()'); });
+	</script>
+}
+
+@if(TempData[UserMessagesConstants.WARNING_MESSAGE]!=null)
+{
+	<script>
+		$(function () { toastr.warning('@TempData[UserMessagesConstants.WARNING_MESSAGE].ToString()'); });
+	</script>
+}
+
+@if (TempData[UserMessagesConstants.SUCCESS_MESSAGE] != null)
+{
+	<script>
+		$(function () { toastr.success('@TempData[UserMessagesConstants.SUCCESS_MESSAGE].ToString()'); });
+	</script>
+}

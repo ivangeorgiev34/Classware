@@ -155,7 +155,7 @@ namespace Classware.Areas.Administrator.Controllers
 
 					await userManager.AddToRoleAsync(userRole, "Student");
 
-					var student = new Student()
+					var student = new Classware.Infrastructure.Models.Student()
 					{
 						Userid = userRole.Id,
 						ClassId = model.ClassId

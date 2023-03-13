@@ -27,8 +27,7 @@ namespace Classware.Controllers
             logger = _logger;
         }
 
-        //[Authorize(Roles ="Adminitrator")]
-        [AllowAnonymous]
+        [Authorize(Roles ="Adminitrator")]
         public async Task<IActionResult> SeedRoles()
         {
             await CreateRoles();
