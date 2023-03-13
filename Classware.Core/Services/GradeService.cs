@@ -73,5 +73,16 @@ namespace Classware.Core.Services
 
 			return grade;
 		}
+
+		public async Task<ICollection<Grade>> GetGradesByStudentIdAndSubjectName(int studentId, string subjectName)
+		{
+			var grades = await repo.All<Grade>()
+				.Include(g => g.Subject)
+				.Include(g=>g.Student)
+				.Where(g => g.StudentId == studentId && g.Subject!.Name == subjectName)
+				.ToListAsync();
+
+			return grades;
+		}
 	}
 }

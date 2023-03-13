@@ -16,5 +16,7 @@ namespace Classware.Core.Contracts
 		Task DeleteGradeByIdAsync(int id);
 
 		Task EditGradeByIdAsync(int id, int gradeNumber);
+
+		Task<ICollection<Grade>> GetGradesByStudentIdAndSubjectName(int studentId, string subjectName);
 	}
 }
