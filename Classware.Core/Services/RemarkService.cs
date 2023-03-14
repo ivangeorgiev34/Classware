@@ -18,7 +18,7 @@ namespace Classware.Core.Services
 		{
 			repo = _repo;
 		}
-		public async Task AddRemarkAsync(int studentId, int subjectId, string title, string? description)
+		public async Task AddRemarkAsync(int studentId, int teacherId, int subjectId, string title, string? description)
 		{
 			await repo.AddAsync(new Remark()
 			{
@@ -26,6 +26,7 @@ namespace Classware.Core.Services
 				Description = description,
 				StudentId = studentId,
 				SubjectId = subjectId,
+				TeacherId = teacherId
 			});
 
 			await repo.SaveChangesAsync();
@@ -62,6 +63,8 @@ namespace Classware.Core.Services
 			var remark = await repo.All<Remark>()
 				.Include(r => r.Subject)
 				.Include(r => r.Student)
+				.Include(r=>r.Teacher)
+				.ThenInclude(t=>t.User)
 				.Where(r => r.IsActive == true && r.Id == id)
 				.FirstOrDefaultAsync();
 

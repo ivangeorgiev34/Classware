@@ -18,13 +18,14 @@ namespace Classware.Core.Services
         {
             repo  = _repo;
         }
-        public async Task AddGradeAsync(int studentId, int subjectId,int grade)
+        public async Task AddGradeAsync(int studentId, int teacherId, int subjectId,int grade)
 		{
 			await repo.AddAsync(new Grade()
 			{
 				Type = grade,
 				StudentId = studentId,
-				SubjectId = subjectId
+				SubjectId = subjectId,
+				TeacherId = teacherId
 			});
 
 			await repo.SaveChangesAsync();

@@ -18,14 +18,15 @@ namespace Classware.Core.Services
         {
 			repo = _repo;
         }
-        public async Task AddComplimentAsync(int studentId, int subjectId, string title, string? description)
+        public async Task AddComplimentAsync(int studentId, int teacherId, int subjectId, string title, string? description)
 		{
 			await repo.AddAsync(new Compliment()
 			{
 				Title = title,
 				Description = description,
 				StudentId = studentId,
-				SubjectId = subjectId
+				SubjectId = subjectId,
+				TeacherId = teacherId
 			});
 
 			await repo.SaveChangesAsync();
