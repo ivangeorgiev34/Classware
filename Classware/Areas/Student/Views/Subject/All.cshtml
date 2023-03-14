@@ -1,0 +1,50 @@
+﻿@using Classware.Areas.Student.Models.Subject;
+@model AllSubjectsViewModel
+
+@if (Model.Subjects.Count>0)
+{
+	<table class="table table-light table-hover table-striped table-bordered">
+		<thead>
+			<tr>
+				<th class="text-center" scope="col">Subject name</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var subject in Model.Subjects)
+			{
+				<tr>
+					<td class="text-center">@subject.Name</td>
+					<td>
+						@foreach (var grade in subject.Grades)
+						{
+							@if (grade.Grade == 2)
+							{
+								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:red; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">2</a>
+							}
+							else if (grade.Grade == 3)
+							{
+								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:#ff4100; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">3</a>
+							}
+							else if (grade.Grade == 4)
+							{
+								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:darkorange; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">4</a>
+							}
+							else if (grade.Grade == 5)
+							{
+								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:dodgerblue; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">5</a>
+							}
+							else if (grade.Grade == 6)
+							{
+								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:forestgreen; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">6</a>
+							}
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<h2>You have no subjects!</h2>
+}
