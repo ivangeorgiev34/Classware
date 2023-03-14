@@ -1,0 +1,57 @@
+﻿@using Classware.Areas.Student.Models.Grade;
+@model GradeInformationViewModel
+
+<div class="card ">
+	<h3 class="mt-3 text-center">Grade information</h3>
+	<hr />
+	<div class="mt-3" style="margin:auto;">
+		<label asp-for="@Model.FirstName"><b>Student first name:</b> @Model.FirstName </label>
+	</div>
+	<div class="mt-3" style="margin:auto;">
+		<label asp-for="@Model.MiddleName"><b>Student middle name:</b> @Model.MiddleName </label>
+	</div>
+	<div class="mt-3" style="margin:auto;">
+		<label asp-for="@Model.LastName"><b>Student last name:</b> @Model.LastName </label>
+	</div>
+	@if (Model.Grade == 2)
+	{
+		<div class="mt-3" style="margin:auto;">
+			<label asp-for="@Model.Grade"><b>Grade:</b></label>
+			<div style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:red; color:white; border:1px solid black">2</div>
+		</div>
+	}
+	else if (Model.Grade == 3)
+	{
+		<div class="mt-3" style="margin:auto;">
+			<label asp-for="@Model.Grade"><b>Grade:</b></label>
+			<div style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:#ff6600; color:white; border:1px solid black">3</div>
+		</div>
+	}
+	else if (Model.Grade == 4)
+	{
+		<div class="mt-3" style="margin:auto;">
+			<label asp-for="@Model.Grade"><b>Grade:</b></label>
+			<div style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:darkorange; color:white; border:1px solid black">4</div>
+		</div>
+	}
+	else if (Model.Grade == 5)
+	{
+		<div class="mt-3" style="margin:auto;">
+			<label asp-for="@Model.Grade"><b>Grade:</b></label>
+			<div style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:dodgerblue; color:white; border:1px solid black">5</div>
+		</div>
+	}
+	else if (Model.Grade == 6)
+	{
+		<div class="mt-3" style="margin:auto;">
+			<label asp-for="@Model.Grade"><b>Grade:</b></label>
+			<div style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:forestgreen; color:white; border:1px solid black">6</div>
+		</div>
+	}
+	<div class="mt-3 " style="margin:auto;">
+		<label asp-for="@Model.SubjectName"><b>Subject: </b>@Model.SubjectName</label>
+	</div>
+	<div class="mt-3 mb-3" style="margin:auto;">
+		<label asp-for="@Model.Teacher"><b>Teacher name: </b>@Model.Teacher</label>
+	</div>
+</div>

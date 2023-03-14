@@ -59,6 +59,8 @@ namespace Classware.Core.Services
 		public async Task<Grade> GetGradeByIdAsync(int id)
 		{
 			var grade =await  repo.All<Grade>()
+				.Include(g=>g.Teacher)
+				.ThenInclude(t=>t.User)
 				.Include(g=>g.Student)
 				.ThenInclude(s=>s.Class)
 				.Include(g => g.Student)

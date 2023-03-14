@@ -150,6 +150,9 @@ namespace Classware.Infrastructure.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -160,6 +163,8 @@ namespace Classware.Infrastructure.Migrations
                     b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Compliments");
                 });
@@ -181,6 +186,9 @@ namespace Classware.Infrastructure.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -189,6 +197,8 @@ namespace Classware.Infrastructure.Migrations
                     b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Grades");
                 });
@@ -214,6 +224,9 @@ namespace Classware.Infrastructure.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -224,6 +237,8 @@ namespace Classware.Infrastructure.Migrations
                     b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Remarks");
                 });
@@ -537,9 +552,17 @@ namespace Classware.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Classware.Infrastructure.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Student");
 
                     b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Grade", b =>
@@ -556,9 +579,17 @@ namespace Classware.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Classware.Infrastructure.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Student");
 
                     b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Remark", b =>
@@ -575,9 +606,17 @@ namespace Classware.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Classware.Infrastructure.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Student");
 
                     b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Student", b =>

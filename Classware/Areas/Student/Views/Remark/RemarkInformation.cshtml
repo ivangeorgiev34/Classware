@@ -1,0 +1,42 @@
+﻿@using Classware.Areas.Student.Models.Remark;
+@model RemarkInformationViewModel
+
+<div class="card">
+	<h3 class="text-center mt-3">Remark information</h3>
+	<hr />
+	<div class="mt-3" style="margin:auto;">
+		<label asp-for="@Model.FirstName"><b>Student first name: </b>@Model.FirstName</label>
+	</div>
+	<div class="mt-3" style="margin:auto;">
+		<label asp-for="@Model.MiddleName"><b>Student middle name: </b>@Model.MiddleName</label>
+	</div>
+	<div class="mt-3" style="margin:auto;">
+		<label asp-for="@Model.LastName"><b>Student last name: </b>@Model.LastName</label>
+	</div>
+	<div class="mt-3" style="margin:auto;">
+		<label asp-for="@Model.Title"><b>Remark title: </b>@Model.Title</label>
+	</div>
+	<div class="mt-3" style="margin:auto;">
+		@if (Model.Description == null)
+		{
+			<label asp-for="@Model.Description"><b>Remark description: </b>No description</label>
+		}		
+		else
+		{
+			<label asp-for="@Model.Description"><b>Remark description: </b>@Model.Description</label>
+		}
+	</div>
+	<div class="mt-3" style="margin:auto;">
+		@if (Model.SubjectName == null)
+		{
+			<label asp-for="@Model.SubjectName"><b>Remark subject name: </b>No subject</label>
+		}
+		else
+		{
+			<label asp-for="@Model.SubjectName"><b>Remark subject name: </b>@Model.SubjectName</label>
+		}
+	</div>
+	<div class="mt-3 mb-3" style="margin:auto;">
+		<label asp-for="@Model.TeacherName"><b>Teacher name: </b>@Model.TeacherName</label>
+	</div>
+</div>

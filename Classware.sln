@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classware", "Classware\Classware.csproj", "{61073742-A47E-4D18-B7D2-23BA3DFCD815}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classware", "Classware\Classware.csproj", "{61073742-A47E-4D18-B7D2-23BA3DFCD815}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classware.Core", "Classware.Core\Classware.Core.csproj", "{946B9B42-8DBE-4FCF-9DDA-0570CBFD7B8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classware.Core", "Classware.Core\Classware.Core.csproj", "{946B9B42-8DBE-4FCF-9DDA-0570CBFD7B8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classware.Infrastructure", "Classware.Infrastructure\Classware.Infrastructure.csproj", "{401CF8DF-58F3-4F21-B2AE-5E672FEFC053}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classware.Infrastructure", "Classware.Infrastructure\Classware.Infrastructure.csproj", "{401CF8DF-58F3-4F21-B2AE-5E672FEFC053}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
