@@ -1,4 +1,6 @@
-﻿namespace Classware.Areas.Teacher.Models.Grade
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+
+namespace Classware.Areas.Teacher.Models.Grade
 {
 	public class GradeInformationViewModel
 	{
@@ -9,6 +11,8 @@
 		public string ClassName { get; set; } = null!;
 
         public string SubjectName { get; set; } = null!;
+
+		public string TeacherName { get; set; } = null!;
 
         public string? FirstName { get; set; }
 
