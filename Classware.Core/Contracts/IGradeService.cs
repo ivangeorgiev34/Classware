@@ -9,7 +9,7 @@ namespace Classware.Core.Contracts
 {
 	public interface IGradeService
 	{
-		Task AddGradeAsync(int studentId,int subjectId,int grade);
+		Task AddGradeAsync(int studentId,int teacherId,int subjectId,int grade);
 
 		Task<Grade> GetGradeByIdAsync(int id);
 

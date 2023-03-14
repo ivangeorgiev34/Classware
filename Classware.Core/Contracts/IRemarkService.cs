@@ -10,7 +10,7 @@ namespace Classware.Core.Contracts
 	public interface IRemarkService
 	{
 
-		Task AddRemarkAsync(int studentId, int subjectId, string title, string? description);
+		Task AddRemarkAsync(int studentId, int teacherId, int subjectId, string title, string? description);
 
 		Task DeleteRemarkByIdAsync(int id);
 

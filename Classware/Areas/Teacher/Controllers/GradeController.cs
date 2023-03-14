@@ -105,7 +105,7 @@ namespace Classware.Areas.Teacher.Controllers
 
 				var subject = await subjectService.GetSubjectByNameAsync(teacher.Subject.Name);
 
-				await gradeService.AddGradeAsync(student.Id, subject.Id, model.Type);
+				await gradeService.AddGradeAsync(student.Id,teacher.Id, subject.Id, model.Type);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Grade added successfully";
 
@@ -131,6 +131,8 @@ namespace Classware.Areas.Teacher.Controllers
 			{
 				var grade = await gradeService.GetGradeByIdAsync(id);
 
+				var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
+
 				var model = new GradeInformationViewModel()
 				{
 					Id = grade.Id,
@@ -139,7 +141,8 @@ namespace Classware.Areas.Teacher.Controllers
 					MiddleName = grade.Student?.User.MiddleName,
 					LastName = grade.Student?.User.LastName,
 					SubjectName = grade.Subject!.Name!,
-					ClassName = grade.Student!.Class.Name
+					ClassName = grade.Student!.Class.Name,
+					TeacherName = $"{teacher.User.FirstName} {teacher.User.MiddleName}  {teacher.User.LastName}"
 				};
 
 				return View(model);

@@ -90,7 +90,7 @@ namespace Classware.Areas.Teacher.Controllers
 					return RedirectToAction("Index", "Home", new { area = "Teacher" });
 				}
 
-				await complimentService.AddComplimentAsync(student.Id, teacher.Subject.Id, model.Title, model.Description ?? null);
+				await complimentService.AddComplimentAsync(student.Id,teacher.Id, teacher.Subject.Id, model.Title, model.Description ?? null);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Compliment added successfully";
 
