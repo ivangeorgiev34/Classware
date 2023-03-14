@@ -81,6 +81,7 @@ namespace Classware.Core.Services
 		{
 			var teacher = await repo.All<Teacher>()
 				.Include(t=>t.Subject)
+				.Include(t=>t.User)
 				.Where(t => t.IsActive && t.UserId == id)
 				.FirstOrDefaultAsync();
 
