@@ -44,5 +44,12 @@ namespace Classware.Infrastructure.Models
 		public int StudentId { get; set; }
 		public Student? Student { get; set; }
 
+		/// <summary>
+		/// Teacher who wrote the grade
+		/// </summary>
+		[ForeignKey(nameof(Teacher))]
+		public int TeacherId { get; set; }
+		public Teacher? Teacher { get; set; }
+
 	}
 }

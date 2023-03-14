@@ -49,5 +49,12 @@ namespace Classware.Infrastructure.Models
 		[ForeignKey(nameof(Student))]
 		public int StudentId { get; set; }
 		public Student? Student { get; set; }
+
+		/// <summary>
+		/// Teacher who wrote the compliment
+		/// </summary>
+		[ForeignKey(nameof(Teacher))]
+		public int TeacherId { get; set; }
+		public Teacher? Teacher { get; set; }
 	}
 }
