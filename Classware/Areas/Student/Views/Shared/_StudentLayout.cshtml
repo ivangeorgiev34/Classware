@@ -15,11 +15,17 @@
 		<partial name="_UserMessagesPartial" />
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #6600cc;">
 			<div class="container-fluid">
-				<a style="color:white;" class="navbar-brand" asp-area="Teacher" asp-controller="Home" asp-action="Index">Classware - Students</a>
+				<a style="color:white;" class="navbar-brand" asp-area="Student" asp-controller="Home" asp-action="Index">Classware - Students</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
+			</div>
+			<div class="dropdown">
+				<a class=" nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="color:white">Subjects</a>
+				<ul class="dropdown-menu">
+					<li><a asp-area="Student" asp-controller="Subject" asp-action="All" class="dropdown-item">All subjects</a></li>
+				</ul>
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav mr-auto">
