@@ -68,6 +68,11 @@ namespace Classware.Core.Services
 		public async Task<Compliment> GetComplimentByIdAsync(int id)
 		{
 			var compliment = await repo.All<Compliment>()
+				.Include(c=>c.Teacher)
+				.ThenInclude(t=>t.User)
+				.Include(c=>c.Subject)
+				.Include(c=>c.Student)
+				.ThenInclude(s=>s.User)
 				.Where(c => c.IsActive == true && c.Id == id)
 				.FirstOrDefaultAsync();
 
