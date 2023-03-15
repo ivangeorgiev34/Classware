@@ -1,4 +1,5 @@
 ﻿using Classware.Areas.Student.Models.Remark;
+using Classware.Core.Constants;
 using Classware.Core.Contracts;
 using Classware.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -19,51 +20,67 @@ namespace Classware.Areas.Student.Controllers
 		[HttpGet]
 		public async Task<IActionResult> All()
 		{
-			var student = await studentService.GetStudentByUserIdAsync(User.Id());
-
-			var remarks = student.Remarks
-				.Where(r => r.IsActive == true)
-				.ToList();
-
-			ICollection<RemarkViewModel> remarkViewModels = new List<RemarkViewModel>();
-
-			foreach (var remark in remarks)
+			try
 			{
-				remarkViewModels.Add(new RemarkViewModel
+				var student = await studentService.GetStudentByUserIdAsync(User.Id());
+
+				var remarks = student.Remarks
+					.Where(r => r.IsActive == true)
+					.ToList();
+
+				ICollection<RemarkViewModel> remarkViewModels = new List<RemarkViewModel>();
+
+				foreach (var remark in remarks)
 				{
-					Id = remark.Id,
-					Title = remark.Title,
-					Description = remark.Description
-				});
+					remarkViewModels.Add(new RemarkViewModel
+					{
+						Id = remark.Id,
+						Title = remark.Title,
+						Description = remark.Description
+					});
+				}
+
+				var model = new AllRemarksViewModel()
+				{
+					Remarks = remarkViewModels
+				};
+
+				return View(model);
 			}
-
-			var model = new AllRemarksViewModel()
+			catch (NullReferenceException e)
 			{
-				Remarks = remarkViewModels
-			};
-
-			return View(model);
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("All", "Remark", new { area = "Student" });
+			}
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> RemarkInformation(int id)
 		{
-			var remark = await remarkService.GetRemarkByIdAsync(id);
-
-			var student = await studentService.GetStudentByUserIdAsync(User.Id());
-
-			var model = new RemarkInformationViewModel()
+			try
 			{
-				FirstName = student.User.FirstName,
-				MiddleName = student.User.MiddleName,
-				LastName = student.User.LastName,
-				Title = remark.Title,
-				Description = remark.Description,
-				SubjectName = remark.Subject?.Name ?? null,
-				TeacherName = $"{remark.Teacher.User.FirstName} {remark.Teacher.User.MiddleName} {remark.Teacher.User.LastName}"
-			};
+				var remark = await remarkService.GetRemarkByIdAsync(id);
 
-			return View(model);
+				var student = await studentService.GetStudentByUserIdAsync(User.Id());
+
+				var model = new RemarkInformationViewModel()
+				{
+					FirstName = student.User.FirstName,
+					MiddleName = student.User.MiddleName,
+					LastName = student.User.LastName,
+					Title = remark.Title,
+					Description = remark.Description,
+					SubjectName = remark.Subject?.Name ?? null,
+					TeacherName = $"{remark.Teacher.User.FirstName} {remark.Teacher.User.MiddleName} {remark.Teacher.User.LastName}"
+				};
+
+				return View(model);
+			}
+			catch (NullReferenceException e)
+			{
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("All", "Remark", new { area = "Student" });
+			}
 		}
 	}
 }
