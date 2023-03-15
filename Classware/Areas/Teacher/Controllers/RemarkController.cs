@@ -207,8 +207,6 @@ namespace Classware.Areas.Teacher.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Edit(EditRemarkViewModel model)
 		{
-			try
-			{
 				if (!ModelState.IsValid)
 				{
 					return View(model);
@@ -218,12 +216,6 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Remark edited successfully";
 
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
 		}
 	}
 }
