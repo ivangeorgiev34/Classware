@@ -43,8 +43,7 @@ namespace Classware.Areas.Teacher.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Add()
 		{
-			try
-			{
+
 				if (!(await teacherService.TeacherHasASubjectAsync(User.Id())))
 				{
 					TempData[UserMessagesConstants.ERROR_MESSAGE] = "You don't have a assigned subject";
@@ -74,12 +73,7 @@ namespace Classware.Areas.Teacher.Controllers
 				};
 
 				return View(model);
-			}
-			catch (Exception)
-			{
 
-				throw;
-			}
 			
 		}
 
@@ -111,12 +105,19 @@ namespace Classware.Areas.Teacher.Controllers
 
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-			catch (Exception)
+			catch (InvalidOperationException e)
 			{
 
-				throw;
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-			
+			catch (NullReferenceException e)
+			{
+
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
+			}
+
 		}
 
 		/// <summary>
@@ -147,10 +148,11 @@ namespace Classware.Areas.Teacher.Controllers
 
 				return View(model);
 			}
-			catch (Exception)
+			catch (NullReferenceException e)
 			{
 
-				throw;
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
 		
 		}
@@ -171,10 +173,11 @@ namespace Classware.Areas.Teacher.Controllers
 
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-			catch (Exception)
+			catch (NullReferenceException e)
 			{
 
-				throw;
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
 			
 		}
@@ -199,10 +202,11 @@ namespace Classware.Areas.Teacher.Controllers
 
 				return View(model);
 			}
-			catch (Exception)
+			catch (NullReferenceException e)
 			{
 
-				throw;
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
 
 		}
@@ -222,10 +226,10 @@ namespace Classware.Areas.Teacher.Controllers
 
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-			catch (Exception)
+			catch (NullReferenceException e)
 			{
-
-				throw;
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
 			
 		}
