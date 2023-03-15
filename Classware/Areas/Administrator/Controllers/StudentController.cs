@@ -42,8 +42,6 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpGet]
 		public async Task<IActionResult> All()
 		{
-			try
-			{
 				List<AllStudentsViewModel> models = new List<AllStudentsViewModel>();
 
 				var students = await studentService.GetAllStudentsAsync();
@@ -65,12 +63,6 @@ namespace Classware.Areas.Administrator.Controllers
 				}
 
 				return View(models);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
 			
 		}
 
@@ -81,8 +73,6 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Add()
 		{
-			try
-			{
 				var classes = await classService.GetAllClassesAsync();
 
 				var classViewModels = new List<ClassViewModel>();
@@ -103,20 +93,11 @@ namespace Classware.Areas.Administrator.Controllers
 				};
 
 				return View(model);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
-			
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Add(AddStudentViewModel model)
 		{
-			try
-			{
 				if (!ModelState.IsValid)
 				{
 					return View(model);
@@ -175,13 +156,6 @@ namespace Classware.Areas.Administrator.Controllers
 				}
 
 				return View(model);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
-			
 		}
 
 		/// <summary>
@@ -193,8 +167,7 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Delete(int id)
 		{
-			try
-			{
+
 				var student = await studentService.GetStudentByIdAsync(id);
 
 				await studentService.DeleteStudentByIdAsync(id);
@@ -204,13 +177,8 @@ namespace Classware.Areas.Administrator.Controllers
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Student deleted successfully";
 
 				return RedirectToAction("All", "Student", new { area = "Administrator" });
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
 			
+
 		}
 
 		/// <summary>
@@ -221,8 +189,7 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpGet]
 		public async Task<IActionResult> AssignSubjects()
 		{
-			try
-			{
+
 				var students = await studentService.GetAllStudentsAsync();
 
 				var subjects = await subjectService.GetAllSubjectsAsync();
@@ -257,12 +224,8 @@ namespace Classware.Areas.Administrator.Controllers
 				};
 
 				return View(model);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
+			
+			
 			
 		}
 
@@ -277,9 +240,10 @@ namespace Classware.Areas.Administrator.Controllers
 
 				return RedirectToAction("Index", "Home", new { area = "Administrator" });
 			}
-			catch (Exception ex)
+			catch (NullReferenceException e)
 			{
-				throw;
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return View(model);
 			}
 
 		}
