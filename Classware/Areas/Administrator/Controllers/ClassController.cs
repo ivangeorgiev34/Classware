@@ -25,25 +25,14 @@ namespace Classware.Areas.Administrator.Controllers
         [HttpGet]
 		public IActionResult Add()
 		{
-			try
-			{
 				var model = new AddClassViewModel();
 
 				return View(model);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
-
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Add(AddClassViewModel model)
 		{
-			try
-			{
 				if (!ModelState.IsValid)
 				{
 					return View();
@@ -68,13 +57,6 @@ namespace Classware.Areas.Administrator.Controllers
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = $"Class {_class.Name} has been added successfully!";
 
 				return RedirectToAction("All", "Class", new { area = "Administrator" });
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
-			
 		}
 
 		/// <summary>
@@ -84,8 +66,6 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpGet]
 		public async Task<IActionResult> All()
 		{
-			try
-			{
 				ICollection<AllClassesViewModel> models = new List<AllClassesViewModel>();
 
 				var classes = await classService.GetAllClassesAsync();
@@ -99,15 +79,7 @@ namespace Classware.Areas.Administrator.Controllers
 						StudentsCount = _class.Students.Count
 					});
 				}
-
-				return View(models);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
-			
+				return View(models);		
 		}
 		
 		/// <summary>
@@ -118,8 +90,6 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Delete(int id)
 		{
-			try
-			{
 				await classService.DeleteClassByIdAsync(id);
 
 
@@ -128,13 +98,8 @@ namespace Classware.Areas.Administrator.Controllers
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Class deleted successfully";
 
 				return RedirectToAction("Index", "Home", new { area = "Administrator" });
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
 			
 		}
 	}
+	
 }
