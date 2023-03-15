@@ -1,4 +1,5 @@
 ﻿using Classware.Areas.Teacher.Models.Class;
+using Classware.Core.Constants;
 using Classware.Core.Contracts;
 using Classware.Core.Services;
 using Classware.Extensions;
@@ -18,42 +19,35 @@ namespace Classware.Areas.Teacher.Controllers
 			IClassService _classService,
 			IStudentService _studentService,
 			ITeacherService _teacherService)
-        {
+		{
 			logger = _logger;
 			classService = _classService;
 			studentService = _studentService;
-			teacherService= _teacherService;	
-        }
+			teacherService = _teacherService;
+		}
 		/// <summary>
 		/// Gets all the classes
 		/// </summary>
 		/// <returns></returns>
-        [HttpGet]
+		[HttpGet]
 		public async Task<IActionResult> All()
 		{
-			try
+
+			ICollection<AllClassesViewModel> models = new List<AllClassesViewModel>();
+
+			var classes = await classService.GetAllClassesAsync();
+
+			foreach (var _class in classes)
 			{
-				ICollection<AllClassesViewModel> models = new List<AllClassesViewModel>();
-
-				var classes = await classService.GetAllClassesAsync();
-
-				foreach (var _class in classes)
+				models.Add(new AllClassesViewModel()
 				{
-					models.Add(new AllClassesViewModel()
-					{
-						Id = _class.Id,
-						Name = _class.Name,
-						StudentsCount = _class.Students.Count
-					});
-				}
-
-				return View(models);
+					Id = _class.Id,
+					Name = _class.Name,
+					StudentsCount = _class.Students.Count
+				});
 			}
-			catch (Exception)
-			{
 
-				throw;
-			}
+			return View(models);
 		}
 		/// <summary>
 		/// Gets all of the given class' students
@@ -110,12 +104,12 @@ namespace Classware.Areas.Teacher.Controllers
 				return View(model);
 
 			}
-			catch (Exception)
+			catch (NullReferenceException e)
 			{
-
-				throw;
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("All");
 			}
-		
+
 		}
 
 	}
