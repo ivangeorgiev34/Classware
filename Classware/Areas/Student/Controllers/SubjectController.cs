@@ -1,5 +1,6 @@
 ﻿using Classware.Areas.Administrator.Models.Student;
 using Classware.Areas.Student.Models.Subject;
+using Classware.Core.Constants;
 using Classware.Core.Contracts;
 using Classware.Extensions;
 using Classware.Infrastructure.Models;
@@ -25,45 +26,53 @@ namespace Classware.Areas.Student.Controllers
         [HttpGet]
         public async Task<IActionResult> All()
 		{
-            
-            var student = await studentService.GetStudentByUserIdAsync(User.Id());
-
-            var subjects = student.StudentSubjects
-                .Where(ss => ss.Subject?.IsActive == true)
-                .Select(ss=>ss.Subject)
-                .ToList();
-
-            ICollection<Models.Subject.SubjectViewModel> subjectViewModels = new List<Models.Subject.SubjectViewModel>();
-
-            foreach (var subject in subjects)
+            try
             {
-                var grades = await gradeService.GetGradesByStudentIdAndSubjectName(student.Id, subject.Name);
+				var student = await studentService.GetStudentByUserIdAsync(User.Id());
 
-                ICollection<GradeViewModel> gradeViewModels = new List<GradeViewModel>();
+				var subjects = student.StudentSubjects
+					.Where(ss => ss.Subject?.IsActive == true)
+					.Select(ss => ss.Subject)
+					.ToList();
 
-                foreach (var grade in grades)
-                {
-                    gradeViewModels.Add(new GradeViewModel()
-                    {
-                        Id = grade.Id,
-                        Grade = grade.Type
-                    });
+				ICollection<Models.Subject.SubjectViewModel> subjectViewModels = new List<Models.Subject.SubjectViewModel>();
+
+				foreach (var subject in subjects)
+				{
+					var grades = await gradeService.GetGradesByStudentIdAndSubjectName(student.Id, subject.Name);
+
+					ICollection<GradeViewModel> gradeViewModels = new List<GradeViewModel>();
+
+					foreach (var grade in grades)
+					{
+						gradeViewModels.Add(new GradeViewModel()
+						{
+							Id = grade.Id,
+							Grade = grade.Type
+						});
+					}
+
+					subjectViewModels.Add(new Models.Subject.SubjectViewModel()
+					{
+						Id = subject!.Id,
+						Name = subject!.Name,
+						Grades = gradeViewModels
+					});
 				}
 
-                subjectViewModels.Add(new Models.Subject.SubjectViewModel()
-                {
-                    Id = subject!.Id,
-                    Name = subject!.Name,
-                    Grades = gradeViewModels
-				});
+				var model = new AllSubjectsViewModel()
+				{
+					Subjects = subjectViewModels
+				};
+
+				return View(model);
 			}
-
-            var model = new AllSubjectsViewModel()
+            catch (NullReferenceException e)
             {
-                Subjects = subjectViewModels
-            };
-
-			return View(model);
+                TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("All", "Subject", new { area = "Student" });
+			}
+          
 		}
         
 	}
