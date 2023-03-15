@@ -1,4 +1,5 @@
 ﻿using Classware.Areas.Student.Models.Compliment;
+using Classware.Core.Constants;
 using Classware.Core.Contracts;
 using Classware.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,6 @@ namespace Classware.Areas.Student.Controllers
         [HttpGet]
 		public async Task<IActionResult> All()
 		{
-			try
-			{
 				var student = await studentService.GetStudentByUserIdAsync(User.Id());
 
 				ICollection<ComplimentViewModel> complimentViewModels = new List<ComplimentViewModel>();
@@ -46,13 +45,6 @@ namespace Classware.Areas.Student.Controllers
 				};
 
 				return View(model);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
-		
 		}
 
 		[HttpGet]
@@ -77,10 +69,14 @@ namespace Classware.Areas.Student.Controllers
 
 				return View(model);
 			}
-			catch (Exception)
+			catch (NullReferenceException e)
 			{
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("All", "Compliment", new
+				{
+					area = "Student"
+				});
 
-				throw;
 			}
 		}
 	}
