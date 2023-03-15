@@ -46,25 +46,17 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpGet]
         public async Task<IActionResult> Add()
         {
-			try
-			{
+			
 				var model = new AddTeacherViewModel();
 
 				return View(model);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
+		
 
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(AddTeacherViewModel model)
         {
-			try
-			{
 				if (!ModelState.IsValid)
 				{
 					return View(model);
@@ -123,12 +115,7 @@ namespace Classware.Areas.Administrator.Controllers
 				}
 
 				return View(model);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
+			
            
         }
 
@@ -140,8 +127,6 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpGet]
 		public async Task<IActionResult> AssignSubject()
 		{
-			try
-			{
 				var teachers = await teacherService.GetAllTeachersAsync();
 
 				var teacherViewModels = new List<TeacherViewModel>();
@@ -182,12 +167,6 @@ namespace Classware.Areas.Administrator.Controllers
 				};
 
 				return View(model);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
 			
 		}
 
@@ -202,10 +181,10 @@ namespace Classware.Areas.Administrator.Controllers
 
 				return RedirectToAction("Index", "Home", new { area = "Administrator" });
 			}
-			catch (Exception)
+			catch (InvalidOperationException e)
 			{
-
-				throw;
+				TempData[UserMessagesConstants.ERROR_MESSAGE]  = e.Message;
+				return View(model);
 			}
 			
 		}
@@ -217,8 +196,7 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpGet]
 		public async Task<IActionResult> All()
 		{
-			try
-			{
+
 				var teachers = await teacherService.GetAllTeachersAsync();
 
 				ICollection<AllTeachersViewModel> models = new List<AllTeachersViewModel>();
@@ -247,12 +225,6 @@ namespace Classware.Areas.Administrator.Controllers
 				}
 
 				return View(models);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
 		
 		}
 
@@ -276,10 +248,11 @@ namespace Classware.Areas.Administrator.Controllers
 
 				return RedirectToAction("All", "Teacher", new { area = "Administrator" });
 			}
-			catch (Exception)
+			catch (InvalidOperationException e)
 			{
 
-				throw;
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("All", "Teacher", new { area = "Administrator" });
 			}
 			
 		}
