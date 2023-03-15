@@ -31,8 +31,6 @@ namespace Classware.Areas.Teacher.Controllers
         [HttpGet]
 		public async Task<IActionResult> ProfileInformation()
 		{
-			try
-			{
 				var currentUser = await userManager.GetUserAsync(User);
 
 				var model = new ProfileInformationViewModel()
@@ -47,15 +45,7 @@ namespace Classware.Areas.Teacher.Controllers
 					Id = currentUser.Id
 				};
 
-				return View(model);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
-			
-		
+				return View(model);		
 		}
 
 		/// <summary>
@@ -66,8 +56,7 @@ namespace Classware.Areas.Teacher.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Upload(ProfileInformationViewModel model)
 		{
-			try
-			{
+
 				if (!ModelState.IsValid)
 				{
 					return View(model);
@@ -89,12 +78,7 @@ namespace Classware.Areas.Teacher.Controllers
 				await profileService.UploadPictureAsync(data, User.Id());
 
 				return RedirectToAction("ProfileInformation", "Profile", new { area = "Teacher" });
-			}
-			catch (Exception)
-			{
 
-				throw;
-			}
 			
 		}
 
@@ -107,8 +91,7 @@ namespace Classware.Areas.Teacher.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(string id)
 		{
-			try
-			{
+
 				var user = await userManager.FindByIdAsync(id);
 
 				var model = new ProfileInformationViewModel()
@@ -125,12 +108,6 @@ namespace Classware.Areas.Teacher.Controllers
 
 				return View(model);
 
-			}
-			catch (Exception ex)
-			{
-
-				throw;
-			}
 
 
 		}
@@ -155,10 +132,11 @@ namespace Classware.Areas.Teacher.Controllers
 
 				return RedirectToAction("ProfileInformation", "Profile", new { area = "Teacher" });
 			}
-			catch (Exception)
+			catch (NullReferenceException e)
 			{
 
-				throw;
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
 		
 		}
