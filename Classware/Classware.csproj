@@ -24,6 +24,7 @@
     <Folder Include="Areas\Administrator\Data\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Constants\" />
+    <Folder Include="Areas\Student\Models\Home\" />
     <Folder Include="Areas\Teacher\Data\" />
     <Folder Include="ModelBinders\" />
     <Folder Include="wwwroot\toastr\" />
