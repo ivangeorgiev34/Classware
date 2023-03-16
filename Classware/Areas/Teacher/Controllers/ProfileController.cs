@@ -57,10 +57,7 @@ namespace Classware.Areas.Teacher.Controllers
 		public async Task<IActionResult> Upload(ProfileInformationViewModel model)
 		{
 
-				if (!ModelState.IsValid)
-				{
-					return View(model);
-				}
+				
 				if (model.ProfilePicture == null)
 				{
 					TempData[UserMessagesConstants.ERROR_MESSAGE] = "Please upload a file before applying it to your profile";
