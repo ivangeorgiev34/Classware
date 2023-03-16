@@ -16,7 +16,7 @@
 
         public string? Username { get; set; }
 
-        public byte[]? ProfilePicture { get; set; }
+        public string? ProfilePicture { get; set; }
 
         public string Class { get; set; } = null!;
 

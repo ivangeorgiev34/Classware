@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.DependencyResolver;
 using System.Data;
 
 namespace Classware.Areas.Administrator.Controllers
@@ -48,7 +49,12 @@ namespace Classware.Areas.Administrator.Controllers
 
 				foreach (var student in students)
 				{
-					models.Add(new AllStudentsViewModel()
+				string? image = null;
+				if (student.User.ProfilePicture != null)
+				{
+					image = Convert.ToBase64String(student.User.ProfilePicture);
+				}
+				models.Add(new AllStudentsViewModel()
 					{
 						Id = student.Id,
 						FirstName = student.User.FirstName,
@@ -56,7 +62,7 @@ namespace Classware.Areas.Administrator.Controllers
 						LastName = student.User.LastName,
 						Age = student.User.Age,
 						Gender = student.User.Gender,
-						ProfilePicture = student.User.ProfilePicture,
+						ProfilePicture = image,
 						Class = student.Class.Name,
 						Username = student.User.UserName
 					});

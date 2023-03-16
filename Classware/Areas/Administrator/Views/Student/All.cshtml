@@ -19,13 +19,13 @@
 			@foreach (var student in Model)
 			{
 				<tr>
-					@if (@student.ProfilePicture == null)
+					@if (student.ProfilePicture == null)
 					{
 						<td>No profile picture</td>
 					}
 					else
 					{
-						<td><img src="data:image;base64,@student.ProfilePicture" /></td>
+						<td><img src="data:image;base64,@student.ProfilePicture" style="border-radius:50%;height:150px; width:150px;" /></td>
 					}
 					<td>@student.FirstName</td>
 					<td>@student.MiddleName</td>
