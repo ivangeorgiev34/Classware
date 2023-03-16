@@ -5,17 +5,17 @@
 	<table class="table table-light table-hover table-striped table-bordered ">
 		<thead>
 			<tr>
-				<th scope="col">Name</th>
-				<th scope="col">Students Count</th>
+				<th class="text-center" scope="col">Name</th>
+				<th class="text-center" scope="col">Students Count</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (var _class in Model)
 			{
 				<tr>
-					<td>@_class.Name</td>
-					<td>@_class.StudentsCount</td>
-					<td><button class="btn btn-danger" asp-area="Administrator" asp-controller="Class" asp-action="Delete" asp-route-id="@_class.Id">Delete</button></td>
+					<td class="text-center">@_class.Name</td>
+					<td class="text-center">@_class.StudentsCount</td>
+					<td class="text-center"><button class="btn btn-danger" asp-area="Administrator" asp-controller="Class" asp-action="Delete" asp-route-id="@_class.Id">Delete</button></td>
 				</tr>
 			}
 		</tbody>
