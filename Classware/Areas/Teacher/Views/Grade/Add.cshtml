@@ -2,8 +2,8 @@
 @model AddGradeViewModel
 
 <form class="row" method="post" asp-area="Teacher" asp-controller="Grade" asp-action="Add">
-	<div class="card">
-		<h3>Add a grade</h3>
+	<div class="card ">
+		<h3 class="text-center mt-3">Add a grade</h3>
 		<hr />
 		<div class="row mb-3" style="margin:auto; width:300px;">
 			<label asp-for="@Model.StudentId" class="form-label">Student:</label>
@@ -15,8 +15,8 @@
 			</select>
 		</div>
 		<div class ="row mb-3" style="margin:auto; width:300px;">
-			<label asp-for="@Model.Type">Grade:</label>
-			<input asp-for="@Model.Type"/>
+			<label asp-for="@Model.Type" class="form-label">Grade:</label>
+			<input asp-for="@Model.Type" value="2"/>
 		</div>
 		<div style="margin:auto">
 			<ul style="list-style-type:none">
