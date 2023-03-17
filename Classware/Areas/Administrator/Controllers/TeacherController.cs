@@ -44,7 +44,7 @@ namespace Classware.Areas.Administrator.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
 			
 				var model = new AddTeacherViewModel();
