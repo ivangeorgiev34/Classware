@@ -64,7 +64,7 @@ namespace Classware.Core.Services
 				.Include(r => r.Subject)
 				.Include(r => r.Student)
 				.Include(r=>r.Teacher)
-				.ThenInclude(t=>t.User)
+				.ThenInclude(t=>t!.User)
 				.Where(r => r.IsActive == true && r.Id == id)
 				.FirstOrDefaultAsync();
 
