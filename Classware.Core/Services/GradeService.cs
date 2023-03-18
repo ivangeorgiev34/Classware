@@ -34,7 +34,7 @@ namespace Classware.Core.Services
 		public async Task DeleteGradeByIdAsync(int id)
 		{
 			var grade =await repo.All<Grade>()
-				.Where(g => g.Id == id)
+				.Where(g => g.Id == id && g.IsActive == true)
 				.FirstOrDefaultAsync();
 
 			if (grade == null)
@@ -60,11 +60,11 @@ namespace Classware.Core.Services
 		{
 			var grade =await  repo.All<Grade>()
 				.Include(g=>g.Teacher)
-				.ThenInclude(t=>t.User)
+				.ThenInclude(t=>t!.User)
 				.Include(g=>g.Student)
-				.ThenInclude(s=>s.Class)
+				.ThenInclude(s=>s!.Class)
 				.Include(g => g.Student)
-				.ThenInclude(s=>s.User)
+				.ThenInclude(s=>s!.User)
 				.Include(g => g.Subject)
 				.Where(g => g.IsActive && g.Id == id)
 				.FirstOrDefaultAsync();
