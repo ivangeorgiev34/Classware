@@ -30,7 +30,7 @@ namespace Classware.Core.Services
 
 		public async Task AssignSubjectsAsync(ICollection<int> subjectIds, int studentId)
 		{
-			if (subjectIds == null)
+			if (subjectIds.Count == 0)
 			{
 				throw new NullReferenceException("No subject ids were given");
 			}
