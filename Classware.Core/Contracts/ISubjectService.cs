@@ -12,7 +12,7 @@ namespace Classware.Core.Contracts
 	{
 		Task AddSubjectAsync(Subject subject);
 
-		Task<bool> SubjectExistsByNameAsync(string name);
+        Task<bool> SubjectExistsByNameAsync(string name);
 
 		Task<IEnumerable<Subject>> GetAllSubjectsAsync();
 
