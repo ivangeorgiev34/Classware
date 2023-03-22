@@ -1,4 +1,4 @@
-# Classware ![CommitsBadge](https://img.shields.io/badge/commits-87-blue)
+# Classware ![GitHub last commit](https://img.shields.io/github/last-commit/ivangeorgiev34/Classware?color=success&style=plastic) ![GitHub repo file count](https://img.shields.io/github/directory-file-count/ivangeorgiev34/Classware?color=blue&logo=files)
 Classware is a simple school management system built on ASP.NET MVC that helps teachers and students manage grades, remarks, and compliments for a specific subject, through their accounts, which are made by the admins of the application.
 # Table of contents
 * [Users and Roles](#usersAndRoles)
