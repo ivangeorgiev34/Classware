@@ -37,7 +37,7 @@ namespace Classware.Core.Services
 		public async Task<ICollection<Subject>> GetAllSubjectsByIdsAsync(ICollection<int> subjectIds)
 		{
 			var allSubjects = await repo.All<Subject>()
-				.Where(s => s.IsActive)
+				.Where(s => s.IsActive && subjectIds.Contains(s.Id))
 				.ToListAsync();
 
 			var subjects = new List<Subject>();
