@@ -1,4 +1,5 @@
 using Classware.Extensions;
+using Classware.Hubs;
 using Classware.Infrastructure.Data;
 using Classware.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
@@ -44,6 +45,9 @@ namespace Classware
                 options.LogoutPath = "/home/index";
             });
 
+            builder.Services.AddSignalR();
+
+
 			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -62,6 +66,7 @@ namespace Classware
             app.UseStaticFiles();
 
             app.UseRouting();
+
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -82,6 +87,7 @@ namespace Classware
 
             });
             app.MapRazorPages();
+            app.MapHub<ChatHub>("/chatHub");
 
             app.Run();
         }
