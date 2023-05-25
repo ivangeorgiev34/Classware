@@ -1,0 +1,40 @@
+﻿/*@import url(https://use.fontawesome.com/releases/v5.6.3/css/all.css);*/
+
+.sticky-chat {
+    background-color: rgb( 33, 110, 252);
+    opacity: 0.4;
+    border-radius: 50%;
+    position: fixed;
+    left: 1200px;
+    bottom: 80px;
+    padding: 25px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 110px;
+    text-decoration: none;
+    margin: 0px;
+}
+
+.chat-active-dot {
+    background-color: rgb(13, 212, 29);
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 70px;
+    left: 80px;
+}
+
+.sticky-chat:hover {
+    opacity: 1;
+}
+
+.text-center{
+    width:100%;
+}
+
+.sticky-chat > i {
+    color: white;
+    margin: auto;
+}
