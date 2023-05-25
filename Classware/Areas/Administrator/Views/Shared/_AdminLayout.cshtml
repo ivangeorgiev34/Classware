@@ -30,6 +30,9 @@
 					<a class="nav-link text-dark" title="Manage">Hello @User.Identity?.Name!</a>
 				</li>
 				<li class="nav-item">
+					<a class="nav-link text-dark" title="Manage" asp-controller="Chat" asp-action="AllMessages">Messages</a>
+				</li>
+				<li class="nav-item">
 					<form class="form-inline" asp-area="" asp-controller="Account" asp-action="LogOut" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
 						<button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
 					</form>
