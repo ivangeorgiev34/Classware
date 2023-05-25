@@ -54,7 +54,13 @@ There are three roles in the application, each with their separate area:
 * View profile information
 * Upload or update profile picture
 * Edit his profile information
-* <!-- end of the list -->
+<!-- end of the list -->
+## <a name="chatSystem"></a>Chat system
+### How the chat system works:
+* Messages can be written to all administrators, by users that are not logged in.
+* Messages are not stored they are shown in real-time when an administrator is active and removed when the tab is refreshed or closed.
+* Users submit their full name and email for contact information so that administrators can contact them later via email (contacting the users is done outside the application).
+<!-- end of the list -->
 ## <a name="technologiesAndTools"></a>Technologies and Tools
 - ASP.NET Core MVC 6.0
 - Entity Framework Core 6.0
@@ -62,6 +68,7 @@ There are three roles in the application, each with their separate area:
 - Javascript
 - HTML 5
 - CSS
+- SignalR
 - NUnit
 - Toastr library
 ## <a name="databaseDesign"></a>Database Diagram
