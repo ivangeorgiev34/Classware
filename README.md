@@ -71,5 +71,5 @@ There are three roles in the application, each with their separate area:
 - SignalR
 - NUnit
 - Toastr library
-## <a id="databaseDesign" name="databaseDesign"></a>Database Diagram
+## <a id="databaseDesign" name="databaseDesign">Database Diagram</a>
 ![ClasswareDatabaseDiagram](Images/ClasswareDatabaseDiagram.PNG?raw=true "Database Diagram")
