@@ -5,7 +5,7 @@ Classware is a simple school management system built on ASP.NET MVC that helps t
 * [Roles actions](#rolesActions)
 * [Technologies and Tools](#technologiesAndTools)
 * [Database design](#databaseDesign)
-## <a name="usersAndRoles"></a>Users and roles
+## <a id="usersAndRoles" name="usersAndRoles"></a>Users and roles
 There are three roles in the application, each with their separate area:
 * Admin role has its admin area
 * Teacher role has its teacher area
