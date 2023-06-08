@@ -1,16 +1,17 @@
 # Classware ![GitHub last commit](https://img.shields.io/github/last-commit/ivangeorgiev34/Classware?color=success&style=plastic) ![GitHub repo file count](https://img.shields.io/github/directory-file-count/ivangeorgiev34/Classware?color=informational&logo=files&style=plastic)
 Classware is a simple school management system built on ASP.NET MVC that helps teachers and students manage grades, remarks, and compliments for a specific subject, through their accounts, which are made by the admins of the application.
 # Table of contents
-* [Users and Roles](#usersAndRoles)
-* [Roles actions](#rolesActions)
-* [Technologies and Tools](#technologiesAndTools)
-* [Database design](#databaseDesign)
-## <a id="usersAndRoles" name="usersAndRoles"></a>Users and roles
+* [Users and Roles](#users-and-roles)
+* [Roles actions](#roles-actions)
+* [Chat system](#chat-system)
+* [Technologies and Tools](#technologies-and-tools)
+* [Database design](#database-design)
+## <a id="users-and-roles" name="users-and-roles"></a>Users and roles
 There are three roles in the application, each with their separate area:
 * Admin role has its admin area
 * Teacher role has its teacher area
 * Student role has its student area
-## <a name="rolesActions"></a>Roles actions
+## <a id="roles-actions" name="roles-actions"></a>Roles actions
 ### Admin can do the following actions:
 * Add a class
 * View information about class(see how many students are in the class)
@@ -55,13 +56,13 @@ There are three roles in the application, each with their separate area:
 * Upload or update profile picture
 * Edit his profile information
 <!-- end of the list -->
-## <a name="chatSystem"></a>Chat system
+## <a id="chat-system" name="chat-system"></a>Chat system
 ### How the chat system works:
 * Messages can be written to all administrators, by users that are not logged in.
 * Messages are not stored they are shown in real-time when an administrator is active and removed when the tab is refreshed or closed.
 * Users submit their full name and email for contact information so that administrators can contact them later via email (contacting the users is done outside the application).
 <!-- end of the list -->
-## <a name="technologiesAndTools"></a>Technologies and Tools
+## <a id="technologies-and-tools" name="technologies-and-tools"></a>Technologies and Tools
 - ASP.NET Core MVC 6.0
 - Entity Framework Core 6.0
 - ASP.NET Core 6.0 Bootstrap
@@ -71,5 +72,5 @@ There are three roles in the application, each with their separate area:
 - SignalR
 - NUnit
 - Toastr library
-## <a id="databaseDesign" name="databaseDesign">Database Diagram</a>
+## <a id="database-design" name="database-design">Database Diagram</a>
 ![ClasswareDatabaseDiagram](Images/ClasswareDatabaseDiagram.PNG?raw=true "Database Diagram")
