@@ -65,7 +65,7 @@ There are three roles in the application, each with their separate area:
 ## <a id="technologies-and-tools" name="technologies-and-tools"></a>Technologies and Tools
 - ASP.NET Core MVC 6.0
 - Entity Framework Core 6.0
-- ASP.NET Core 6.0 Bootstrap
+- Bootstrap
 - Javascript
 - HTML 5
 - CSS
