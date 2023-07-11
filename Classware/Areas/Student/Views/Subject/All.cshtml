@@ -1,7 +1,7 @@
 ﻿@using Classware.Areas.Student.Models.Subject;
 @model AllSubjectsViewModel
 
-@if (Model.Subjects.Count>0)
+@if (Model.Subjects.Count > 0)
 {
 	<table class="table table-light table-hover table-striped table-bordered">
 		<thead>
@@ -15,29 +15,36 @@
 			{
 				<tr>
 					<td class="text-center">@subject.Name</td>
-					<td style="display: flex; align-items: center; align-content: center;">
-						@foreach (var grade in subject.Grades)
+					<td class="text-center" style="display: flex; justify-content: center; align-content: center;">
+						@if (subject.Grades.Count > 0)
 						{
-							@if (grade.Grade == 2)
+							@foreach (var grade in subject.Grades)
 							{
-								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:red; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">2</a>
+								@if (grade.Grade == 2)
+								{
+									<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:red; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">2</a>
+								}
+								else if (grade.Grade == 3)
+								{
+									<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:#ff4100; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">3</a>
+								}
+								else if (grade.Grade == 4)
+								{
+									<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:darkorange; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">4</a>
+								}
+								else if (grade.Grade == 5)
+								{
+									<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:dodgerblue; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">5</a>
+								}
+								else if (grade.Grade == 6)
+								{
+									<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:forestgreen; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">6</a>
+								}
 							}
-							else if (grade.Grade == 3)
-							{
-								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:#ff4100; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">3</a>
-							}
-							else if (grade.Grade == 4)
-							{
-								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:darkorange; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">4</a>
-							}
-							else if (grade.Grade == 5)
-							{
-								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:dodgerblue; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">5</a>
-							}
-							else if (grade.Grade == 6)
-							{
-								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:forestgreen; color:white; border:1px solid black" asp-area="Student" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">6</a>
-							}
+						}
+						else
+						{
+							<p class="text-center">No grades yet!</p>
 						}
 					</td>
 				</tr>
