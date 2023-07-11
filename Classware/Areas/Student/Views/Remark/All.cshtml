@@ -1,21 +1,28 @@
 ﻿@using Classware.Areas.Student.Models.Remark;
 @model AllRemarksViewModel
 
-<table class="table table-light table-hover table-striped table-bordered">
-	<thead>
-		<tr>
-			<th scope="col" class="text-center">Title</th>
-			<th scope="col" class="text-center">Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var remark in Model.Remarks)
-		{
+@if(Model.Remarks.Count > 0)
+{
+	<table class="table table-light table-hover table-striped table-bordered">
+		<thead>
 			<tr>
-				<td class="text-center">@remark.Title</td>
-				<td class="text-center">@remark.Description</td>
-				<td class="text-center"><a class="btn btn-secondary" asp-area="Student" asp-controller="Remark" asp-action="RemarkInformation" asp-route-id="@remark.Id">More information</a></td>
+				<th scope="col" class="text-center">Title</th>
+				<th scope="col" class="text-center">Description</th>
 			</tr>
-		}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			@foreach (var remark in Model.Remarks)
+			{
+				<tr>
+					<td class="text-center">@remark.Title</td>
+					<td class="text-center">@remark.Description</td>
+					<td class="text-center"><a class="btn btn-secondary" asp-area="Student" asp-controller="Remark" asp-action="RemarkInformation" asp-route-id="@remark.Id">More information</a></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<h2 class="text-center">You have no remarks!</h2>
+}
