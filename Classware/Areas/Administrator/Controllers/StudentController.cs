@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.DependencyResolver;
 using System.Data;
+using static Classware.Infrastructure.Constants.InfrastructureConstants;
 
 namespace Classware.Areas.Administrator.Controllers
 {
@@ -43,33 +44,33 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpGet]
 		public async Task<IActionResult> All()
 		{
-				List<AllStudentsViewModel> models = new List<AllStudentsViewModel>();
+			List<AllStudentsViewModel> models = new List<AllStudentsViewModel>();
 
-				var students = await studentService.GetAllStudentsAsync();
+			var students = await studentService.GetAllStudentsAsync();
 
-				foreach (var student in students)
-				{
+			foreach (var student in students)
+			{
 				string? image = null;
 				if (student.User.ProfilePicture != null)
 				{
 					image = Convert.ToBase64String(student.User.ProfilePicture);
 				}
 				models.Add(new AllStudentsViewModel()
-					{
-						Id = student.Id,
-						FirstName = student.User.FirstName,
-						MiddleName = student.User.MiddleName,
-						LastName = student.User.LastName,
-						Age = student.User.Age,
-						Gender = student.User.Gender,
-						ProfilePicture = image,
-						Class = student.Class.Name,
-						Username = student.User.UserName
-					});
-				}
+				{
+					Id = student.Id,
+					FirstName = student.User.FirstName,
+					MiddleName = student.User.MiddleName,
+					LastName = student.User.LastName,
+					Age = student.User.Age,
+					Gender = student.User.Gender,
+					ProfilePicture = image,
+					Class = student.Class.Name,
+					Username = student.User.UserName
+				});
+			}
 
-				return View(models);
-			
+			return View(models);
+
 		}
 
 		/// <summary>
@@ -79,89 +80,105 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Add()
 		{
-				var classes = await classService.GetAllClassesAsync();
+			var classes = await classService.GetAllClassesAsync();
 
-				var classViewModels = new List<ClassViewModel>();
+			var classViewModels = new List<ClassViewModel>();
 
-				foreach (var _class in classes)
+			foreach (var _class in classes)
+			{
+				classViewModels.Add(new ClassViewModel()
 				{
-					classViewModels.Add(new ClassViewModel()
-					{
-						Id = _class.Id,
-						Name = _class.Name,
-						IsActive = _class.IsActive
-					});
-				}
+					Id = _class.Id,
+					Name = _class.Name,
+					IsActive = _class.IsActive
+				});
+			}
 
-				var model = new AddStudentViewModel()
-				{
-					Classes = classViewModels
-				};
+			var model = new AddStudentViewModel()
+			{
+				Classes = classViewModels
+			};
 
-				return View(model);
+			return View(model);
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Add(AddStudentViewModel model)
 		{
-				if (!ModelState.IsValid)
+			var classes = await classService.GetAllClassesAsync();
+
+			var classViewModels = new List<ClassViewModel>();
+
+			foreach (var _class in classes)
+			{
+				classViewModels.Add(new ClassViewModel()
 				{
-					return View(model);
-				}
+					Id = _class.Id,
+					Name = _class.Name,
+					IsActive = _class.IsActive
+				});
+			}
 
-				if (await userManager.FindByNameAsync(model.Username) != null)
-				{
-					ModelState.AddModelError("", "Student with such username already exists");
+			model.Classes = classViewModels;
 
-					return View(model);
-				}
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
 
-				if (await userManager.FindByEmailAsync(model.Email) != null)
-				{
-					ModelState.AddModelError("", "Student with such email already exists");
-
-					return View(model);
-				}
-
-				var user = new ApplicationUser()
-				{
-					FirstName = model.FirstName,
-					MiddleName = model.MiddleName,
-					LastName = model.LastName,
-					Age = model.Age,
-					Gender = model.Gender,
-					UserName = model.Username,
-					Email = model.Email
-				};
-
-				var result = await userManager.CreateAsync(user, model.Password);
-
-				if (result.Succeeded)
-				{
-					var userRole = await userManager.FindByEmailAsync(user.Email);
-
-					await userManager.AddToRoleAsync(userRole, "Student");
-
-					var student = new Classware.Infrastructure.Models.Student()
-					{
-						Userid = userRole.Id,
-						ClassId = model.ClassId
-					};
-
-					await studentService.AddStudentAsync(student);
-
-					logger.LogInformation("Student with email:{0} name:{1} {2} {3},who is {4} years of age and a {5} has been added", model.Email, model.FirstName, model.MiddleName, model.LastName, model.Age, model.Gender);
-
-					TempData[UserMessagesConstants.SUCCESS_MESSAGE] = $"Student {model.FirstName} {model.LastName} added successfully";
-
-					return RedirectToAction("Index", "Home", new { area = "Administrator" });
-				}
-				foreach (var error in result.Errors)
-				{
-					ModelState.AddModelError("", error.Description);
-				}
+			if (await userManager.FindByNameAsync(model.Username) != null)
+			{
+				ModelState.AddModelError("", "Student with such username already exists");
 
 				return View(model);
+			}
+
+			if (await userManager.FindByEmailAsync(model.Email) != null)
+			{
+				ModelState.AddModelError("", "Student with such email already exists");
+
+				return View(model);
+			}
+
+			var user = new ApplicationUser()
+			{
+				FirstName = model.FirstName,
+				MiddleName = model.MiddleName,
+				LastName = model.LastName,
+				Age = model.Age,
+				Gender = model.Gender,
+				UserName = model.Username,
+				Email = model.Email
+			};
+
+			var result = await userManager.CreateAsync(user, model.Password);
+
+			if (result.Succeeded)
+			{
+				var userRole = await userManager.FindByEmailAsync(user.Email);
+
+				await userManager.AddToRoleAsync(userRole, "Student");
+
+				var student = new Classware.Infrastructure.Models.Student()
+				{
+					Userid = userRole.Id,
+					ClassId = model.ClassId
+				};
+
+				await studentService.AddStudentAsync(student);
+
+				logger.LogInformation("Student with email:{0} name:{1} {2} {3},who is {4} years of age and a {5} has been added", model.Email, model.FirstName, model.MiddleName, model.LastName, model.Age, model.Gender);
+
+				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = $"Student {model.FirstName} {model.LastName} added successfully";
+
+				return RedirectToAction("Index", "Home", new { area = "Administrator" });
+			}
+			foreach (var error in result.Errors)
+			{
+				ModelState.AddModelError("", error.Description);
+			}
+
+			return View(model);
 		}
 
 		/// <summary>
@@ -174,16 +191,16 @@ namespace Classware.Areas.Administrator.Controllers
 		public async Task<IActionResult> Delete(int id)
 		{
 
-				var student = await studentService.GetStudentByIdAsync(id);
+			var student = await studentService.GetStudentByIdAsync(id);
 
-				await studentService.DeleteStudentByIdAsync(id);
+			await studentService.DeleteStudentByIdAsync(id);
 
-				logger.LogInformation("Student with email:{0} name:{1} {2} {3},who is {4} years of age and a {5} has been added", student.User.Email, student.User.FirstName, student.User.MiddleName, student.User.LastName, student.User.Age, student.User.Gender);
+			logger.LogInformation("Student with email:{0} name:{1} {2} {3},who is {4} years of age and a {5} has been added", student.User.Email, student.User.FirstName, student.User.MiddleName, student.User.LastName, student.User.Age, student.User.Gender);
 
-				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Student deleted successfully";
+			TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Student deleted successfully";
 
-				return RedirectToAction("All", "Student", new { area = "Administrator" });
-			
+			return RedirectToAction("All", "Student", new { area = "Administrator" });
+
 
 		}
 
@@ -196,43 +213,43 @@ namespace Classware.Areas.Administrator.Controllers
 		public async Task<IActionResult> AssignSubjects()
 		{
 
-				var students = await studentService.GetAllStudentsAsync();
+			var students = await studentService.GetAllStudentsAsync();
 
-				var subjects = await subjectService.GetAllSubjectsAsync();
+			var subjects = await subjectService.GetAllSubjectsAsync();
 
-				var studentViewModels = new List<StudentViewModel>();
+			var studentViewModels = new List<StudentViewModel>();
 
-				var subjectViewModels = new List<SubjectViewModel>();
+			var subjectViewModels = new List<SubjectViewModel>();
 
-				foreach (var student in students)
+			foreach (var student in students)
+			{
+				studentViewModels.Add(new StudentViewModel()
 				{
-					studentViewModels.Add(new StudentViewModel()
-					{
-						Id = student.Id,
-						User = student.User,
-						UserId = student.Userid
-					});
-				}
+					Id = student.Id,
+					User = student.User,
+					UserId = student.Userid
+				});
+			}
 
-				foreach (var subject in subjects)
+			foreach (var subject in subjects)
+			{
+				subjectViewModels.Add(new SubjectViewModel()
 				{
-					subjectViewModels.Add(new SubjectViewModel()
-					{
-						Id = subject.Id,
-						Name = subject.Name
-					});
-				}
+					Id = subject.Id,
+					Name = subject.Name
+				});
+			}
 
-				var model = new AssignSubjectsToStudentViewModel()
-				{
-					Subjects = subjectViewModels,
-					Students = studentViewModels
-				};
+			var model = new AssignSubjectsToStudentViewModel()
+			{
+				Subjects = subjectViewModels,
+				Students = studentViewModels
+			};
 
-				return View(model);
-			
-			
-			
+			return View(model);
+
+
+
 		}
 
 		[HttpPost]
