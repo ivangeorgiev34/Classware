@@ -1,21 +1,28 @@
 ﻿@using Classware.Areas.Student.Models.Compliment;
 @model AllComplimentsViewModel
 
-<table class="table table-light table-hover table-striped table-bordered">
-	<thead>
-		<tr>
-			<th scope="col" class="text-center">Title</th>
-			<th scope="col" class="text-center">Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var compliment in Model.Compliments)
-		{
+@if (Model.Compliments.Count > 0)
+{
+	<table class="table table-light table-hover table-striped table-bordered">
+		<thead>
 			<tr>
-				<td class="text-center">@compliment.Title</td>
-				<td class="text-center">@compliment.Description</td>
-				<td class="text-center"><a class="btn btn-secondary" asp-area="Student" asp-controller="Compliment" asp-action="ComplimentInformation" asp-route-id="@compliment.Id">More information</a></td>
+				<th scope="col" class="text-center">Title</th>
+				<th scope="col" class="text-center">Description</th>
 			</tr>
-		}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			@foreach (var compliment in Model.Compliments)
+			{
+				<tr>
+					<td class="text-center">@compliment.Title</td>
+					<td class="text-center">@compliment.Description</td>
+					<td class="text-center"><a class="btn btn-secondary" asp-area="Student" asp-controller="Compliment" asp-action="ComplimentInformation" asp-route-id="@compliment.Id">More information</a></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<h2 class="text-center">You have no compliments!</h2>
+}
