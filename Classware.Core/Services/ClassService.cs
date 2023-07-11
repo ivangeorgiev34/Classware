@@ -71,6 +71,8 @@ namespace Classware.Core.Services
 		{
             IEnumerable<Class> classes =await repo.All<Class>()
                 .Include(c=>c.Students)
+                .ThenInclude(s=>s.StudentSubjects)
+                .ThenInclude(ss=>ss.Subject)
                 .Where(c => c.IsActive)
                 .ToListAsync();
 
