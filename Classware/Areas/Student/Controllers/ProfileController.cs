@@ -92,11 +92,16 @@ namespace Classware.Areas.Student.Controllers
 				{
 					return View(model);
 				}
-				byte[] data = null;
-				using (var ms = new MemoryStream())
+
+				byte[]? data = null;
+
+				if (model.ProfilePicture != null)
 				{
-					await model.ProfilePicture?.CopyToAsync(ms);
-					data = ms.ToArray();
+					using (var ms = new MemoryStream())
+					{
+						await model.ProfilePicture!.CopyToAsync(ms);
+						data = ms.ToArray();
+					}
 				}
 
 				await profileService.EditProfileInformationAsync(User.Id(), data, model.FirstName, model.MiddleName, model.LastName, model.Age, model.Gender);
