@@ -2,7 +2,7 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-let button = document.querySelector("#sendBtn");
+let button = document.querySelector(".sendBtn");
 button.addEventListener("click", function (event) {
 
     event.preventDefault();
@@ -15,6 +15,8 @@ button.addEventListener("click", function (event) {
     connection.invoke("SendMessageToAdmins", fullName, email, title, description).catch(function (error) {
         return console.error(error.toString());
     })
+
+    window.location.href = "https://localhost:7287/";
 
 });
 
