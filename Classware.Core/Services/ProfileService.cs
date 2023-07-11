@@ -34,7 +34,7 @@ namespace Classware.Core.Services
 		/// <param name="gender"></param>
 		/// <returns></returns>
 		/// <exception cref="NullReferenceException"></exception>
-		public async Task EditProfileInformationAsync(string userId, byte[] data, string? firstName, string? middleName, string? lastName, int? age, string? gender)
+		public async Task EditProfileInformationAsync(string userId, byte[]? data, string? firstName, string? middleName, string? lastName, int? age, string? gender)
 		{
 			var user = await userManager.FindByIdAsync(userId);
 

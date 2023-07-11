@@ -10,6 +10,6 @@ namespace Classware.Core.Contracts
 	{
 		Task UploadPictureAsync(byte[] data,string userId);
 
-		Task EditProfileInformationAsync(string userId, byte[] data,string? firstName,string? middleName,string? lastName,int? age, string? gender);
+		Task EditProfileInformationAsync(string userId, byte[]? data,string? firstName,string? middleName,string? lastName,int? age, string? gender);
 	}
 }
