@@ -82,7 +82,7 @@ namespace Classware.Core.Services
 			var grades = await repo.All<Grade>()
 				.Include(g => g.Subject)
 				.Include(g=>g.Student)
-				.Where(g => g.StudentId == studentId && g.Subject!.Name == subjectName)
+				.Where(g => g.StudentId == studentId && g.Subject!.Name == subjectName && g.IsActive == true)
 				.ToListAsync();
 
 			return grades;
