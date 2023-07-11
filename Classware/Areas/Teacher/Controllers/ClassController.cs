@@ -33,6 +33,8 @@ namespace Classware.Areas.Teacher.Controllers
 		public async Task<IActionResult> All()
 		{
 
+			var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
+
 			ICollection<AllClassesViewModel> models = new List<AllClassesViewModel>();
 
 			var classes = await classService.GetAllClassesAsync();
@@ -43,7 +45,8 @@ namespace Classware.Areas.Teacher.Controllers
 				{
 					Id = _class.Id,
 					Name = _class.Name,
-					StudentsCount = _class.Students.Count
+					StudentsCount = _class.Students.Count(s => s.StudentSubjects
+					.Select(ss => ss.Subject.Name).Contains(teacher.Subject.Name))
 				});
 			}
 
