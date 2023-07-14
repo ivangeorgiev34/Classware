@@ -12,15 +12,18 @@ connection.on("RecieveMessage", function (fullName, email, title, description) {
 
     let li = document.createElement("li");
     li.classList.add("messageListItem");
+    li.style.display = "flex";
+    li.style.flexDirection = "column";
+    li.style.alignItems = "center";
 
     let titleHeading = document.createElement("h2");
     titleHeading.textContent = title;
     li.appendChild(titleHeading);
 
     let descriptionParagraph = document.createElement("p");
-    descriptionParagraph.textContent = description;
+    descriptionParagraph.textContent = `Description: ${description}`;
 
-    descriptionParagraph.style.fontSize = "20px";
+    descriptionParagraph.style.fontSize = "22px";
 
     li.appendChild(descriptionParagraph);
 
@@ -28,7 +31,7 @@ connection.on("RecieveMessage", function (fullName, email, title, description) {
     fullNameSpan.textContent = `Full name: ${fullName}`;
 
     fullNameSpan.style.display = "block";
-    fullNameSpan.style.fontSize = "14px";
+    fullNameSpan.style.fontSize = "18px";
     fullNameSpan.style.marginBottom = "10px";
     li.appendChild(fullNameSpan);
 
@@ -37,7 +40,7 @@ connection.on("RecieveMessage", function (fullName, email, title, description) {
     emailSpan.textContent = `Email: ${email}`;
 
     emailSpan.style.display = "block";
-    emailSpan.style.fontSize = "14px";
+    emailSpan.style.fontSize = "18px";
     emailSpan.style.marginBottom = "10px";
 
     li.appendChild(emailSpan);
