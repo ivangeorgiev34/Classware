@@ -1,95 +1,51 @@
 ﻿@using Classware.Areas.Teacher.Models.Profile;
 @model ProfileInformationViewModel
 
-<div>
-	@if (Model.UploadedProfilePicture != null)
+<div class="card">
+	<h3 class="text-center mt-3 mb-3">Profile information</h3>
+	<hr />
+	@if (Model.UploadedProfilePicture == null)
 	{
-		<div class="card">
-			<h3 class="text-center mt-3 ">Profile information</h3>
-			<hr />
-			<div class="mb-4" style="margin:auto">
-				<img src="data:image;base64,@Model.UploadedProfilePicture" style="border-radius:50%;height:150px; width:150px;" />
-			</div>
-			<div class="mb-4" style="margin:auto;">
-				<label asp-for="@Model.FirstName"><b>First Name:</b> @Model.FirstName</label>
-			</div>
-			<div class="mb-4" style="margin:auto;">
-				<label asp-for="@Model.MiddleName"><b>Middle Name:</b> @Model.MiddleName</label>
-			</div>
-			<div class="mb-4" style="margin:auto;">
-				<label asp-for="@Model.LastName"><b>Last Name:</b> @Model.LastName</label>
-			</div>
-			<div class="mb-4" style="margin:auto;">
-				<label asp-for="@Model.LastName"><b>Username:</b> @Model.Username</label>
-			</div>
-			<div class="mb-4" style="margin:auto;">
-				<label asp-for="@Model.LastName"><b>Age:</b> @Model.Age</label>
-			</div>
-			<div class="mb-4" style="margin:auto;">
-				@if (Model.Gender == "Male")
-				{
-					<label asp-for="@Model.LastName"><b>Gender:</b> @Model.Gender 👨</label>
-				}
-				else if (Model.Gender == "Female")
-				{
-					<label asp-for="@Model.LastName"><b>Gender:</b> @Model.Gender 👩</label>
-				}
-				else
-				{
-					<label asp-for="@Model.LastName"><b>Gender:</b> @Model.Gender</label>
-				}
-			</div>
-			<div class="mb-4" style="margin:auto;">
-				<a class="btn btn-warning" asp-area="Teacher" asp-controller="Profile" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-			</div>
+		<div class="mb-4 mt-4" style="margin:auto">
+			<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" style="border-radius:50%;height:150px; width:150px;" />
 		</div>
-
 	}
 	else
 	{
-		<div class="card">
-
-			<form class="mb-4" style="margin:auto;" asp-area="Teacher" asp-controller="Profile" asp-action="Upload" method="post" enctype="multipart/form-data">
-				<div class=" mb-4" style="margin:auto;">
-					<label asp-for="@Model.ProfilePicture" class="control-label"></label>
-					<input type="file" asp-for="@Model.ProfilePicture" />
-				</div>
-				<div class=" mb-4" style="margin:auto;">
-					<button class="btn btn-primary" asp-area="Teacher" asp-controller="Profile" asp-action="Upload">Upload</button>
-				</div>
-			</form>
-			<div class="  mb-4" style="margin:auto;">
-				<label asp-for="@Model.FirstName"><b>First Name:</b> @Model.FirstName</label>
-			</div>
-			<div class=" mb-4" style="margin:auto;">
-				<label asp-for="@Model.MiddleName"><b>Middle Name:</b> @Model.MiddleName</label>
-			</div>
-			<div class=" mb-4" style="margin:auto;">
-				<label asp-for="@Model.LastName"><b>Last Name:</b> @Model.LastName</label>
-			</div>
-			<div class=" mb-4" style="margin:auto;">
-				<label asp-for="@Model.LastName"><b>Username:</b> @Model.Username</label>
-			</div>
-			<div class=" mb-4" style="margin:auto;">
-				<label asp-for="@Model.LastName"><b>Age:</b> @Model.Age</label>
-			</div>
-			<div class=" mb-4" style="margin:auto;">
-				@if (Model.Gender == "Male")
-				{
-					<label asp-for="@Model.LastName"><b>Gender:</b> @Model.Gender 👨</label>
-				}
-				else if (Model.Gender == "Female")
-				{
-					<label asp-for="@Model.LastName"><b>Gender:</b> @Model.Gender 👩</label>
-				}
-				else
-				{
-					<label asp-for="@Model.LastName"><b>Gender:</b> @Model.Gender</label>
-				}
-			</div>
-			<div class=" mb-4" style="margin:auto;">
-				<a class="btn btn-warning" asp-area="Teacher" asp-controller="Profile" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-			</div>
+		<div class="mb-4 mt-4" style="margin:auto">
+			<img src="data:image;base64,@Model.UploadedProfilePicture" style="border-radius:50%;height:150px; width:150px;" />
 		</div>
 	}
+	<div class="  mb-4" style="margin:auto;">
+		<label asp-for="@Model.FirstName"><b>First Name:</b> @Model.FirstName</label>
+	</div>
+	<div class=" mb-4" style="margin:auto;">
+		<label asp-for="@Model.MiddleName"><b>Middle Name:</b> @Model.MiddleName</label>
+	</div>
+	<div class=" mb-4" style="margin:auto;">
+		<label asp-for="@Model.LastName"><b>Last Name:</b> @Model.LastName</label>
+	</div>
+	<div class=" mb-4" style="margin:auto;">
+		<label asp-for="@Model.LastName"><b>Username:</b> @Model.Username</label>
+	</div>
+	<div class=" mb-4" style="margin:auto;">
+		<label asp-for="@Model.LastName"><b>Age:</b> @Model.Age</label>
+	</div>
+	<div class=" mb-4" style="margin:auto;">
+		@if (Model.Gender == "Male")
+		{
+			<label asp-for="@Model.LastName"><b>Gender:</b> @Model.Gender 👨</label>
+		}
+		else if (Model.Gender == "Female")
+		{
+			<label asp-for="@Model.LastName"><b>Gender:</b> @Model.Gender 👩</label>
+		}
+		else
+		{
+			<label asp-for="@Model.LastName"><b>Gender:</b> @Model.Gender</label>
+		}
+	</div>
+	<div class=" mb-4" style="margin:auto;">
+		<a class="btn btn-warning" asp-area="Teacher" asp-controller="Profile" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+	</div>
 </div>
