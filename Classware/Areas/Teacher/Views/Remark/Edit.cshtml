@@ -13,7 +13,7 @@
 			<label asp-for="@Model.Description">Description:</label>
 			<textarea asp-for="@Model.Description" value="@Model.Description" style="height:150px;"></textarea>
 		</div>
-		<div class="row mt-3 " style="margin:auto; width:300px;">
+		<div class="row mt-3 text-center" style="margin:auto; width:300px;">
 			<ul style="list-style-type:none">
 				@foreach (var error in ViewContext.ViewData.ModelState.Values.SelectMany(v => v.Errors))
 				{
