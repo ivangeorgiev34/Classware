@@ -2,10 +2,10 @@
 @model AddGradeViewModel
 
 <form class="row" method="post" asp-area="Teacher" asp-controller="Grade" asp-action="Add">
-	<div class="card ">
+	<div class="card">
 		<h3 class="text-center mt-3">Add a grade</h3>
 		<hr />
-		<div class="row mb-3" style="margin:auto; width:300px;">
+		<div class="row mb-3" style="margin:auto;">
 			<label asp-for="@Model.StudentId" class="form-label">Student:</label>
 			<select asp-for="@Model.StudentId" class="form-control">
 				@foreach (var student in Model.Students)
@@ -14,9 +14,9 @@
 				}
 			</select>
 		</div>
-		<div class ="row mb-3" style="margin:auto; width:300px;">
+		<div class="row mb-3" style="margin:auto; width:300px;">
 			<label asp-for="@Model.Type" class="form-label">Grade:</label>
-			<input asp-for="@Model.Type" value="2"/>
+			<input asp-for="@Model.Type" value="2" />
 		</div>
 		<div style="margin:auto">
 			<ul style="list-style-type:none">
@@ -26,15 +26,15 @@
 						<span class="text-danger">@error.ErrorMessage</span>
 					</li>
 				}
-					<li>
+				<li>
 					<span class="text-danger" asp-validation-for="@Model.StudentId"></span>
-					</li>
+				</li>
 				<li>
 					<span class="text-danger" asp-validation-for="@Model.Type"></span>
 				</li>
 			</ul>
 		</div>
-		<div class="row mb-3" style="margin:auto; width:300px;">
+		<div class="row mb-3" style="margin:auto;">
 			<button class="btn btn-success" asp-area="Teacher" asp-controller="Grade" asp-action="Add">Add</button>
 		</div>
 	</div>
