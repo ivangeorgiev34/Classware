@@ -3,10 +3,10 @@
 
 <form class="row" method="post" asp-area="Teacher" asp-controller="Remark" asp-action="Add">
 	<div class="card">
-		<h3 class="text-center mt-3">Add a remark</h3>
+		<h3 class="text-center mt-3 mb-3">Add a remark</h3>
 		<hr />
 		<div class="row mt-3" style="margin:auto;  width:300px">
-			<label asp-for="@Model.StudentId" class="form-label">Student:</label>
+			<label asp-for="@Model.StudentId">Student:</label>
 			<select asp-for="@Model.StudentId" class="form-control">
 				@foreach (var student in Model.Students)
 				{
