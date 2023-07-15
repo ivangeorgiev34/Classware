@@ -5,13 +5,13 @@
 	<div class="card">
 		<h3 class="text-center mt-3">Log In</h3>
 		<hr />
-		<div class="row mb-2" style=" margin:auto; width:200px;" >
+		<div class="row mb-2" style=" margin:auto; width:200px;">
 			<label asp-for="@Model.Email">Email:</label>
 			<input placeholder="Email..." asp-for="@Model.Email" />
 		</div>
-		<div class=" row mb-2" style="margin:auto; width:200px;">
+		<div class="row mb-2" style="margin:auto; width:200px;">
 			<label asp-for="@Model.Password">Password:</label>
-			<input placeholder="Password..." asp-for="@Model.Password" />
+			<input placeholder="Password..." asp-for="@Model.Password"/>
 		</div>
 		<div class="row mb-2" style="margin:auto;">
 			<ul style="list-style-type:none">
@@ -23,7 +23,7 @@
 				<li><span class="text-danger" asp-validation-for="@Model.Password"></span></li>
 			</ul>
 		</div>
-		<div class="row mb-2" style="margin:auto">
+		<div class="row mb-3" style="margin:auto">
 			<button class="btn btn-primary" asp-action="LogIn" asp-controller="Account">Log In</button>
 		</div>
 	</div>
