@@ -1,12 +1,13 @@
-﻿<div class="text-center">
-	<h2>Hello!</h2>
-	<h3>This is the administration area where you can manage all sorts of things</h3>
-	<hr />
+﻿@using System.Security.Claims;
 
+<div class="text-center">
+	<h2>Hello, @User?.Identity?.Name!</h2>
+	<h3 class="mb-3 mt-2">This is the administration area where you can manage all sorts of things</h3>
+	<hr />
 </div>
 <div class="row row-cols-3 text-center">
 	<div class="card ">
-		<h4 class="mt-2" >Classes</h4>
+		<h4>Classes</h4>
 		<hr />
 		<h6>All the actions you are permited to do:</h6>
 		<div class="mt-2 mb-2">
@@ -15,7 +16,7 @@
 		</div>
 	</div>
 	<div class="card">
-		<h4 class="mt-2">Teachers</h4>
+		<h4>Teachers</h4>
 		<hr />
 		<h6>All the actions you are permited to do:</h6>
 		<div class="mt-2 mb-2">
@@ -25,7 +26,7 @@
 		</div>
 	</div>
 	<div class="card">
-		<h4 class="mt-2">Students</h4>
+		<h4>Students</h4>
 		<hr />
 		<h6>All the actions you are permited to do:</h6>
 		<div class="mt-2 mb-2">
