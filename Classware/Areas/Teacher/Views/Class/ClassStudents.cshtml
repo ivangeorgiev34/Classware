@@ -4,67 +4,77 @@
 }
 @model ClassStudentsViewModel
 
-<table class="table table-light table-hover table-striped table-bordered">
-	<thead>
-		<tr>
-			<th scope="col" class="text-center">Profile picture</th>
-			<th scope="col" class="text-center">First name</th>
-			<th scope="col" class="text-center">Middle name</th>
-			<th scope="col" class="text-center">Last name</th>
-			<th scope="col" class="text-center">Age</th>
-			<th scope="col" class="text-center">Gender</th>
-			<th scope="col" class="text-center">Grades</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var student in Model.Students)
-		{
+@if(Model.Students.Count > 0)
+{
+	<table class="table table-light table-hover table-striped table-bordered">
+		<thead>
 			<tr>
-				@if (student.ProfilePicture == null)
-				{
-					<td>No profile picture</td>
-				}
-				else
-				{
-					<td><img src="data:image;base64,@student.ProfilePicture" style="border-radius:50%;height:150px; width:150px;" /></td>
-				}
-				<td>@student.FirstName</td>
-				<td>@student.MiddleName</td>
-				<td>@student.LastName</td>
-				<td>@student.Age</td>
-				<td>@student.Gender</td>
-				<td>
+				<th scope="col" class="text-center">Profile picture</th>
+				<th scope="col" class="text-center">First name</th>
+				<th scope="col" class="text-center">Middle name</th>
+				<th scope="col" class="text-center">Last name</th>
+				<th scope="col" class="text-center">Age</th>
+				<th scope="col" class="text-center">Gender</th>
+				<th scope="col" class="text-center">Grades</th>
+				<th scope="col" class="text-center">Remarks</th>
+				<th scope="col" class="text-center">Compliments</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var student in Model.Students)
+			{
+				<tr>
+					@if (student.ProfilePicture == null)
+					{
+						<td class="text-center">No profile picture</td>
+					}
+					else
+					{
+						<td class="text-center"><img src="data:image;base64,@student.ProfilePicture" style="border-radius:50%;height:150px; width:150px;" /></td>
+					}
+					<td class="text-center">@student.FirstName</td>
+					<td class="text-center">@student.MiddleName</td>
+					<td class="text-center">@student.LastName</td>
+					<td class="text-center">@student.Age</td>
+					<td class="text-center">@student.Gender</td>
+					<td class="text-center">
 						@foreach (var grade in student.Grades)
 						{
 							@if (grade.Type == 2)
 							{
-								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:red; color:white; border:1px solid black" asp-area="Teacher" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">2</a>
+								<a style="text-align:center; text-decoration:none; display:inline-block; margin:auto; width:25px; height:25px; background-color:red; color:white; border:1px solid black" asp-area="Teacher" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">2</a>
 							}
 							else if (grade.Type == 3)
 							{
-								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:#ff4100; color:white; border:1px solid black" asp-area="Teacher" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">3</a>
+								<a style="text-align:center; text-decoration:none; display:inline-block; margin:auto; width:25px; height:25px; background-color:#ff4100; color:white; border:1px solid black" asp-area="Teacher" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">3</a>
 							}
 							else if (grade.Type == 4)
 							{
-								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:darkorange; color:white; border:1px solid black" asp-area="Teacher" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">4</a>
+								<a style="text-align:center; text-decoration:none; display:inline-block; margin:auto; width:25px; height:25px; background-color:darkorange; color:white; border:1px solid black" asp-area="Teacher" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">4</a>
 							}
 							else if (grade.Type == 5)
 							{
-								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:dodgerblue; color:white; border:1px solid black" asp-area="Teacher" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">5</a>
+								<a style="text-align:center; text-decoration:none; display:inline-block; margin:auto; width:25px; height:25px; background-color:dodgerblue; color:white; border:1px solid black" asp-area="Teacher" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">5</a>
 							}
 							else if (grade.Type == 6)
 							{
-								<a style="text-align:center; display:inline-block; margin:auto; width:25px; height:25px; background-color:forestgreen; color:white; border:1px solid black" asp-area="Teacher" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">6</a>
+								<a style="text-align:center; text-decoration:none; display:inline-block; margin:auto; width:25px; height:25px; background-color:forestgreen; color:white; border:1px solid black" asp-area="Teacher" asp-controller="Grade" asp-action="GradeInformation" asp-route-id="@grade.Id">6</a>
 							}
 						}
-				</td>
-				<td>
-					<a class="btn btn-secondary" asp-area="Teacher" asp-controller="Remark" asp-action="All" asp-route-id="@student.Id">View all remarks</a>
-				</td>
-				<td>
-					<a class="btn btn-secondary" asp-area="Teacher" asp-controller="Compliment" asp-action="All" asp-route-id="@student.Id">View all compliments</a>
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
+					</td>
+					<td class="text-center">
+						<a class="btn btn-secondary" asp-area="Teacher" asp-controller="Remark" asp-action="All" asp-route-id="@student.Id">View all remarks</a>
+					</td>
+					<td class="text-center">
+						<a class="btn btn-secondary" asp-area="Teacher" asp-controller="Compliment" asp-action="All" asp-route-id="@student.Id">View all compliments</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<h2 class="text-center">You don't have students in this class!</h2>
+}
