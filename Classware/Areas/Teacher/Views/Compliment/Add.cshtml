@@ -3,10 +3,10 @@
 
 <form class="row" method="post" asp-area="Teacher" asp-controller="Compliment" asp-action="Add">
 	<div class="card">
-		<h3 class="text-center mt-3">Add a compliment</h3>
+		<h3 class="text-center mt-3 mb-3">Add a compliment</h3>
 		<hr />
-		<div class="row mt-3" style="margin:auto;  width:300px">
-			<label asp-for="@Model.StudentId" class="form-label">Student:</label>
+		<div class="row mt-3" style="margin:auto; width:300px">
+			<label asp-for="@Model.StudentId">Student:</label>
 			<select asp-for="@Model.StudentId" class="form-control">
 				@foreach (var student in Model.Students)
 				{
@@ -27,16 +27,16 @@
 				@foreach (var error in ViewContext.ViewData.ModelState.Values.SelectMany(v => v.Errors))
 				{
 					<li>
-						<span class="text-danger">@error.ErrorMessage</span>
+						<span class="text-danger text-center">@error.ErrorMessage</span>
 					</li>
 				}
-				<li>
+				<li class="text-center">
 					<span class="text-danger" asp-validation-for="@Model.StudentId"></span>
 				</li>
-				<li>
+				<li class="text-center">
 					<span class="text-danger" asp-validation-for="@Model.Title"></span>
 				</li>
-				<li>
+				<li class="text-center">
 					<span class="text-danger" asp-validation-for="@Model.Description"></span>
 				</li>
 			</ul>
