@@ -23,6 +23,7 @@ namespace Classware.Extensions
 			services.AddScoped<IGradeService, GradeService>();
 			services.AddScoped<IRemarkService, RemarkService>();
 			services.AddScoped<IComplimentService, ComplimentService>();
+			services.AddScoped<IMessageService, MessageService>();
 
 			return services;
 		}
