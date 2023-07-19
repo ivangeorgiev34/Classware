@@ -40,5 +40,15 @@ namespace Classware.Infrastructure.Constants
 
 			public const int COMPLIMENT_DESCRIPTION_MAX_LENGTH = 100;
 		}
+
+		public static class Message
+		{
+			public const string MESSAGE_TITLE_REQUIRED_ERROR_MESSAGE = "Title is required!";
+			public const string MESSAGE_FULL_NAME_REQUIRED_ERROR_MESSAGE = "Full name is required!";
+			public const string MESSAGE_DESCRIPTION_REQUIRED_ERROR_MESSAGE = "Description is required!";
+			public const string MESSAGE_EMAIL_REQUIRED_ERROR_MESSAGE = "Email is required!";
+			public const string MESSAGE_EMAIL_INVALID_ERROR_MESSAGE = "Invalid email!";
+			public const string MESSAGE_IS_ANSWERED_REQUIRED_ERROR_MESSAGE = "Is answered is required!";
+		}
 	}
 }
