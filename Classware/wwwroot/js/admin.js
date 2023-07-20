@@ -8,7 +8,20 @@ connection.start().then(function () {
     return console.error(error.toString());
 });
 
-connection.on("RecieveMessage", function (fullName, email, title, description) {
+function onIsAnsweredButtonHandler(e) {
+    let tokens = e.currentTarget.previousElementSibling.textContent.split(": ");
+    connection.invoke("SetMessageToAnswered", Number.parseInt(tokens[tokens.length - 1])).catch(function (error) {
+        return console.error(error.toString());
+    })
+
+    window.location.href = "https://localhost:7287/administrator/Home/Index";
+};
+
+let buttons = Array.from(document.querySelectorAll("button")).forEach(x => {
+    x.addEventListener("click", onIsAnsweredButtonHandler);
+});
+
+connection.on("RecieveMessage", function (fullName, email, title, description, messageId) {
 
     let li = document.createElement("li");
     li.classList.add("messageListItem");
@@ -35,7 +48,6 @@ connection.on("RecieveMessage", function (fullName, email, title, description) {
     fullNameSpan.style.marginBottom = "10px";
     li.appendChild(fullNameSpan);
 
-
     let emailSpan = document.createElement("span");
     emailSpan.textContent = `Email: ${email}`;
 
@@ -45,6 +57,30 @@ connection.on("RecieveMessage", function (fullName, email, title, description) {
 
     li.appendChild(emailSpan);
 
+    let messageIdSpan = document.createElement("span");
+    messageIdSpan.textContent = `Message Id: ${messageId}`;
+
+    messageIdSpan.style.display = "block";
+    messageIdSpan.style.fontSize = "18px";
+    messageIdSpan.style.marginBottom = "10px";
+
+    li.appendChild(messageIdSpan);
+
+    let isAnsweredBtn = document.createElement("button");
+
+    isAnsweredBtn.style.all = "unset";
+    isAnsweredBtn.style.padding = "10px 20px";
+    isAnsweredBtn.style.color = "white";
+    isAnsweredBtn.style.backgroundColor = "green";
+    isAnsweredBtn.style.borderRadius = "10px";
+    isAnsweredBtn.style.marginBottom = "10px";
+    isAnsweredBtn.type = "button";
+    isAnsweredBtn.textContent = "Is Answered"
+
+    isAnsweredBtn.addEventListener("click", onIsAnsweredButtonHandler);
+
+    li.appendChild(isAnsweredBtn);
+
     li.style.border = "1px solid black";
     li.style.listStyleType = "none";
     li.style.marginBottom = "20px";
@@ -53,3 +89,5 @@ connection.on("RecieveMessage", function (fullName, email, title, description) {
 
     document.querySelector(".messagesList").appendChild(li);
 });
+
+
