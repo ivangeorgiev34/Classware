@@ -75,4 +75,4 @@ There are three roles in the application, each with their separate area:
 - NUnit
 - Toastr library
 ## <a id="database-design" name="database-design">Database Diagram</a>
-![ClasswareDatabaseDiagram](Images/ClasswareDatabaseDiagram.PNG?raw=true "Database Diagram")
+![ClasswareDatabaseDiagram](Images/classware-database-diagram.JPG?raw=true "Database Diagram")
