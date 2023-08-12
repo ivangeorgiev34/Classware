@@ -31,18 +31,24 @@ namespace Classware.Areas.Teacher.Controllers
 		public async Task<IActionResult> Add()
 		{
 
-				if (!await teacherService.TeacherHasASubjectAsync(User.Id()))
-				{
-					TempData[UserMessagesConstants.ERROR_MESSAGE] = "You don't have a assigned subject";
+			if (!await teacherService.TeacherHasASubjectAsync(User.Id()))
+			{
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = "You don't have a assigned subject";
 
-					return RedirectToAction("Index", "Home", new { area = "Teacher" });
-				}
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
+			}
 
-				var students = await studentService.GetAllStudentsAsync();
+			var students = await studentService.GetAllStudentsAsync();
 
-				ICollection<StudentViewModel> studentViewModels = new List<StudentViewModel>();
+			ICollection<StudentViewModel> studentViewModels = new List<StudentViewModel>();
 
-				foreach (var student in students)
+			var teacherUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+			var teacher = await teacherService.GetTeacherByUserIdAsync(teacherUserId!);
+
+			foreach (var student in students)
+			{
+				if (student.StudentSubjects.Any(ss => ss.Subject?.Name == teacher.Subject?.Name))
 				{
 					studentViewModels.Add(new StudentViewModel
 					{
@@ -53,13 +59,14 @@ namespace Classware.Areas.Teacher.Controllers
 						ClassId = student.ClassId
 					});
 				}
+			}
 
-				var model = new AddComplimentViewModel()
-				{
-					Students = studentViewModels
-				};
+			var model = new AddComplimentViewModel()
+			{
+				Students = studentViewModels
+			};
 
-				return View(model);
+			return View(model);
 
 		}
 
@@ -84,7 +91,7 @@ namespace Classware.Areas.Teacher.Controllers
 					return RedirectToAction("Index", "Home", new { area = "Teacher" });
 				}
 
-				await complimentService.AddComplimentAsync(student.Id,teacher.Id, teacher.Subject.Id, model.Title, model.Description ?? null);
+				await complimentService.AddComplimentAsync(student.Id, teacher.Id, teacher.Subject.Id, model.Title, model.Description ?? null);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Compliment added successfully";
 
@@ -98,7 +105,7 @@ namespace Classware.Areas.Teacher.Controllers
 			catch (NullReferenceException e)
 			{
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
-				return RedirectToAction("Index","Home",new {area="Teacher"});
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
 		}
 
@@ -149,7 +156,7 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-		
+
 		}
 		/// <summary>
 		/// Sets a given compliment to not active
@@ -203,7 +210,7 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-	
+
 		}
 
 		[HttpPost]
@@ -228,7 +235,7 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-		
+
 		}
-	} 
+	}
 }
