@@ -4,6 +4,7 @@ using Classware.Core.Contracts;
 using Classware.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.Security.Claims;
 using System.Security.Policy;
 
 namespace Classware.Areas.Teacher.Controllers
@@ -114,10 +115,12 @@ namespace Classware.Areas.Teacher.Controllers
 			{
 				var student = await studentService.GetStudentByIdAsync(id);
 
+				var teacherUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
 				ICollection<RemarkViewModel> remarkViewModels = new List<RemarkViewModel>();
 
 				var remarks = student.Remarks
-					.Where(r => r.IsActive == true)
+					.Where(r => r.IsActive == true && r.Teacher.UserId == teacherUserId)
 					.ToList();
 
 				foreach (var remark in remarks)
