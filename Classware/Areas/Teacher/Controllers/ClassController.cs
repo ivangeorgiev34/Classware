@@ -75,7 +75,7 @@ namespace Classware.Areas.Teacher.Controllers
 					ICollection<StudentSubjectGradesViewModel>? studentSubjectGradesViewModels = new List<StudentSubjectGradesViewModel>();
 
 					var grades = student.Grades
-						.Where(s => s.IsActive)
+						.Where(s => s.IsActive && s.Subject?.Name == teacher.Subject?.Name)
 						.ToList();
 
 					foreach (var grade in grades)
