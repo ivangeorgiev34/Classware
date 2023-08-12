@@ -64,7 +64,7 @@ namespace Classware.Areas.Administrator.Controllers
 					Age = student.User.Age,
 					Gender = student.User.Gender,
 					ProfilePicture = image,
-					Class = student.Class.Name,
+					Class = student.Class.IsActive == true ? student.Class.Name : null,
 					Username = student.User.UserName
 				});
 			}
