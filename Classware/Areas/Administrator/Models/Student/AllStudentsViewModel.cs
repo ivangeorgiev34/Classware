@@ -18,7 +18,7 @@
 
         public string? ProfilePicture { get; set; }
 
-        public string Class { get; set; } = null!;
+        public string? Class { get; set; }
 
     }
 }
