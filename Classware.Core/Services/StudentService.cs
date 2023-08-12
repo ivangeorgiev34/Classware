@@ -124,7 +124,7 @@ namespace Classware.Core.Services
 				.Include(s=>s.User)
 				.Include(s => s.StudentSubjects)
 				.ThenInclude(ss => ss.Subject)
-				.Where(s => s.ClassId == classId && s.StudentSubjects.Any(s => s.Subject.Name == subjectName))
+				.Where(s => s.ClassId == classId && s.StudentSubjects.Any(s => s.Subject.Name == subjectName) && s.IsActive == true)
 				.ToListAsync();
 
 			return students;
