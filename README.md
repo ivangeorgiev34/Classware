@@ -59,7 +59,9 @@ There are three roles in the application, each with their separate area:
 ## <a id="chat-system" name="chat-system"></a>Chat system
 ### How the chat system works:
 * Messages can be written to all administrators, by users that are not logged in.
-* Messages are not stored they are shown in real-time when an administrator is active and removed when the tab is refreshed or closed.
+* Messages are stored in a database and all messages that are not answered are displayed when admin accesses the all messages page.
+* When someone sends a message it is saved in the database and added to the all messages page, which is only accessed by admins.
+* A message can be flagged as answered by the admin answering it.
 * Users submit their full name and email for contact information so that administrators can contact them later via email (contacting the users is done outside the application).
 <!-- end of the list -->
 ## <a id="technologies-and-tools" name="technologies-and-tools"></a>Technologies and Tools
@@ -73,4 +75,4 @@ There are three roles in the application, each with their separate area:
 - NUnit
 - Toastr library
 ## <a id="database-design" name="database-design">Database Diagram</a>
-![ClasswareDatabaseDiagram](Images/ClasswareDatabaseDiagram.PNG?raw=true "Database Diagram")
+![ClasswareDatabaseDiagram](Images/classware-database-diagram.JPG?raw=true "Database Diagram")
