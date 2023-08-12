@@ -45,7 +45,7 @@ namespace Classware.Areas.Teacher.Controllers
 				{
 					Id = _class.Id,
 					Name = _class.Name,
-					StudentsCount = _class.Students.Count(s => s.StudentSubjects
+					StudentsCount = _class.Students.Where(s => s.IsActive == true).Count(s => s.StudentSubjects
 					.Select(ss => ss.Subject.Name).Contains(teacher.Subject.Name))
 				});
 			}
