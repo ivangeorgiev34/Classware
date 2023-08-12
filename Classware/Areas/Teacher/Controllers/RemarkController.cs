@@ -17,32 +17,38 @@ namespace Classware.Areas.Teacher.Controllers
 		public RemarkController(ITeacherService _teacherService,
 			IStudentService _studentService,
 			IRemarkService _remarkService)
-        {
-            teacherService = _teacherService;
+		{
+			teacherService = _teacherService;
 			studentService = _studentService;
 			remarkService = _remarkService;
-        }
+		}
 		/// <summary>
 		/// Adds a remark to a given student
 		/// </summary>
 		/// <returns></returns>
 
-        [HttpGet]
+		[HttpGet]
 		public async Task<IActionResult> Add()
 		{
 
-				if (!await teacherService.TeacherHasASubjectAsync(User.Id()))
-				{
-					TempData[UserMessagesConstants.ERROR_MESSAGE] = "You don't have a assigned subject";
+			if (!await teacherService.TeacherHasASubjectAsync(User.Id()))
+			{
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = "You don't have a assigned subject";
 
-					return RedirectToAction("Index", "Home", new { area = "Teacher" });
-				}
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
+			}
 
-				var students = await studentService.GetAllStudentsAsync();
+			var students = await studentService.GetAllStudentsAsync();
 
-				ICollection<StudentViewModel> studentViewModels = new List<StudentViewModel>();
+			ICollection<StudentViewModel> studentViewModels = new List<StudentViewModel>();
 
-				foreach (var student in students)
+			var teacherUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+			var teacher = await teacherService.GetTeacherByUserIdAsync(teacherUserId!);
+
+			foreach (var student in students)
+			{
+				if (student.StudentSubjects.Any(ss => ss.Subject?.Name == teacher.Subject?.Name))
 				{
 					studentViewModels.Add(new StudentViewModel()
 					{
@@ -53,15 +59,16 @@ namespace Classware.Areas.Teacher.Controllers
 						UserId = student.Userid
 					});
 				}
+			}
 
-				var model = new AddRemarkViewModel()
-				{
-					Students = studentViewModels
-				};
+			var model = new AddRemarkViewModel()
+			{
+				Students = studentViewModels
+			};
 
-				return View(model);
+			return View(model);
 
-			
+
 		}
 
 		[HttpPost]
@@ -84,7 +91,7 @@ namespace Classware.Areas.Teacher.Controllers
 					return RedirectToAction("Index", "Home", new { area = "Teacher" });
 				}
 
-				await remarkService.AddRemarkAsync(student.Id,teacher.Id, teacher.Subject.Id, model.Title, model.Description ?? null);
+				await remarkService.AddRemarkAsync(student.Id, teacher.Id, teacher.Subject.Id, model.Title, model.Description ?? null);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Remark added successfully";
 
@@ -151,7 +158,7 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-		
+
 		}
 		/// <summary>
 		/// Sets a given remark to not active
@@ -175,7 +182,7 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-			
+
 		}
 		/// <summary>
 		/// Edits a given remark
@@ -204,21 +211,21 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-	
+
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Edit(EditRemarkViewModel model)
 		{
-				if (!ModelState.IsValid)
-				{
-					return View(model);
-				}
-				await remarkService.EditRemarkByIdAsync(model.Id, model.Title, model.Description ?? null);
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+			await remarkService.EditRemarkByIdAsync(model.Id, model.Title, model.Description ?? null);
 
-				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Remark edited successfully";
+			TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Remark edited successfully";
 
-				return RedirectToAction("Index", "Home", new { area = "Teacher" });
+			return RedirectToAction("Index", "Home", new { area = "Teacher" });
 		}
 	}
 }
