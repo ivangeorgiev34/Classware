@@ -81,8 +81,10 @@ namespace Classware.Core.Services
 		public async Task<Student> GetStudentByIdAsync(int id)
 		{
 			var student = await repo.All<Student>()
-				.Include(s=>s.Remarks)
+				.Include(s => s.Remarks)
+				.ThenInclude(c => c.Teacher)
 				.Include(s => s.Compliments)
+				.ThenInclude(c => c.Teacher)
 				.Include(s => s.User)
 				.Include(s => s.Class)
 				.Include(s => s.StudentSubjects)
@@ -99,13 +101,13 @@ namespace Classware.Core.Services
 		public async Task<Student> GetStudentByUserIdAsync(string id)
 		{
 			var student = await repo.All<Student>()
-				.Include(s=>s.Class)
-				.Include(s=>s.User)
-				.Include(s=>s.Compliments)
+				.Include(s => s.Class)
+				.Include(s => s.User)
+				.Include(s => s.Compliments)
 				.Include(s => s.Grades)
 				.Include(s => s.Remarks)
 				.Include(s => s.StudentSubjects)
-				.ThenInclude(ss=>ss.Subject)
+				.ThenInclude(ss => ss.Subject)
 				.Where(s => s.IsActive == true && s.Userid == id)
 				.FirstOrDefaultAsync();
 
@@ -119,9 +121,9 @@ namespace Classware.Core.Services
 
 		public async Task<IEnumerable<Student>> GetStudentsByClassIdAndSubjectName(int classId, string subjectName)
 		{
-			var students =await repo.All<Student>()
-				.Include(s=>s.Grades)
-				.Include(s=>s.User)
+			var students = await repo.All<Student>()
+				.Include(s => s.Grades)
+				.Include(s => s.User)
 				.Include(s => s.StudentSubjects)
 				.ThenInclude(ss => ss.Subject)
 				.Where(s => s.ClassId == classId && s.StudentSubjects.Any(s => s.Subject.Name == subjectName) && s.IsActive == true)
@@ -130,9 +132,9 @@ namespace Classware.Core.Services
 			return students;
 		}
 
-		public async Task<bool> StudentHasASubjectAsync(Student student,string subjectName)
+		public async Task<bool> StudentHasASubjectAsync(Student student, string subjectName)
 		{
-			if (student.StudentSubjects.Any(s=>s.Subject.Name == subjectName))
+			if (student.StudentSubjects.Any(s => s.Subject.Name == subjectName))
 			{
 				return true;
 			}
