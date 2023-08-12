@@ -9,6 +9,7 @@ using Classware.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Configuration;
+using System.Security.Claims;
 
 namespace Classware.Areas.Teacher.Controllers
 {
@@ -43,19 +44,24 @@ namespace Classware.Areas.Teacher.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Add()
 		{
+			if (!(await teacherService.TeacherHasASubjectAsync(User.Id())))
+			{
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = "You don't have a assigned subject";
 
-				if (!(await teacherService.TeacherHasASubjectAsync(User.Id())))
-				{
-					TempData[UserMessagesConstants.ERROR_MESSAGE] = "You don't have a assigned subject";
+				return RedirectToAction("Index", "Home", new { area = "Teacher" });
+			}
 
-					return RedirectToAction("Index", "Home", new { area = "Teacher" });
-				}
+			var students = await studentService.GetAllStudentsAsync();
 
-				var students = await studentService.GetAllStudentsAsync();
+			ICollection<Models.Grade.StudentViewModel> studentViewModels = new List<Models.Grade.StudentViewModel>();
 
-				ICollection<Models.Grade.StudentViewModel> studentViewModels = new List<Models.Grade.StudentViewModel>();
+			var teacherUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-				foreach (var student in students)
+			var teacher = await teacherService.GetTeacherByUserIdAsync(teacherUserId!);
+
+			foreach (var student in students)
+			{
+				if (student.StudentSubjects.Any(ss => ss.Subject?.Name == teacher.Subject?.Name))
 				{
 					studentViewModels.Add(new Models.Grade.StudentViewModel()
 					{
@@ -66,15 +72,16 @@ namespace Classware.Areas.Teacher.Controllers
 						ClassId = student.ClassId
 					});
 				}
+			}
 
-				var model = new AddGradeViewModel()
-				{
-					Students = studentViewModels
-				};
+			var model = new AddGradeViewModel()
+			{
+				Students = studentViewModels
+			};
 
-				return View(model);
+			return View(model);
 
-			
+
 		}
 
 		[HttpPost]
@@ -99,7 +106,7 @@ namespace Classware.Areas.Teacher.Controllers
 
 				var subject = await subjectService.GetSubjectByNameAsync(teacher.Subject.Name);
 
-				await gradeService.AddGradeAsync(student.Id,teacher.Id, subject.Id, model.Type);
+				await gradeService.AddGradeAsync(student.Id, teacher.Id, subject.Id, model.Type);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Grade added successfully";
 
@@ -154,7 +161,7 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-		
+
 		}
 
 		/// <summary>
@@ -179,7 +186,7 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-			
+
 		}
 
 		/// <summary>
@@ -231,7 +238,7 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-			
+
 		}
 	}
 }
