@@ -4,6 +4,7 @@ using Classware.Core.Contracts;
 using Classware.Core.Services;
 using Classware.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Classware.Areas.Teacher.Controllers
 {
@@ -113,8 +114,10 @@ namespace Classware.Areas.Teacher.Controllers
 			{
 				var student = await studentService.GetStudentByIdAsync(id);
 
+				var teacherUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
 				var compliments = student.Compliments
-					.Where(c => c.IsActive)
+					.Where(c => c.IsActive && c.Teacher.UserId == teacherUserId)
 					.ToList();
 
 				ICollection<ComplimentViewModel> complimentViewModels = new List<ComplimentViewModel>();
