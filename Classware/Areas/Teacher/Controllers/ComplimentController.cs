@@ -119,9 +119,22 @@ namespace Classware.Areas.Teacher.Controllers
 		{
 			try
 			{
+				var teacherUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+				var teacher = await teacherService
+					.GetTeacherByUserIdAsync(teacherUserId!);
+
+				if (await studentService.StudentExistsByUserId(id) == false)
+				{
+					return BadRequest();
+				}
+
 				var student = await studentService.GetStudentByIdAsync(id);
 
-				var teacherUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+				if (await studentService.StudentHasASubjectAsync(student, teacher.Subject.Name) == false)
+				{
+					return BadRequest();
+				}
 
 				var compliments = student.Compliments
 					.Where(c => c.IsActive && c.Teacher.UserId == teacherUserId)
