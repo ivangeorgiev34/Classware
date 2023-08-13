@@ -63,6 +63,11 @@ namespace Classware.Areas.Teacher.Controllers
 		{
 			try
 			{
+				if (await classService.ClassExistsByIdAsync(id) == false)
+				{
+					return StatusCode(StatusCodes.Status400BadRequest);
+				}
+
 				var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
 
 				var students = await studentService.GetStudentsByClassIdAndSubjectName(id, teacher.Subject?.Name ?? "");
