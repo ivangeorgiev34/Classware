@@ -78,6 +78,7 @@ namespace Classware.Areas.Administrator.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Add()
 		{
 			var classes = await classService.GetAllClassesAsync();

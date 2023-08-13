@@ -2,6 +2,7 @@
 @model AddStudentViewModel
 
 <form class="row" method="post" asp-action="Add" asp-controller="Student" asp-area="Administrator">
+	@Html.AntiForgeryToken()
 	<div class="card">
 		<h3 class="mt-4 mb-4" style="text-align:center">Add student</h3>
 		<hr />
