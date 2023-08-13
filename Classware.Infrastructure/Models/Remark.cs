@@ -10,7 +10,7 @@ namespace Classware.Infrastructure.Models
         /// Remark's primary key
         /// </summary>
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Remark's title
@@ -36,21 +36,21 @@ namespace Classware.Infrastructure.Models
         /// Remark's subject
         /// </summary>
 		[ForeignKey(nameof(Subject))]
-		public int SubjectId { get; set; }
+		public Guid SubjectId { get; set; }
 		public Subject? Subject { get; set; }
 
         /// <summary>
         /// Remark to the given student
         /// </summary>
 		[ForeignKey(nameof(Student))]
-		public int StudentId { get; set; }
+		public Guid StudentId { get; set; }
 		public Student? Student { get; set; }
 
 		/// <summary>
 		/// Teacher who wrote the remark
 		/// </summary>
 		[ForeignKey(nameof(Teacher))]
-		public int TeacherId { get; set; }
+		public Guid TeacherId { get; set; }
 		public Teacher? Teacher { get; set; }
 	}
 }

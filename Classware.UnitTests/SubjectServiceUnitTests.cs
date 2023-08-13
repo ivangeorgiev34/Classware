@@ -40,7 +40,7 @@ namespace Classware.UnitTests
 
             var subject = new Subject()
             {
-                Id = 12,
+                Id = new Guid("69887c5d-bf81-4b47-923d-e7f19ca0343a"),
                 Name = "random"
             };
 
@@ -76,9 +76,9 @@ namespace Classware.UnitTests
 
             var result = (await subjectService.GetSubjectByNameAsync(subjectName)).Id;
 
-            var expectedSubjectId = 1;
+            var expectedSubjectId = "e60f5411-9d93-458c-82c6-1e45cc1888a6";
 
-            Assert.That(result, Is.EqualTo(expectedSubjectId));
+            Assert.That(result.ToString(), Is.EqualTo(expectedSubjectId));
         }
 
         [Test]
@@ -96,11 +96,11 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             subjectService = new SubjectService(repo);
 
-            var subjectIds = new List<int>()
+            var subjectIds = new List<string>()
             {
-                1,
-                2
-            };
+				"e60f5411-9d93-458c-82c6-1e45cc1888a6",
+				"18c2ee89-e19a-4c59-ab53-9a572e1840e2"
+			};
 
             var result = (await subjectService.GetAllSubjectsByIdsAsync(subjectIds)).Count();
 

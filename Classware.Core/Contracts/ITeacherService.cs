@@ -14,11 +14,11 @@ namespace Classware.Core.Contracts
 
 		Task<IEnumerable<Teacher>> GetAllTeachersAsync();
 
-		Task<Teacher> GetTeacherByIdAsync(int teacherId);
+		Task<Teacher> GetTeacherByIdAsync(string teacherId);
 
-		Task AssignSubjectToTeacherAsync(int teacherId,int subjectId);
+		Task AssignSubjectToTeacherAsync(string teacherId, string subjectId);
 
-		Task DeleteTeacherByIdAsync(int id);
+		Task DeleteTeacherByIdAsync(string id);
 
 		Task<bool> TeacherHasASubjectAsync(string id);
 

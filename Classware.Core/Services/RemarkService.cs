@@ -18,24 +18,24 @@ namespace Classware.Core.Services
 		{
 			repo = _repo;
 		}
-		public async Task AddRemarkAsync(int studentId, int teacherId, int subjectId, string title, string? description)
+		public async Task AddRemarkAsync(string studentId, string teacherId, string subjectId, string title, string? description)
 		{
 			await repo.AddAsync(new Remark()
 			{
 				Title = title,
 				Description = description,
-				StudentId = studentId,
-				SubjectId = subjectId,
-				TeacherId = teacherId
+				StudentId = new Guid(studentId),
+				SubjectId = new Guid(subjectId),
+				TeacherId = new Guid(teacherId)
 			});
 
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task DeleteRemarkByIdAsync(int id)
+		public async Task DeleteRemarkByIdAsync(string id)
 		{
 			var remark = await repo.All<Remark>()
-				.Where(r => r.Id == id)
+				.Where(r => r.Id == new Guid(id))
 				.FirstOrDefaultAsync();
 
 			if (remark == null)
@@ -48,7 +48,7 @@ namespace Classware.Core.Services
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task EditRemarkByIdAsync(int id, string title, string? description)
+		public async Task EditRemarkByIdAsync(string id, string title, string? description)
 		{
 			var remark = await GetRemarkByIdAsync(id);
 
@@ -58,14 +58,14 @@ namespace Classware.Core.Services
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task<Remark> GetRemarkByIdAsync(int id)
+		public async Task<Remark> GetRemarkByIdAsync(string id)
 		{
 			var remark = await repo.All<Remark>()
 				.Include(r => r.Subject)
 				.Include(r => r.Student)
 				.Include(r=>r.Teacher)
 				.ThenInclude(t=>t!.User)
-				.Where(r => r.IsActive == true && r.Id == id)
+				.Where(r => r.IsActive == true && r.Id == new Guid(id))
 				.FirstOrDefaultAsync();
 
 			if (remark == null)

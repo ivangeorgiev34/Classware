@@ -41,7 +41,7 @@ namespace Classware.UnitTests
 
 			var message = new Message()
 			{
-				Id = 1,
+				Id = new Guid("59087313-acf6-4321-80c1-79561fdb7cce"),
 				Email = "example@abv.bg",
 				Description = "",
 				Title = "",
@@ -65,7 +65,7 @@ namespace Classware.UnitTests
 
 			var message = new Message()
 			{
-				Id = 1,
+				Id = new Guid("c3b94935-1cbc-4d56-9e03-540fafc3ddf6"),
 				Email = "example@abv.bg",
 				Description = "",
 				Title = "",
@@ -77,7 +77,7 @@ namespace Classware.UnitTests
 
 			var allMessages = await messageService.GetAllMessagesAsync();
 
-			await messageService.SetMessageToAnsweredAsync(1);
+			await messageService.SetMessageToAnsweredAsync("c3b94935-1cbc-4d56-9e03-540fafc3ddf6");
 
 			Assert.That(allMessages[0].IsAnswered, Is.True);
 
@@ -92,7 +92,7 @@ namespace Classware.UnitTests
 
 			var message = new Message()
 			{
-				Id = 1,
+				Id = new Guid("5a88df67-33e3-42ae-84df-06e94acd7701"),
 				Email = "example@abv.bg",
 				Description = "",
 				Title = "",
@@ -104,7 +104,7 @@ namespace Classware.UnitTests
 
 			var allMessages = await messageService.GetAllMessagesAsync();
 
-			await messageService.SetMessageToAnsweredAsync(5);
+			await messageService.SetMessageToAnsweredAsync("5a88df67-33e3-42ae-84df-06e94acd7701");
 
 			Assert.That(allMessages[0].IsAnswered, Is.False);
 
@@ -119,7 +119,7 @@ namespace Classware.UnitTests
 
 			var firstMessage = new Message()
 			{
-				Id = 1,
+				Id = new Guid("51aadf89-de5b-4f08-a03f-b15521e4f3d2"),
 				Email = "example1@abv.bg",
 				Description = "1",
 				Title = "1",
@@ -129,7 +129,7 @@ namespace Classware.UnitTests
 
 			var secondMessage = new Message()
 			{
-				Id = 2,
+				Id = new Guid("a07ea973-9eac-48be-b5eb-5bcf2d3787ff"),
 				Email = "example2@abv.bg",
 				Description = "2",
 				Title = "2",
@@ -141,11 +141,13 @@ namespace Classware.UnitTests
 
 			await messageService.AddMessageAsync(secondMessage.FullName, secondMessage.Email, secondMessage.Title, secondMessage.Description);
 
-			await messageService.SetMessageToAnsweredAsync(firstMessage.Id);
+			await messageService.SetMessageToAnsweredAsync(firstMessage.Id.ToString());
 
 			var allMessages = await messageService.GetAllMessagesAsync();
 
-			Assert.That(firstMessage.Id,Is.EqualTo(allMessages.Count));	
+			var expectedCount = 1;
+
+			Assert.That(expectedCount, Is.EqualTo(allMessages.Count));	
 		}
 
 		[TearDown]

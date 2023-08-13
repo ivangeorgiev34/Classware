@@ -29,22 +29,22 @@ namespace Classware.Core.Services
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task AssignSubjectToTeacherAsync(int teacherId,int subjectId)
+		public async Task AssignSubjectToTeacherAsync(string teacherId, string subjectId)
 		{
 			var teacher = await repo.All<Teacher>()
-				.FirstOrDefaultAsync(t => t.IsActive == true && t.Id == teacherId) ?? null;
+				.FirstOrDefaultAsync(t => t.IsActive == true && t.Id == new Guid(teacherId)) ?? null;
 
 			if (teacher == null)
 			{
 				throw new InvalidOperationException("Teacher with such id doesn't exist");
 			}
 
-			teacher.SubjectId = subjectId;
+			teacher.SubjectId = new Guid(subjectId);
 
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task DeleteTeacherByIdAsync(int id)
+		public async Task DeleteTeacherByIdAsync(string id)
 		{
 			var teacher = await GetTeacherByIdAsync(id);
 
@@ -62,12 +62,12 @@ namespace Classware.Core.Services
 				.ToListAsync();
 		}
 
-		public async Task<Teacher> GetTeacherByIdAsync(int teacherId)
+		public async Task<Teacher> GetTeacherByIdAsync(string teacherId)
 		{
 			var teacher = await repo.All<Teacher>()
 				.Include(t=>t.User)
 				.Include(t=>t.Subject)
-				.FirstOrDefaultAsync(t => t.IsActive == true && t.Id == teacherId) ?? null;
+				.FirstOrDefaultAsync(t => t.IsActive == true && t.Id == new Guid(teacherId)) ?? null;
 
 			if (teacher == null)
 			{

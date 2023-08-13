@@ -19,7 +19,7 @@ namespace Classware.Infrastructure.Models
 		/// Subject's primary key
 		/// </summary>
 		[Key]
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 
 		/// <summary>
 		/// Subject's name

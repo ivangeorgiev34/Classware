@@ -15,7 +15,7 @@ namespace Classware.Infrastructure.Models
         /// Grade's primary key
         /// </summary>
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Grade's type
@@ -34,21 +34,21 @@ namespace Classware.Infrastructure.Models
         /// Grade's subject
         /// </summary>
         [ForeignKey(nameof(Subject))]
-        public int SubjectId { get; set; }
+        public Guid SubjectId { get; set; }
         public Subject? Subject { get; set; }
 
         /// <summary>
         /// Grade to the given student
         /// </summary>
 		[ForeignKey(nameof(Student))]
-		public int StudentId { get; set; }
+		public Guid StudentId { get; set; }
 		public Student? Student { get; set; }
 
 		/// <summary>
 		/// Teacher who wrote the grade
 		/// </summary>
 		[ForeignKey(nameof(Teacher))]
-		public int TeacherId { get; set; }
+		public Guid TeacherId { get; set; }
 		public Teacher? Teacher { get; set; }
 
 	}

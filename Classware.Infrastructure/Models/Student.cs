@@ -22,7 +22,7 @@ namespace Classware.Infrastructure.Models
         /// Student's primary key
         /// </summary>
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Is student active
@@ -34,7 +34,7 @@ namespace Classware.Infrastructure.Models
         /// </summary>
         [Required]
         [ForeignKey(nameof(User))]
-        public string Userid { get; set; }
+        public string UserId { get; set; }
         public ApplicationUser User { get; set; } = null!;
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Classware.Infrastructure.Models
         /// </summary>
         [Required]
         [ForeignKey(nameof(Class))]
-        public int ClassId { get; set; }
+        public Guid ClassId { get; set; }
         public Class Class { get; set; } = null!;
 
 		/// <summary>

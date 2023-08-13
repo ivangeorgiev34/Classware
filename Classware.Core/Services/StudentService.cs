@@ -28,7 +28,7 @@ namespace Classware.Core.Services
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task AssignSubjectsAsync(ICollection<int> subjectIds, int studentId)
+		public async Task AssignSubjectsAsync(ICollection<string> subjectIds, string studentId)
 		{
 			if (subjectIds.Count == 0)
 			{
@@ -49,7 +49,7 @@ namespace Classware.Core.Services
 				var studentSubjectPair = new StudentSubject()
 				{
 					SubjectId = subject.Id,
-					StudentId = studentId
+					StudentId = new Guid(studentId)
 				};
 
 				student.StudentSubjects.Add(studentSubjectPair);
@@ -58,7 +58,7 @@ namespace Classware.Core.Services
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task DeleteStudentByIdAsync(int id)
+		public async Task DeleteStudentByIdAsync(string id)
 		{
 			var student = await GetStudentByIdAsync(id);
 
@@ -78,7 +78,7 @@ namespace Classware.Core.Services
 				.ToListAsync();
 		}
 
-		public async Task<Student> GetStudentByIdAsync(int id)
+		public async Task<Student> GetStudentByIdAsync(string id)
 		{
 			var student = await repo.All<Student>()
 				.Include(s => s.Remarks)
@@ -89,7 +89,7 @@ namespace Classware.Core.Services
 				.Include(s => s.Class)
 				.Include(s => s.StudentSubjects)
 				.ThenInclude(ss => ss.Subject)
-				.FirstOrDefaultAsync(s => s.Id == id && s.IsActive == true);
+				.FirstOrDefaultAsync(s => s.Id == new Guid(id) && s.IsActive == true);
 
 			if (student == null)
 			{
@@ -108,7 +108,7 @@ namespace Classware.Core.Services
 				.Include(s => s.Remarks)
 				.Include(s => s.StudentSubjects)
 				.ThenInclude(ss => ss.Subject)
-				.Where(s => s.IsActive == true && s.Userid == id)
+				.Where(s => s.IsActive == true && s.UserId == id)
 				.FirstOrDefaultAsync();
 
 			if (student == null)
@@ -119,14 +119,14 @@ namespace Classware.Core.Services
 			return student;
 		}
 
-		public async Task<IEnumerable<Student>> GetStudentsByClassIdAndSubjectName(int classId, string subjectName)
+		public async Task<IEnumerable<Student>> GetStudentsByClassIdAndSubjectName(string classId, string subjectName)
 		{
 			var students = await repo.All<Student>()
 				.Include(s => s.Grades)
 				.Include(s => s.User)
 				.Include(s => s.StudentSubjects)
 				.ThenInclude(ss => ss.Subject)
-				.Where(s => s.ClassId == classId && s.StudentSubjects.Any(s => s.Subject.Name == subjectName) && s.IsActive == true)
+				.Where(s => s.ClassId == new Guid(classId) && s.StudentSubjects.Any(s => s.Subject.Name == subjectName) && s.IsActive == true)
 				.ToListAsync();
 
 			return students;

@@ -43,10 +43,10 @@ namespace Classware.UnitTests
 
             var student = new Student()
             {
-                Id = 1,
+                Id = new Guid("f088aa44-4591-41ad-9376-259835910394"),
                 Class = new Class()
                 {
-                    Id = 1,
+                    Id = new Guid("5048d92e-5d2e-45f1-96af-a4f450e909b2"),
                     Name = "Test"
                 },
                 User = new ApplicationUser()
@@ -57,7 +57,7 @@ namespace Classware.UnitTests
 
             await studentService.AddStudentAsync(student);
 
-            Assert.That((await repo.All<Student>().FirstOrDefaultAsync(s => s.Id == student.Id))?.Id, Is.EqualTo(1));
+            Assert.That((await repo.All<Student>().FirstOrDefaultAsync(s => s.Id == student.Id))?.Id.ToString(), Is.EqualTo("f088aa44-4591-41ad-9376-259835910394"));
         }
 
         [Test]
@@ -69,10 +69,10 @@ namespace Classware.UnitTests
 
             var student = new Student()
             {
-                Id = 1,
+                Id = new Guid("73849b4c-b002-43a5-b772-685ddadba7d0"),
                 Class = new Class()
                 {
-                    Id = 1,
+                    Id = new Guid("fe0231a3-5258-4da1-aed7-74cbbc45226d"),
                     Name = "Test"
                 },
                 User = new ApplicationUser()
@@ -83,7 +83,7 @@ namespace Classware.UnitTests
 
             await studentService.AddStudentAsync(student);
 
-            Assert.ThrowsAsync<NullReferenceException>(async () => await studentService.AssignSubjectsAsync(new List<int>(), 1));
+            Assert.ThrowsAsync<NullReferenceException>(async () => await studentService.AssignSubjectsAsync(new List<string>(), "73849b4c-b002-43a5-b772-685ddadba7d0"));
         }
 
         [Test]
@@ -95,10 +95,10 @@ namespace Classware.UnitTests
 
             var student = new Student()
             {
-                Id = 1,
+                Id = new Guid("341c201c-8c70-488d-af63-6c27ae81001a"),
                 Class = new Class()
                 {
-                    Id = 1,
+                    Id = new Guid("8c8b2659-77a0-46d1-b7cf-00044bb47900"),
                     Name = "Test"
                 },
                 User = new ApplicationUser()
@@ -109,14 +109,14 @@ namespace Classware.UnitTests
 
             await studentService.AddStudentAsync(student);
 
-            var subjectIds = new List<int>()
+            var subjectIds = new List<string>()
             {
-                1,
-                1,
-                2
-            };
+				"e60f5411-9d93-458c-82c6-1e45cc1888a6",
+				"e60f5411-9d93-458c-82c6-1e45cc1888a6",
+				"18c2ee89-e19a-4c59-ab53-9a572e1840e2"
+			};
 
-            await studentService.AssignSubjectsAsync(subjectIds, student.Id);
+            await studentService.AssignSubjectsAsync(subjectIds, student.Id.ToString());
 
             Assert.That(student.StudentSubjects.Count, Is.EqualTo(2));
         }
@@ -128,23 +128,23 @@ namespace Classware.UnitTests
             subjectService = new SubjectService(repo);
             studentService = new StudentService(repo, subjectService);
 
-            var student = new Student()
-            {
-                Id = 1,
-                Class = new Class()
-                {
-                    Id = 1,
-                    Name = "Test"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
-                },
-            };
+			var student = new Student()
+			{
+				Id = new Guid("341c201c-8c70-488d-af63-6c27ae81001a"),
+				Class = new Class()
+				{
+					Id = new Guid("8c8b2659-77a0-46d1-b7cf-00044bb47900"),
+					Name = "Test"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
+				},
+			};
 
-            await studentService.AddStudentAsync(student);
+			await studentService.AddStudentAsync(student);
 
-            await studentService.DeleteStudentByIdAsync(student.Id);
+            await studentService.DeleteStudentByIdAsync(student.Id.ToString());
 
             var result = (await repo.All<Student>().FirstOrDefaultAsync(s => s.Id == student.Id))?.IsActive;
 
@@ -158,39 +158,39 @@ namespace Classware.UnitTests
             subjectService = new SubjectService(repo);
             studentService = new StudentService(repo, subjectService);
 
-            var student = new Student()
-            {
-                Id = 1,
-                Class = new Class()
-                {
-                    Id = 1,
-                    Name = "Test"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
-                },
-            };
+			var student = new Student()
+			{
+				Id = new Guid("341c201c-8c70-488d-af63-6c27ae81001a"),
+				Class = new Class()
+				{
+					Id = new Guid("8c8b2659-77a0-46d1-b7cf-00044bb47900"),
+					Name = "Test"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
+				},
+			};
 
-            var secondStudent = new Student()
-            {
-                Id = 2,
-                Class = new Class()
-                {
-                    Id = 2,
-                    Name = "Test2"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
-                }
-            };
+			var secondStudent = new Student()
+			{
+				Id = new Guid("4b44b517-e6be-45e8-9007-457ef107f618"),
+				Class = new Class()
+				{
+					Id = new Guid("7f77e923-2603-426e-a4c3-0bf8410859ee"),
+					Name = "Test"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
+				},
+			};
 
-            await studentService.AddStudentAsync(student);
+			await studentService.AddStudentAsync(student);
 
             await studentService.AddStudentAsync(secondStudent);
 
-            await studentService.DeleteStudentByIdAsync(student.Id);
+            await studentService.DeleteStudentByIdAsync(student.Id.ToString());
 
             var result = (await studentService.GetAllStudentsAsync()).Count();
 
@@ -208,10 +208,10 @@ namespace Classware.UnitTests
 
             var student = new Student()
             {
-                Id = 1,
+                Id = new Guid("a2f6f7f1-253a-46bf-b613-a4bada059a2c"),
                 Class = new Class()
                 {
-                    Id = 1,
+                    Id = new Guid("62777727-ed06-458d-8879-b0c41f023402"),
                     Name = "Test"
                 },
                 User = new ApplicationUser()
@@ -222,10 +222,10 @@ namespace Classware.UnitTests
 
             var secondStudent = new Student()
             {
-                Id = 2,
+                Id = new Guid("7553f0e2-4f07-4cbe-a624-58a1f4b1bd49"),
                 Class = new Class()
                 {
-                    Id = 2,
+                    Id = new Guid("5b031d15-2e8d-4e72-b95e-985852486212"),
                     Name = "Test2"
                 },
                 User = new ApplicationUser()
@@ -238,7 +238,7 @@ namespace Classware.UnitTests
 
             await studentService.AddStudentAsync(secondStudent);
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await studentService.GetStudentByIdAsync(0));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await studentService.GetStudentByIdAsync("a07ea973-9eac-48be-b5eb-5bcf2d3787ff"));
         }
 
         [Test]
@@ -248,39 +248,39 @@ namespace Classware.UnitTests
             subjectService = new SubjectService(repo);
             studentService = new StudentService(repo, subjectService);
 
-            var student = new Student()
-            {
-                Id = 1,
-                Class = new Class()
-                {
-                    Id = 1,
-                    Name = "Test"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
-                },
-            };
+			var student = new Student()
+			{
+				Id = new Guid("a2f6f7f1-253a-46bf-b613-a4bada059a2c"),
+				Class = new Class()
+				{
+					Id = new Guid("62777727-ed06-458d-8879-b0c41f023402"),
+					Name = "Test"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
+				},
+			};
 
-            var secondStudent = new Student()
-            {
-                Id = 2,
-                Class = new Class()
-                {
-                    Id = 2,
-                    Name = "Test2"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
-                }
-            };
+			var secondStudent = new Student()
+			{
+				Id = new Guid("7553f0e2-4f07-4cbe-a624-58a1f4b1bd49"),
+				Class = new Class()
+				{
+					Id = new Guid("5b031d15-2e8d-4e72-b95e-985852486212"),
+					Name = "Test2"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
+				}
+			};
 
-            await studentService.AddStudentAsync(student);
+			await studentService.AddStudentAsync(student);
 
             await studentService.AddStudentAsync(secondStudent);
 
-            var result = (await studentService.GetStudentByIdAsync(1)).Class.Name;
+            var result = (await studentService.GetStudentByIdAsync("a2f6f7f1-253a-46bf-b613-a4bada059a2c")).Class.Name;
 
             var expectedClassName = "Test";
 
@@ -294,35 +294,35 @@ namespace Classware.UnitTests
             subjectService = new SubjectService(repo);
             studentService = new StudentService(repo, subjectService);
 
-            var student = new Student()
-            {
-                Id = 1,
-                Class = new Class()
-                {
-                    Id = 1,
-                    Name = "Test"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
-                },
-            };
+			var student = new Student()
+			{
+				Id = new Guid("a2f6f7f1-253a-46bf-b613-a4bada059a2c"),
+				Class = new Class()
+				{
+					Id = new Guid("62777727-ed06-458d-8879-b0c41f023402"),
+					Name = "Test"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
+				},
+			};
 
-            var secondStudent = new Student()
-            {
-                Id = 2,
-                Class = new Class()
-                {
-                    Id = 2,
-                    Name = "Test2"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
-                }
-            };
+			var secondStudent = new Student()
+			{
+				Id = new Guid("7553f0e2-4f07-4cbe-a624-58a1f4b1bd49"),
+				Class = new Class()
+				{
+					Id = new Guid("5b031d15-2e8d-4e72-b95e-985852486212"),
+					Name = "Test2"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
+				}
+			};
 
-            await studentService.AddStudentAsync(student);
+			await studentService.AddStudentAsync(student);
 
             await studentService.AddStudentAsync(secondStudent);
 
@@ -342,39 +342,39 @@ namespace Classware.UnitTests
             subjectService = new SubjectService(repo);
             studentService = new StudentService(repo, subjectService);
 
-            var student = new Student()
-            {
-                Id = 1,
-                Class = new Class()
-                {
-                    Id = 1,
-                    Name = "Test"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
-                },
-            };
+			var student = new Student()
+			{
+				Id = new Guid("a2f6f7f1-253a-46bf-b613-a4bada059a2c"),
+				Class = new Class()
+				{
+					Id = new Guid("62777727-ed06-458d-8879-b0c41f023402"),
+					Name = "Test"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
+				},
+			};
 
-            var secondStudent = new Student()
-            {
-                Id = 2,
-                Class = new Class()
-                {
-                    Id = 2,
-                    Name = "Test2"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
-                }
-            };
+			var secondStudent = new Student()
+			{
+				Id = new Guid("7553f0e2-4f07-4cbe-a624-58a1f4b1bd49"),
+				Class = new Class()
+				{
+					Id = new Guid("5b031d15-2e8d-4e72-b95e-985852486212"),
+					Name = "Test2"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
+				}
+			};
 
-            await studentService.AddStudentAsync(student);
+			await studentService.AddStudentAsync(student);
 
             await studentService.AddStudentAsync(secondStudent);
 
-            Assert.ThrowsAsync<NullReferenceException>(async () => await studentService.GetStudentByUserIdAsync(""));
+            Assert.ThrowsAsync<NullReferenceException>(async () => await studentService.GetStudentByUserIdAsync("2f53b253-d3fe-4888-a87b-bb2a0975ab32"));
         }
 
         [Test]
@@ -386,11 +386,11 @@ namespace Classware.UnitTests
 
             var student = new Student()
             {
-                Id = 1,
-                ClassId = 1,
+                Id = new Guid("1d3a5cc0-458d-4e48-9a97-aa268d0dea4f"),
+                ClassId = new Guid("54f15b35-0649-435c-846e-3a87825b543d"),
                 Class = new Class()
                 {
-                    Id = 1,
+                    Id = new Guid("54f15b35-0649-435c-846e-3a87825b543d"),
                     Name = "Test"
                 },
                 User = new ApplicationUser()
@@ -401,10 +401,10 @@ namespace Classware.UnitTests
 
             var secondStudent = new Student()
             {
-                Id = 2,
+                Id = new Guid("8238a0d9-f0ee-458b-9875-93ff338e0ccd"),
                 Class = new Class()
                 {
-                    Id = 2,
+                    Id = new Guid("42a63f23-5642-41d4-9661-29cf73ce8621"),
                     Name = "Test2"
                 },
                 User = new ApplicationUser()
@@ -417,16 +417,16 @@ namespace Classware.UnitTests
 
             await studentService.AddStudentAsync(secondStudent);
 
-            var subjectIds = new List<int>()
+            var subjectIds = new List<string>()
             {
-                1,
-                2
-            };
+				"6d5ec005-583e-451e-8e7c-79b40b8e3f66",
+				"1f8d202c-a3d9-42e7-bb13-f6f9aefce150"
+			};
 
-            await studentService.AssignSubjectsAsync(subjectIds, 1);
+            await studentService.AssignSubjectsAsync(subjectIds, "1d3a5cc0-458d-4e48-9a97-aa268d0dea4f");
 
             var subjectName= "English language";
-            var classId = 1;
+            var classId = "e5cdff95-6847-43fa-a8f6-e0161df09680";
 
             var result = (await studentService.GetStudentsByClassIdAndSubjectName(classId, subjectName)).Count();
 
@@ -442,47 +442,47 @@ namespace Classware.UnitTests
             subjectService = new SubjectService(repo);
             studentService = new StudentService(repo, subjectService);
 
-            var student = new Student()
-            {
-                Id = 1,
-                ClassId = 1,
-                Class = new Class()
-                {
-                    Id = 1,
-                    Name = "Test"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
-                },
-            };
+			var student = new Student()
+			{
+				Id = new Guid("1d3a5cc0-458d-4e48-9a97-aa268d0dea4f"),
+				ClassId = new Guid("54f15b35-0649-435c-846e-3a87825b543d"),
+				Class = new Class()
+				{
+					Id = new Guid("54f15b35-0649-435c-846e-3a87825b543d"),
+					Name = "Test"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
+				},
+			};
 
-            var secondStudent = new Student()
-            {
-                Id = 2,
-                Class = new Class()
-                {
-                    Id = 2,
-                    Name = "Test2"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
-                }
-            };
+			var secondStudent = new Student()
+			{
+				Id = new Guid("8238a0d9-f0ee-458b-9875-93ff338e0ccd"),
+				Class = new Class()
+				{
+					Id = new Guid("42a63f23-5642-41d4-9661-29cf73ce8621"),
+					Name = "Test2"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
+				}
+			};
 
-            await studentService.AddStudentAsync(student);
+			await studentService.AddStudentAsync(student);
 
             await studentService.AddStudentAsync(secondStudent);
 
-            var subjectIds = new List<int>()
+            var subjectIds = new List<string>()
             {
-                1
-            };
+				"e60f5411-9d93-458c-82c6-1e45cc1888a6"
+			};
 
             var studentId = student.Id;
 
-            await studentService.AssignSubjectsAsync(subjectIds, studentId);
+            await studentService.AssignSubjectsAsync(subjectIds, student.Id.ToString());
 
             var subjectName = "English language";
 
@@ -498,36 +498,36 @@ namespace Classware.UnitTests
             subjectService = new SubjectService(repo);
             studentService = new StudentService(repo, subjectService);
 
-            var student = new Student()
-            {
-                Id = 1,
-                ClassId = 1,
-                Class = new Class()
-                {
-                    Id = 1,
-                    Name = "Test"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
-                },
-            };
+			var student = new Student()
+			{
+				Id = new Guid("1d3a5cc0-458d-4e48-9a97-aa268d0dea4f"),
+				ClassId = new Guid("54f15b35-0649-435c-846e-3a87825b543d"),
+				Class = new Class()
+				{
+					Id = new Guid("54f15b35-0649-435c-846e-3a87825b543d"),
+					Name = "Test"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "ad6668e8-bc9f-4b61-aaf5-4557720604e1"
+				},
+			};
 
-            var secondStudent = new Student()
-            {
-                Id = 2,
-                Class = new Class()
-                {
-                    Id = 2,
-                    Name = "Test2"
-                },
-                User = new ApplicationUser()
-                {
-                    Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
-                }
-            };
+			var secondStudent = new Student()
+			{
+				Id = new Guid("8238a0d9-f0ee-458b-9875-93ff338e0ccd"),
+				Class = new Class()
+				{
+					Id = new Guid("42a63f23-5642-41d4-9661-29cf73ce8621"),
+					Name = "Test2"
+				},
+				User = new ApplicationUser()
+				{
+					Id = "2f53b253-d3fe-4888-a87b-bb2a0975ab38"
+				}
+			};
 
-            await studentService.AddStudentAsync(student);
+			await studentService.AddStudentAsync(student);
 
             await studentService.AddStudentAsync(secondStudent);
 

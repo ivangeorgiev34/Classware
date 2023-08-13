@@ -39,7 +39,7 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             complimentService = new ComplimentService(repo);
 
-            await complimentService.AddComplimentAsync(1, 2, 3, "test", "");
+            await complimentService.AddComplimentAsync("da1fd710-0374-4180-82d0-ef94021be249", "ad5e1c2d-ec25-420b-8d8b-b25edc4e5f70", "632f979c-b14e-4a0b-8691-b075ec374229", "test", "");
 
             Assert.That((await repo.All<Compliment>().Where(c => c.Title == "test").FirstOrDefaultAsync())?.Title, Is.EqualTo("test"));
         }
@@ -50,10 +50,10 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             complimentService = new ComplimentService(repo);
 
-            await complimentService.AddComplimentAsync(1, 2, 3, "test", "");
+            await complimentService.AddComplimentAsync("dc888754-7f2a-4b97-bd44-88af02b14e2e", "c4ea2f98-2636-4117-bbbf-9797bfecfbea", "b41a5b40-b4e7-4a49-a2ee-41761b1b1ccd", "test", "");
 
 
-            Assert.ThrowsAsync<NullReferenceException>(async () => await complimentService.DeleteComplimentByIdAsync(0));
+            Assert.ThrowsAsync<NullReferenceException>(async () => await complimentService.DeleteComplimentByIdAsync("b41a5b40-b4e7-4a49-a2ee-41761b1b1cch"));
         }
 
         [Test]
@@ -62,11 +62,11 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             complimentService = new ComplimentService(repo);
 
-            await complimentService.AddComplimentAsync(1, 2, 3, "test", "");
+            await complimentService.AddComplimentAsync("200ee2eb-03b7-4e11-ad53-cd84baadf4b5", "70479b76-401e-4cd0-9013-628ccd3d2417", "d8f87545-eac7-42e1-bbc9-82caf3d4104e", "test", "");
 
-            await complimentService.DeleteComplimentByIdAsync(1);
+            await complimentService.DeleteComplimentByIdAsync(repo.All<Compliment>().First().Id.ToString());
 
-            Assert.That(repo.All<Compliment>().Where(c => c.Id == 1).FirstOrDefault()?.IsActive, Is.EqualTo(false));
+            Assert.That(repo.All<Compliment>().First()?.IsActive, Is.EqualTo(false));
         }
 
         [Test]
@@ -75,9 +75,9 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             complimentService = new ComplimentService(repo);
 
-            await complimentService.AddComplimentAsync(1, 2, 3, "test", "");
+            await complimentService.AddComplimentAsync("d8f87545-eac7-42e1-bbc9-82caf3d4104e", "7fd79a64-9e2d-45b8-90d6-647f0b848084", "268590f4-98ea-4434-87f6-3f1a6cd375ec", "test", "");
 
-            Assert.ThrowsAsync<NullReferenceException>(async () => await complimentService.EditComplimentByIdAsync(0, "", ""));
+            Assert.ThrowsAsync<NullReferenceException>(async () => await complimentService.EditComplimentByIdAsync("e6d828cc-09ac-484f-8502-a7d0bdd333e6", "", ""));
         }
 
         [Test]
@@ -86,13 +86,15 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             complimentService = new ComplimentService(repo);
 
-            await complimentService.AddComplimentAsync(1, 2, 3, "test", "");
+            await complimentService.AddComplimentAsync("1e0c261f-6fba-419e-931e-d162b811c777", "fc0b617f-ebd9-4377-a134-0cbaf5c032dc", "73c3a142-d2b3-48d8-af6f-64e74f93f761", "test", "");
 
-            await complimentService.EditComplimentByIdAsync(1, "edited title", "edited description");
+            var complimentId =  repo.All<Compliment>().First().Id.ToString();
 
-            Assert.That((await repo.All<Compliment>().Where(c => c.Id == 1).FirstOrDefaultAsync())?.Title, Is.EqualTo("edited title"));
+            await complimentService.EditComplimentByIdAsync(complimentId, "edited title", "edited description");
 
-            Assert.That((await repo.All<Compliment>().Where(c => c.Id == 1).FirstOrDefaultAsync())?.Description, Is.EqualTo("edited description"));
+            Assert.That((await repo.All<Compliment>().Where(c => c.Id == new Guid(complimentId)).FirstOrDefaultAsync())?.Title, Is.EqualTo("edited title"));
+
+            Assert.That((await repo.All<Compliment>().Where(c => c.Id == new Guid(complimentId)).FirstOrDefaultAsync())?.Description, Is.EqualTo("edited description"));
 
             //check if the compliment is active
         }
@@ -103,9 +105,9 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             complimentService = new ComplimentService(repo);
 
-            await complimentService.AddComplimentAsync(1, 2, 3, "test", "");
+            await complimentService.AddComplimentAsync("73c3a142-d2b3-48d8-af6f-64e74f93f761", "8f79d5f8-4cc1-49bb-9b05-29ba59a469c0", "01de3a1b-fe08-4423-93a3-4f559fcb8161", "test", "");
 
-            Assert.ThrowsAsync<NullReferenceException>(async () => await complimentService.GetComplimentByIdAsync(1));
+            Assert.ThrowsAsync<NullReferenceException>(async () => await complimentService.GetComplimentByIdAsync("609bf89b-a1ac-4a86-b1b9-7810bd1bc884"));
         }
 
         [Test]
@@ -116,7 +118,7 @@ namespace Classware.UnitTests
 
             var student = new Student()
             {
-                Id = 1,
+                Id = new Guid("7943a892-769d-4670-bf21-256e2e32c731"),
                 User = new ApplicationUser()
                 {
                     Id = "f2eb23b1-adad-4225-b50f-e5c4cc309146"
@@ -125,7 +127,7 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 2,
+                Id = new Guid("d2951c03-4a5a-49ad-8641-a37791cca18e"),
                 User = new ApplicationUser()
                 {
                     Id = "fa57882a-1a8d-495c-9b48-07943b983dac"
@@ -135,9 +137,11 @@ namespace Classware.UnitTests
 
             await repo.AddAsync(teacher);
 
-            await complimentService.AddComplimentAsync(1, 2, 3, "test", "");
+            await complimentService.AddComplimentAsync("7943a892-769d-4670-bf21-256e2e32c731", "d2951c03-4a5a-49ad-8641-a37791cca18e", "e60f5411-9d93-458c-82c6-1e45cc1888a6", "test", "");
 
-            Assert.That((await complimentService.GetComplimentByIdAsync(1)).Title, Is.EqualTo
+            var complimentId = repo.All<Compliment>().First().Id.ToString();
+
+            Assert.That((await complimentService.GetComplimentByIdAsync(complimentId)).Title, Is.EqualTo
                 ("test"));
         }
 

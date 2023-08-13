@@ -9,12 +9,12 @@ namespace Classware.Core.Contracts
 {
 	public interface IComplimentService
 	{
-		Task AddComplimentAsync(int studentId,int teacherId, int subjectId, string title, string? description);
+		Task AddComplimentAsync(string studentId, string teacherId, string subjectId, string title, string? description);
 
-		Task DeleteComplimentByIdAsync(int id);
+		Task DeleteComplimentByIdAsync(string id);
 
-		Task<Compliment> GetComplimentByIdAsync(int id);
+		Task<Compliment> GetComplimentByIdAsync(string id);
 
-		Task EditComplimentByIdAsync(int id, string title, string? description);
+		Task EditComplimentByIdAsync(string id, string title, string? description);
 	}
 }

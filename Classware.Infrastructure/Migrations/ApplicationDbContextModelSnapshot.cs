@@ -110,11 +110,9 @@ namespace Classware.Infrastructure.Migrations
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Class", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -131,11 +129,9 @@ namespace Classware.Infrastructure.Migrations
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Compliment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasMaxLength(100)
@@ -144,14 +140,14 @@ namespace Classware.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -171,23 +167,21 @@ namespace Classware.Infrastructure.Migrations
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Grade", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -205,11 +199,9 @@ namespace Classware.Infrastructure.Migrations
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Message", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -242,11 +234,9 @@ namespace Classware.Infrastructure.Migrations
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Remark", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasMaxLength(100)
@@ -255,14 +245,14 @@ namespace Classware.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -282,19 +272,17 @@ namespace Classware.Infrastructure.Migrations
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Student", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Userid")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -302,18 +290,18 @@ namespace Classware.Infrastructure.Migrations
 
                     b.HasIndex("ClassId");
 
-                    b.HasIndex("Userid");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Classware.Infrastructure.Models.StudentSubject", b =>
                 {
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("SubjectId", "StudentId");
 
@@ -324,11 +312,9 @@ namespace Classware.Infrastructure.Migrations
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Subject", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -345,67 +331,67 @@ namespace Classware.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("e60f5411-9d93-458c-82c6-1e45cc1888a6"),
                             IsActive = true,
                             Name = "English language"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("18c2ee89-e19a-4c59-ab53-9a572e1840e2"),
                             IsActive = true,
                             Name = "Bulgarian language"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("9ecfb09c-eb90-4827-9e30-c3798db87f20"),
                             IsActive = true,
                             Name = "Mathematics"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = new Guid("7d1cf7b9-a923-47e0-9d6a-c1b2dc5ce07a"),
                             IsActive = true,
                             Name = "Physical education"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = new Guid("72e19517-3d0f-4839-a5cd-41bb74d25056"),
                             IsActive = true,
                             Name = "Information technologies"
                         },
                         new
                         {
-                            Id = 6,
+                            Id = new Guid("40c0ffef-7986-4cbe-8fec-2e3f4578df36"),
                             IsActive = true,
                             Name = "Informatics"
                         },
                         new
                         {
-                            Id = 7,
+                            Id = new Guid("4933f0ba-4123-49f6-b1b0-2507a8924121"),
                             IsActive = true,
                             Name = "Geography"
                         },
                         new
                         {
-                            Id = 8,
+                            Id = new Guid("19e7b987-e9b8-4701-aad8-6f813d8f2885"),
                             IsActive = true,
                             Name = "History"
                         },
                         new
                         {
-                            Id = 9,
+                            Id = new Guid("d340c7d9-b6c4-46d0-acfa-d66327e78d6f"),
                             IsActive = true,
                             Name = "Physics"
                         },
                         new
                         {
-                            Id = 10,
+                            Id = new Guid("99726581-f158-4168-baf9-dd9c1e52be9c"),
                             IsActive = true,
                             Name = "Biology"
                         },
                         new
                         {
-                            Id = 11,
+                            Id = new Guid("0d0e04ac-0f9c-41f3-918a-00bbe3865846"),
                             IsActive = true,
                             Name = "Chemistry"
                         });
@@ -413,17 +399,15 @@ namespace Classware.Infrastructure.Migrations
 
             modelBuilder.Entity("Classware.Infrastructure.Models.Teacher", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -675,7 +659,7 @@ namespace Classware.Infrastructure.Migrations
 
                     b.HasOne("Classware.Infrastructure.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("Userid")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

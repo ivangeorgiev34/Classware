@@ -18,10 +18,11 @@ namespace Classware.Core.Services
 			this.repo = _repo;
 		}
 
-		public async Task<int> AddMessageAsync(string fullName, string email, string title, string description)
+		public async Task<string> AddMessageAsync(string fullName, string email, string title, string description)
 		{
 			var message = new Message()
 			{
+				//chekc if id should be included as guid explicitly
 				Email = email,
 				FullName = fullName,
 				Description = description,
@@ -33,7 +34,7 @@ namespace Classware.Core.Services
 
 			await repo.SaveChangesAsync();
 
-			return message.Id;
+			return message.Id.ToString();
 		}
 
 		public async Task<List<Message>> GetAllMessagesAsync()
@@ -43,10 +44,10 @@ namespace Classware.Core.Services
 				.ToListAsync();
 		}
 
-		public async Task SetMessageToAnsweredAsync(int messageId)
+		public async Task SetMessageToAnsweredAsync(string messageId)
 		{
 			var message = await repo.All<Message>()
-				.FirstOrDefaultAsync(m => m.Id == messageId);
+				.FirstOrDefaultAsync(m => m.Id == new Guid(messageId));
 
 			if (message != null)
 			{

@@ -10,11 +10,11 @@ namespace Classware.Infrastructure.Models
 	public class StudentSubject
 	{
 		[ForeignKey(nameof(Student))]
-        public int StudentId { get; set; }
+        public Guid StudentId { get; set; }
         public Student? Student { get; set; }
 
 		[ForeignKey(nameof(Subject))]
-		public int SubjectId { get; set; }
+		public Guid SubjectId { get; set; }
 		public Subject? Subject { get; set; }
 
 	}

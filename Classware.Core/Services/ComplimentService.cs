@@ -18,24 +18,24 @@ namespace Classware.Core.Services
         {
 			repo = _repo;
         }
-        public async Task AddComplimentAsync(int studentId, int teacherId, int subjectId, string title, string? description)
+        public async Task AddComplimentAsync(string studentId, string teacherId, string subjectId, string title, string? description)
 		{
 			await repo.AddAsync(new Compliment()
 			{
 				Title = title,
 				Description = description,
-				StudentId = studentId,
-				SubjectId = subjectId,
-				TeacherId = teacherId
+				StudentId = new Guid(studentId),
+				SubjectId = new Guid(subjectId),
+				TeacherId = new Guid(teacherId)
 			});
 
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task DeleteComplimentByIdAsync(int id)
+		public async Task DeleteComplimentByIdAsync(string id)
 		{
 			var compliment =await repo.All<Compliment>()
-				.Where(c=>c.Id == id)
+				.Where(c=>c.Id == new Guid(id))
 				.FirstOrDefaultAsync();
 
 			if (compliment == null)
@@ -48,10 +48,10 @@ namespace Classware.Core.Services
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task EditComplimentByIdAsync(int id, string title, string? description)
+		public async Task EditComplimentByIdAsync(string id, string title, string? description)
 		{
 			var compliment = await repo.All<Compliment>()
-				.Where(c => c.IsActive == true && c.Id == id)
+				.Where(c => c.IsActive == true && c.Id == new Guid(id))
 				.FirstOrDefaultAsync();
 
 			if (compliment == null)
@@ -65,7 +65,7 @@ namespace Classware.Core.Services
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task<Compliment> GetComplimentByIdAsync(int id)
+		public async Task<Compliment> GetComplimentByIdAsync(string id)
 		{
 			var compliment = await repo.All<Compliment>()
 				.Include(c => c.Teacher)
@@ -73,7 +73,7 @@ namespace Classware.Core.Services
 				.Include(c => c.Subject)
 				.Include(c => c.Student)
 				.ThenInclude(s => s!.User)
-				.Where(c => c.IsActive == true && c.Id == id)
+				.Where(c => c.IsActive == true && c.Id == new Guid(id))
 				.FirstOrDefaultAsync();
 
 			if (compliment == null)

@@ -12,7 +12,7 @@ namespace Classware.Infrastructure.Models
 	public class Message
 	{
 		[Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = InfrastructureConstants.Message.MESSAGE_TITLE_REQUIRED_ERROR_MESSAGE)]
 		public string Title { get; set; } = null!;

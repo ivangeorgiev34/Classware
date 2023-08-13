@@ -52,7 +52,7 @@ namespace Classware.Core.Services
         /// <param name="id"></param>
         /// <returns></returns>
 
-		public async Task DeleteClassByIdAsync(int id)
+		public async Task DeleteClassByIdAsync(string id)
 		{
             var _class = await GetClassByIdAsync(id);
 
@@ -98,10 +98,10 @@ namespace Classware.Core.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public async Task<Class> GetClassByIdAsync(int id)
+		public async Task<Class> GetClassByIdAsync(string id)
 		{
             var _class =await repo.All<Class>()
-                .FirstOrDefaultAsync(c => c.IsActive && c.Id == id);
+                .FirstOrDefaultAsync(c => c.IsActive && c.Id == new Guid(id));
 
             if (_class == null)
             {

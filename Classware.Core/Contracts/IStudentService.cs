@@ -13,13 +13,13 @@ namespace Classware.Core.Contracts
 
 		Task<IEnumerable<Student>> GetAllStudentsAsync();
 
-		Task DeleteStudentByIdAsync(int id);
+		Task DeleteStudentByIdAsync(string id);
 
-		Task<Student> GetStudentByIdAsync(int id);
+		Task<Student> GetStudentByIdAsync(string id);
 
-		Task AssignSubjectsAsync(ICollection<int> subjectIds,int studentId);
+		Task AssignSubjectsAsync(ICollection<string> subjectIds,string studentId);
 
-		Task<IEnumerable<Student>> GetStudentsByClassIdAndSubjectName(int classId,string subjectName);
+		Task<IEnumerable<Student>> GetStudentsByClassIdAndSubjectName(string classId,string subjectName);
 
 		Task<bool> StudentHasASubjectAsync(Student student,string subjectName);
 

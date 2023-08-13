@@ -42,7 +42,7 @@ namespace Classware.UnitTests
 
             var _class = new Class()
             {
-                Id = 1,
+                Id = new Guid("cb9f8e37-0aa0-4578-96ee-e3ad6027df77"),
                 Name = "Test"
             };
 
@@ -60,7 +60,7 @@ namespace Classware.UnitTests
 
             var _class = new Class()
             {
-                Id = 1,
+                Id = new Guid("a91ea3eb-5e58-442e-bee6-2bf9afa7e36d"),
                 Name = "Test"
             };
 
@@ -80,7 +80,7 @@ namespace Classware.UnitTests
 
             var _class = new Class()
             {
-                Id = 1,
+                Id = new Guid("30d37823-9ae8-4276-ae91-5930a6ca908b"),
                 Name = "Test"
             };
 
@@ -100,13 +100,13 @@ namespace Classware.UnitTests
 
             var _class = new Class()
             {
-                Id = 1,
+                Id = new Guid("f691832a-855b-485c-a9ad-7a250c83a613"),
                 Name = "Test"
             };
 
             var _class2 = new Class()
             {
-                Id = 2,
+                Id = new Guid("75957fef-59c5-4829-a12f-2025ec956a0e"),
                 Name = "Test"
             };
 
@@ -114,7 +114,7 @@ namespace Classware.UnitTests
 
             await classService.AddClassAsync(_class2);
 
-            await classService.DeleteClassByIdAsync(_class.Id);
+            await classService.DeleteClassByIdAsync(_class.Id.ToString());
 
             var result = await classService.GetAllClassesAsync();
 
@@ -131,13 +131,13 @@ namespace Classware.UnitTests
 
             var _class = new Class()
             {
-                Id = 1,
+                Id = new Guid("7e8c7114-1173-4e72-847c-23fb425ce26f"),
                 Name = "Test"
             };
 
             var _class2 = new Class()
             {
-                Id = 2,
+                Id = new Guid("7990cb0d-fd2a-4627-ac35-8136f1385ae4"),
                 Name = "Test2"
             };
 
@@ -145,7 +145,7 @@ namespace Classware.UnitTests
 
             await classService.AddClassAsync(_class2);
 
-            await classService.DeleteClassByIdAsync(_class.Id);
+            await classService.DeleteClassByIdAsync(_class.Id.ToString());
 
             var result = await classService.GetAllClassNamesAsync();
 
@@ -161,13 +161,13 @@ namespace Classware.UnitTests
 
             var _class = new Class()
             {
-                Id = 1,
+                Id = new Guid("fea5848e-7b72-44d9-92b6-516ca0cb83c3"),
                 Name = "Test"
             };
 
             var _class2 = new Class()
             {
-                Id = 2,
+                Id = new Guid("6c630d1a-7a0f-431e-81a7-4a7c4e71f9eb"),
                 Name = "Test2"
             };
 
@@ -175,9 +175,9 @@ namespace Classware.UnitTests
 
             await classService.AddClassAsync(_class2);
 
-            await classService.DeleteClassByIdAsync(_class.Id);
+            await classService.DeleteClassByIdAsync(_class.Id.ToString());
 
-            var result = await classService.GetClassByIdAsync(_class.Id);
+            var result = await classService.GetClassByIdAsync(_class.Id.ToString());
 
             Assert.IsNull(result);
         }
@@ -191,13 +191,13 @@ namespace Classware.UnitTests
 
             var _class = new Class()
             {
-                Id = 1,
+                Id = new Guid("f4050641-d83b-42d8-b442-92508b2a256c"),
                 Name = "Test"
             };
 
             var _class2 = new Class()
             {
-                Id = 2,
+                Id = new Guid("fb9bbd9e-41d1-4e71-b3c5-f59ba5cf4b04"),
                 Name = "Test2"
             };
 
@@ -205,7 +205,7 @@ namespace Classware.UnitTests
 
             await classService.AddClassAsync(_class2);
 
-            var result = await classService.GetClassByIdAsync(_class.Id);
+            var result = await classService.GetClassByIdAsync(_class.Id.ToString());
 
             Assert.That(_class,Is.SameAs(result));
         }

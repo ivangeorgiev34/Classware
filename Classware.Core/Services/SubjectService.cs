@@ -34,10 +34,10 @@ namespace Classware.Core.Services
 				.ToListAsync();
 		}
 
-		public async Task<ICollection<Subject>> GetAllSubjectsByIdsAsync(ICollection<int> subjectIds)
+		public async Task<ICollection<Subject>> GetAllSubjectsByIdsAsync(ICollection<string> subjectIds)
 		{
 			var allSubjects = await repo.All<Subject>()
-				.Where(s => s.IsActive && subjectIds.Contains(s.Id))
+				.Where(s => s.IsActive && subjectIds.Contains(s.Id.ToString()))
 				.ToListAsync();
 
 			var subjects = new List<Subject>();
@@ -46,7 +46,7 @@ namespace Classware.Core.Services
 			{
 				foreach (var subject in allSubjects)
 				{
-					if (subject.Id == id)
+					if (subject.Id == new Guid(id))
 					{
 						subjects.Add(subject);
 

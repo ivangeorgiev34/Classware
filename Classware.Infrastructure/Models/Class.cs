@@ -18,7 +18,7 @@ namespace Classware.Infrastructure.Models
         /// Class' primary key
         /// </summary>
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Class' name 

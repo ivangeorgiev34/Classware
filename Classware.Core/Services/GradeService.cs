@@ -18,23 +18,23 @@ namespace Classware.Core.Services
         {
             repo  = _repo;
         }
-        public async Task AddGradeAsync(int studentId, int teacherId, int subjectId,int grade)
+        public async Task AddGradeAsync(string studentId, string teacherId, string subjectId,int grade)
 		{
 			await repo.AddAsync(new Grade()
 			{
 				Type = grade,
-				StudentId = studentId,
-				SubjectId = subjectId,
-				TeacherId = teacherId
+				StudentId = new Guid(studentId),
+				SubjectId = new Guid(subjectId),
+				TeacherId = new Guid(teacherId)
 			});
 
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task DeleteGradeByIdAsync(int id)
+		public async Task DeleteGradeByIdAsync(string id)
 		{
 			var grade =await repo.All<Grade>()
-				.Where(g => g.Id == id && g.IsActive == true)
+				.Where(g => g.Id == new Guid(id) && g.IsActive == true)
 				.FirstOrDefaultAsync();
 
 			if (grade == null)
@@ -47,7 +47,7 @@ namespace Classware.Core.Services
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task EditGradeByIdAsync(int id, int gradeNumber)
+		public async Task EditGradeByIdAsync(string id, int gradeNumber)
 		{
 			var grade = await GetGradeByIdAsync(id);
 
@@ -56,7 +56,7 @@ namespace Classware.Core.Services
 			await repo.SaveChangesAsync();
 		}
 
-		public async Task<Grade> GetGradeByIdAsync(int id)
+		public async Task<Grade> GetGradeByIdAsync(string id)
 		{
 			var grade =await  repo.All<Grade>()
 				.Include(g=>g.Teacher)
@@ -66,7 +66,7 @@ namespace Classware.Core.Services
 				.Include(g => g.Student)
 				.ThenInclude(s=>s!.User)
 				.Include(g => g.Subject)
-				.Where(g => g.IsActive && g.Id == id)
+				.Where(g => g.IsActive && g.Id == new Guid(id))
 				.FirstOrDefaultAsync();
 
 			if (grade == null)
@@ -77,12 +77,12 @@ namespace Classware.Core.Services
 			return grade;
 		}
 
-		public async Task<ICollection<Grade>> GetGradesByStudentIdAndSubjectName(int studentId, string subjectName)
+		public async Task<ICollection<Grade>> GetGradesByStudentIdAndSubjectName(string studentId, string subjectName)
 		{
 			var grades = await repo.All<Grade>()
 				.Include(g => g.Subject)
 				.Include(g=>g.Student)
-				.Where(g => g.StudentId == studentId && g.Subject!.Name == subjectName && g.IsActive == true)
+				.Where(g => g.StudentId == new Guid(studentId) && g.Subject!.Name == subjectName && g.IsActive == true)
 				.ToListAsync();
 
 			return grades;

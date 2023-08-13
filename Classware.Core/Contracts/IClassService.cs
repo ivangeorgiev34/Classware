@@ -14,8 +14,8 @@ namespace Classware.Core.Contracts
 
 		Task<IEnumerable<string>> GetAllClassNamesAsync();
 
-		Task<Class> GetClassByIdAsync(int id);
+		Task<Class> GetClassByIdAsync(string id);
 
-		Task DeleteClassByIdAsync(int id);
+		Task DeleteClassByIdAsync(string id);
 	}
 }

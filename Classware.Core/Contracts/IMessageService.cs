@@ -9,10 +9,10 @@ namespace Classware.Core.Contracts
 {
 	public interface IMessageService
 	{
-		Task<int> AddMessageAsync(string fullName, string email, string title, string description);
+		Task<string> AddMessageAsync(string fullName, string email, string title, string description);
 
 		Task<List<Message>> GetAllMessagesAsync();
 
-		Task SetMessageToAnsweredAsync(int messageId);
+		Task SetMessageToAnsweredAsync(string messageId);
 	}
 }

@@ -70,7 +70,7 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("7f77e923-2603-426e-a4c3-0bf8410859ee"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e"
             };
 
@@ -120,21 +120,21 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("7f77e923-2603-426e-a4c3-0bf8410859ee"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e"
             };
 
             var teacherId = teacher.Id;
 
-            var subjectId = 1;
+            var subjectId = "e60f5411-9d93-458c-82c6-1e45cc1888a6";
 
             await teacherService.AddTeacher(teacher);
 
-            await teacherService.AssignSubjectToTeacherAsync(teacherId, subjectId);
+            await teacherService.AssignSubjectToTeacherAsync(teacherId.ToString(), subjectId.ToString());
 
             var result = (await repo.All<Teacher>().FirstOrDefaultAsync(t => t.Id == teacherId))?.SubjectId;
 
-            Assert.That(result, Is.EqualTo(subjectId));
+            Assert.That(result.ToString(), Is.EqualTo(subjectId));
         }
 
         [Test]
@@ -172,18 +172,18 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("51aadf89-de5b-4f08-a03f-b15521e4f3d2"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e",
                 IsActive=false
             };
 
             var teacherId = teacher.Id;
 
-            var subjectId = 1;
+            var subjectId = "e60f5411-9d93-458c-82c6-1e45cc1888a6";
 
             await teacherService.AddTeacher(teacher);
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await teacherService.AssignSubjectToTeacherAsync(teacherId, subjectId));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await teacherService.AssignSubjectToTeacherAsync(teacherId.ToString(), subjectId));
 
         }
 
@@ -222,7 +222,7 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("7f77e923-2603-426e-a4c3-0bf8410859ee"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e"
             };
 
@@ -230,7 +230,7 @@ namespace Classware.UnitTests
 
             await teacherService.AddTeacher(teacher);
 
-            await teacherService.DeleteTeacherByIdAsync(teacherId);
+            await teacherService.DeleteTeacherByIdAsync(teacherId.ToString());
 
             var result = (await repo.All<Teacher>().FirstOrDefaultAsync(t => t.Id == teacherId))?.IsActive;
 
@@ -272,7 +272,7 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("7f77e923-2603-426e-a4c3-0bf8410859ee"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e"
             };
 
@@ -320,7 +320,7 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("7f77e923-2603-426e-a4c3-0bf8410859ee"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e"
             };
 
@@ -328,7 +328,7 @@ namespace Classware.UnitTests
 
             var teacherId = teacher.Id;
 
-            var result = (await teacherService.GetTeacherByIdAsync(teacherId))?.UserId;
+            var result = (await teacherService.GetTeacherByIdAsync(teacherId.ToString()))?.UserId;
 
             var expectedResult = "3b1a9553-091d-4972-83a2-dc2280c57c3e";
 
@@ -370,15 +370,15 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("7943a892-769d-4670-bf21-256e2e32c731"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e"
             };
 
             await teacherService.AddTeacher(teacher);
 
-            await teacherService.DeleteTeacherByIdAsync(teacher.Id);
+            await teacherService.DeleteTeacherByIdAsync(teacher.Id.ToString());
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await teacherService.GetTeacherByIdAsync(teacher.Id));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await teacherService.GetTeacherByIdAsync(teacher.Id.ToString()));
         }
 
         [Test]
@@ -416,7 +416,7 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("7f77e923-2603-426e-a4c3-0bf8410859ee"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e"
             };
 
@@ -426,9 +426,9 @@ namespace Classware.UnitTests
 
             var result = (await teacherService.GetTeacherByUserIdAsync(teacherUserId)).Id;
 
-            var expectedResult = 1;
+            var expectedResult = "7f77e923-2603-426e-a4c3-0bf8410859ee";
 
-            Assert.That(result,Is.EqualTo(expectedResult));
+            Assert.That(result.ToString(),Is.EqualTo(expectedResult));
         }
 
         [Test]
@@ -466,13 +466,13 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("7943a892-769d-4670-bf21-256e2e32c731"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e"
             };
 
             await teacherService.AddTeacher(teacher);
 
-            await teacherService.AssignSubjectToTeacherAsync(teacher.Id, 1);
+            await teacherService.AssignSubjectToTeacherAsync(teacher.Id.ToString(), "e60f5411-9d93-458c-82c6-1e45cc1888a6");
 
             var teacherUserId = teacher.UserId;
 
@@ -516,7 +516,7 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("7f77e923-2603-426e-a4c3-0bf8410859ee"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e"
             };
 
@@ -564,13 +564,13 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("7943a892-769d-4670-bf21-256e2e32c731"),
                 UserId = "3b1a9553-091d-4972-83a2-dc2280c57c3e"
             };
 
             await teacherService.AddTeacher(teacher);
 
-            await teacherService.DeleteTeacherByIdAsync(teacher.Id);
+            await teacherService.DeleteTeacherByIdAsync(teacher.Id.ToString());
 
             Assert.ThrowsAsync<NullReferenceException>(async () => await teacherService.GetTeacherByUserIdAsync(teacher.UserId));
         }

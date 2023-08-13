@@ -14,7 +14,7 @@ namespace Classware.Infrastructure.Models
         /// Teacher's primary key
         /// </summary>
 		[Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Reference to asp.net users
@@ -34,7 +34,7 @@ namespace Classware.Infrastructure.Models
         /// Teacher's subject
         /// </summary>
         [ForeignKey(nameof(Subject))]
-        public int? SubjectId { get; set; }
+        public Guid? SubjectId { get; set; }
         public Subject? Subject { get; set; }
     }
 }

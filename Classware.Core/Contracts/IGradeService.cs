@@ -9,14 +9,14 @@ namespace Classware.Core.Contracts
 {
 	public interface IGradeService
 	{
-		Task AddGradeAsync(int studentId,int teacherId,int subjectId,int grade);
+		Task AddGradeAsync(string studentId, string teacherId, string subjectId,int grade);
 
-		Task<Grade> GetGradeByIdAsync(int id);
+		Task<Grade> GetGradeByIdAsync(string id);
 
-		Task DeleteGradeByIdAsync(int id);
+		Task DeleteGradeByIdAsync(string id);
 
-		Task EditGradeByIdAsync(int id, int gradeNumber);
+		Task EditGradeByIdAsync(string id, int gradeNumber);
 
-		Task<ICollection<Grade>> GetGradesByStudentIdAndSubjectName(int studentId, string subjectName);
+		Task<ICollection<Grade>> GetGradesByStudentIdAndSubjectName(string studentId, string subjectName);
 	}
 }

@@ -39,9 +39,9 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             remarkService = new RemarkService(repo);
 
-            await remarkService.AddRemarkAsync(1, 1, 1, "test", "");
+            await remarkService.AddRemarkAsync("31a1f859-2295-4bb3-9bc2-874ee47e8ef7", "4b514cf9-5fe6-40c8-af4c-1ab9ad494dc1", "101dd43a-8e24-4a79-bf8e-d2dfdec2a1b4", "test", "");
 
-            Assert.That((await repo.All<Remark>().FirstOrDefaultAsync(r => r.Id == 1))?.Title, Is.EqualTo("test"));
+            Assert.That( repo.All<Remark>().First()?.Title, Is.EqualTo("test"));
         }
 
         [Test]
@@ -50,9 +50,9 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             remarkService = new RemarkService(repo);
 
-            await remarkService.AddRemarkAsync(1, 1, 1, "test", "");
+            await remarkService.AddRemarkAsync("45b4c09f-d583-467c-8980-f9f25f680f93", "7108c9bc-3e1a-418e-967a-3a5d42b23fd3", "d6a30476-b960-4395-ab2f-46f021ebbcfe", "test", "");
 
-            Assert.ThrowsAsync<NullReferenceException>(async () => await remarkService.DeleteRemarkByIdAsync(0));
+            Assert.ThrowsAsync<NullReferenceException>(async () => await remarkService.DeleteRemarkByIdAsync("d6a30476-b960-4395-ab2f-46f021ebbcff"));
         }
 
         [Test]
@@ -61,11 +61,13 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             remarkService = new RemarkService(repo);
 
-            await remarkService.AddRemarkAsync(1, 1, 1, "test", "");
+            await remarkService.AddRemarkAsync("eb4526d8-5814-4497-8479-98c71ee15fce", "065665f1-a3fc-43e8-b6c8-7aba8764bdae", "71ecc233-dc0d-452c-9265-0f6b4f70f9ff", "test", "");
 
-            await remarkService.DeleteRemarkByIdAsync(1);
+            var remarkId = repo.All<Remark>().First().Id.ToString();
 
-            Assert.That((await repo.All<Remark>().FirstOrDefaultAsync(r => r.Id == 1))?.IsActive, Is.EqualTo(false));
+            await remarkService.DeleteRemarkByIdAsync(remarkId);
+
+            Assert.That((await repo.All<Remark>().FirstOrDefaultAsync(r => r.Id == new Guid(remarkId)))?.IsActive, Is.EqualTo(false));
         }
 
         [Test]
@@ -76,7 +78,7 @@ namespace Classware.UnitTests
 
             var student = new Student()
             {
-                Id = 1,
+                Id = new Guid("49f64c6e-b869-4393-a3cc-fff4f4e320f3"),
                 User = new ApplicationUser()
                 {
                     Id = "b8751ee64ccf4852aef8aa2f417bf58a"
@@ -85,7 +87,7 @@ namespace Classware.UnitTests
 
             var teacher = new Teacher()
             {
-                Id = 1,
+                Id = new Guid("9e97798e-6557-4c1c-828b-babfeaed3ed7"),
                 User = new ApplicationUser()
                 {
                     Id = "59e4dc7b018c49639ba8de8f5f75d09d"
@@ -96,13 +98,15 @@ namespace Classware.UnitTests
 
             await repo.AddAsync(teacher);
 
-            await remarkService.AddRemarkAsync(1, 1, 1, "test title", "test description");
+            await remarkService.AddRemarkAsync("49f64c6e-b869-4393-a3cc-fff4f4e320f3", "9e97798e-6557-4c1c-828b-babfeaed3ed7", "e60f5411-9d93-458c-82c6-1e45cc1888a6", "test title", "test description");
 
-            await remarkService.EditRemarkByIdAsync(1, "edited title", "edited description");
+            var remarkId = repo.All<Remark>().First().Id.ToString();
 
-            Assert.That((await repo.All<Remark>().FirstOrDefaultAsync(r => r.Id == 1))?.Title, Is.EqualTo("edited title"));
+			await remarkService.EditRemarkByIdAsync(remarkId, "edited title", "edited description");
 
-            Assert.That((await repo.All<Remark>().FirstOrDefaultAsync(r => r.Id == 1))?.Description, Is.EqualTo("edited description"));
+            Assert.That( repo.All<Remark>().First()?.Title, Is.EqualTo("edited title"));
+
+            Assert.That( repo.All<Remark>().First()?.Description, Is.EqualTo("edited description"));
         }
 
         [Test]
@@ -111,31 +115,31 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             remarkService = new RemarkService(repo);
 
-            var student = new Student()
-            {
-                Id = 1,
-                User = new ApplicationUser()
-                {
-                    Id = "b8751ee64ccf4852aef8aa2f417bf58a"
-                }
-            };
+			var student = new Student()
+			{
+				Id = new Guid("49f64c6e-b869-4393-a3cc-fff4f4e320f3"),
+				User = new ApplicationUser()
+				{
+					Id = "b8751ee64ccf4852aef8aa2f417bf58a"
+				}
+			};
 
-            var teacher = new Teacher()
-            {
-                Id = 1,
-                User = new ApplicationUser()
-                {
-                    Id = "59e4dc7b018c49639ba8de8f5f75d09d"
-                }
-            };
+			var teacher = new Teacher()
+			{
+				Id = new Guid("9e97798e-6557-4c1c-828b-babfeaed3ed7"),
+				User = new ApplicationUser()
+				{
+					Id = "59e4dc7b018c49639ba8de8f5f75d09d"
+				}
+			};
 
-            await repo.AddAsync(student);
+			await repo.AddAsync(student);
 
             await repo.AddAsync(teacher);
 
-            await remarkService.AddRemarkAsync(1, 1, 1, "test", "");
+            await remarkService.AddRemarkAsync("49f64c6e-b869-4393-a3cc-fff4f4e320f3", "9e97798e-6557-4c1c-828b-babfeaed3ed7", "e60f5411-9d93-458c-82c6-1e45cc1888a6", "test", "");
 
-            Assert.ThrowsAsync<NullReferenceException>(async () => await remarkService.GetRemarkByIdAsync(0));
+            Assert.ThrowsAsync<NullReferenceException>(async () => await remarkService.GetRemarkByIdAsync("2cfadbc9-f8f6-4980-94d0-7a06fbe324bc"));
         }
 
         [Test]
@@ -144,31 +148,33 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             remarkService = new RemarkService(repo);
 
-            var student = new Student()
-            {
-                Id = 1,
-                User = new ApplicationUser()
-                {
-                    Id = "b8751ee64ccf4852aef8aa2f417bf58a"
-                }
-            };
+			var student = new Student()
+			{
+				Id = new Guid("49f64c6e-b869-4393-a3cc-fff4f4e320f3"),
+				User = new ApplicationUser()
+				{
+					Id = "b8751ee64ccf4852aef8aa2f417bf58a"
+				}
+			};
 
-            var teacher = new Teacher()
-            {
-                Id = 1,
-                User = new ApplicationUser()
-                {
-                    Id = "59e4dc7b018c49639ba8de8f5f75d09d"
-                }
-            };
+			var teacher = new Teacher()
+			{
+				Id = new Guid("9e97798e-6557-4c1c-828b-babfeaed3ed7"),
+				User = new ApplicationUser()
+				{
+					Id = "59e4dc7b018c49639ba8de8f5f75d09d"
+				}
+			};
 
-            await repo.AddAsync(student);
+			await repo.AddAsync(student);
 
             await repo.AddAsync(teacher);
 
-            await remarkService.AddRemarkAsync(1, 1, 1, "test", "");
+            await remarkService.AddRemarkAsync("49f64c6e-b869-4393-a3cc-fff4f4e320f3", "9e97798e-6557-4c1c-828b-babfeaed3ed7", "e60f5411-9d93-458c-82c6-1e45cc1888a6", "test", "");
 
-            Assert.That((await remarkService.GetRemarkByIdAsync(1))?.Title,Is.EqualTo("test"));
+            var remarkId = repo.All<Remark>().First().Id.ToString();
+
+            Assert.That((await remarkService.GetRemarkByIdAsync(remarkId))?.Title,Is.EqualTo("test"));
         }
 
         [TearDown]
