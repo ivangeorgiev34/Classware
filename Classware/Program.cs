@@ -25,6 +25,13 @@ namespace Classware
 
             builder.Services.AddApplicationServices();
 
+            builder.Services.AddAntiforgery(options =>
+            {
+				options.FormFieldName = "AntiforgeryFieldname";
+				options.HeaderName = "X-CSRF-TOKEN";
+				options.SuppressXFrameOptionsHeader = false;
+			});
+
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
