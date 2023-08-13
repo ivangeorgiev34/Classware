@@ -7,6 +7,7 @@ using Classware.Infrastructure.Common;
 using Classware.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Security.Policy;
 
 namespace Classware.Areas.Teacher.Controllers
@@ -16,36 +17,36 @@ namespace Classware.Areas.Teacher.Controllers
 		private readonly UserManager<ApplicationUser> userManager;
 		private readonly IProfileService profileService;
 
-        public ProfileController(UserManager<ApplicationUser> _userManager,
+		public ProfileController(UserManager<ApplicationUser> _userManager,
 			IProfileService _profileService)
-        {
-            userManager = _userManager;
+		{
+			userManager = _userManager;
 			profileService = _profileService;
-        }
+		}
 
 		/// <summary>
 		/// Gets all the information about the profile of the user
 		/// </summary>
 		/// <returns></returns>
 
-        [HttpGet]
+		[HttpGet]
 		public async Task<IActionResult> ProfileInformation()
 		{
-				var currentUser = await userManager.GetUserAsync(User);
+			var currentUser = await userManager.GetUserAsync(User);
 
-				var model = new ProfileInformationViewModel()
-				{
-					FirstName = currentUser.FirstName,
-					MiddleName = currentUser.MiddleName,
-					LastName = currentUser.LastName,
-					Age = currentUser.Age,
-					Gender = currentUser.Gender,
-					UploadedProfilePicture = currentUser.ProfilePicture != null ? Convert.ToBase64String(currentUser.ProfilePicture) : null,
-					Username = currentUser.UserName,
-					Id = currentUser.Id
-				};
+			var model = new ProfileInformationViewModel()
+			{
+				FirstName = currentUser.FirstName,
+				MiddleName = currentUser.MiddleName,
+				LastName = currentUser.LastName,
+				Age = currentUser.Age,
+				Gender = currentUser.Gender,
+				UploadedProfilePicture = currentUser.ProfilePicture != null ? Convert.ToBase64String(currentUser.ProfilePicture) : null,
+				Username = currentUser.UserName,
+				Id = currentUser.Id
+			};
 
-				return View(model);		
+			return View(model);
 		}
 
 		/// <summary>
@@ -57,26 +58,26 @@ namespace Classware.Areas.Teacher.Controllers
 		public async Task<IActionResult> Upload(ProfileInformationViewModel model)
 		{
 
-				
-				if (model.ProfilePicture == null)
-				{
-					TempData[UserMessagesConstants.ERROR_MESSAGE] = "Please upload a file before applying it to your profile";
 
-					return RedirectToAction("ProfileInformation", "Profile", new { area = "Teacher" });
-				}
-
-				byte[] data = null;
-				using (var ms = new MemoryStream())
-				{
-					await model.ProfilePicture?.CopyToAsync(ms);
-					data = ms.ToArray();
-				}
-
-				await profileService.UploadPictureAsync(data, User.Id());
+			if (model.ProfilePicture == null)
+			{
+				TempData[UserMessagesConstants.ERROR_MESSAGE] = "Please upload a file before applying it to your profile";
 
 				return RedirectToAction("ProfileInformation", "Profile", new { area = "Teacher" });
+			}
 
-			
+			byte[] data = null;
+			using (var ms = new MemoryStream())
+			{
+				await model.ProfilePicture?.CopyToAsync(ms);
+				data = ms.ToArray();
+			}
+
+			await profileService.UploadPictureAsync(data, User.Id());
+
+			return RedirectToAction("ProfileInformation", "Profile", new { area = "Teacher" });
+
+
 		}
 
 		/// <summary>
@@ -89,21 +90,26 @@ namespace Classware.Areas.Teacher.Controllers
 		public async Task<IActionResult> Edit(string id)
 		{
 
-				var user = await userManager.FindByIdAsync(id);
+			if (User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value != id)
+			{
+				return Unauthorized();
+			}
 
-				var model = new ProfileInformationViewModel()
-				{
-					FirstName = user.FirstName,
-					MiddleName = user.MiddleName,
-					LastName = user.LastName,
-					Age = user.Age,
-					Gender = user.Gender,
-					UploadedProfilePicture = user.ProfilePicture != null ? Convert.ToBase64String(user.ProfilePicture) : null,
-					Username = user.UserName,
-					Id = user.Id
-				};
+			var user = await userManager.FindByIdAsync(id);
 
-				return View(model);
+			var model = new ProfileInformationViewModel()
+			{
+				FirstName = user.FirstName,
+				MiddleName = user.MiddleName,
+				LastName = user.LastName,
+				Age = user.Age,
+				Gender = user.Gender,
+				UploadedProfilePicture = user.ProfilePicture != null ? Convert.ToBase64String(user.ProfilePicture) : null,
+				Username = user.UserName,
+				Id = user.Id
+			};
+
+			return View(model);
 
 
 
@@ -141,7 +147,7 @@ namespace Classware.Areas.Teacher.Controllers
 				TempData[UserMessagesConstants.ERROR_MESSAGE] = e.Message;
 				return RedirectToAction("Index", "Home", new { area = "Teacher" });
 			}
-		
+
 		}
 	}
 }
