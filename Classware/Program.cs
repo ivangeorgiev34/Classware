@@ -4,8 +4,6 @@ using Classware.Infrastructure.Data;
 using Classware.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using System.Runtime.CompilerServices;
 
 namespace Classware
 {
@@ -74,12 +72,15 @@ namespace Classware
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/Home/Error/500");
+                app.UseStatusCodePagesWithRedirects("/home/error?statusCode={0}");
                 app.UseMigrationsEndPoint();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                //app.UseExceptionHandler("/Home/Error/500");
+                //app.UseStatusCodePagesWithRedirects("home/error?statusCode={0}");
                 app.UseHsts();
             }
 
@@ -98,10 +99,6 @@ namespace Classware
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-				endpoints.MapControllerRoute(
-					name: "Administrator",
-					pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 				endpoints.MapControllerRoute(
                     name: "areas",
