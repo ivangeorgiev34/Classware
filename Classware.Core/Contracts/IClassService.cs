@@ -17,5 +17,7 @@ namespace Classware.Core.Contracts
 		Task<Class> GetClassByIdAsync(string id);
 
 		Task DeleteClassByIdAsync(string id);
+
+		Task<bool> ClassExistsByIdAsync(string id);
 	}
 }
