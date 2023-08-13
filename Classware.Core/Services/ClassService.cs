@@ -30,12 +30,20 @@ namespace Classware.Core.Services
             await repo.SaveChangesAsync();
 		}
 
-        /// <summary>
-        /// Checks if there is already a class with the same name
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+		public async Task<bool> ClassExistsByIdAsync(string id)
+		{
+            var classExists = await repo.AllReadonly<Class>()
+                .AnyAsync(c => c.IsActive == true && c.Id == new Guid(id));
+
+			return classExists;
+		}
+
+		/// <summary>
+		/// Checks if there is already a class with the same name
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		/// <exception cref="NotImplementedException"></exception>
 		public async Task<bool> ClassExistsByNameAsync(string name)
 		{
             if (await repo.AllReadonly<Class>().Where(c=>c.IsActive).AnyAsync(c=>c.Name == name))
