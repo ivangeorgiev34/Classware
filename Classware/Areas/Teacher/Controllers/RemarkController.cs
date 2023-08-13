@@ -52,11 +52,11 @@ namespace Classware.Areas.Teacher.Controllers
 				{
 					studentViewModels.Add(new StudentViewModel()
 					{
-						Id = student.Id,
-						ClassId = student.ClassId,
+						Id = student.Id.ToString(),
+						ClassId = student.ClassId.ToString(),
 						Class = student.Class,
 						User = student.User,
-						UserId = student.Userid
+						UserId = student.UserId
 					});
 				}
 			}
@@ -91,7 +91,7 @@ namespace Classware.Areas.Teacher.Controllers
 					return RedirectToAction("Index", "Home", new { area = "Teacher" });
 				}
 
-				await remarkService.AddRemarkAsync(student.Id, teacher.Id, teacher.Subject.Id, model.Title, model.Description ?? null);
+				await remarkService.AddRemarkAsync(student.Id.ToString(), teacher.Id.ToString(), teacher.Subject.Id.ToString(), model.Title, model.Description ?? null);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Remark added successfully";
 
@@ -116,7 +116,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> All(int id)
+		public async Task<IActionResult> All(string id)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace Classware.Areas.Teacher.Controllers
 				{
 					remarkViewModels.Add(new RemarkViewModel
 					{
-						Id = remark.Id,
+						Id = remark.Id.ToString(),
 						Description = remark.Description,
 						Title = remark.Title
 					});
@@ -167,7 +167,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		public async Task<IActionResult> Delete(int id)
+		public async Task<IActionResult> Delete(string id)
 		{
 			try
 			{
@@ -191,7 +191,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		public async Task<IActionResult> Edit(int id)
+		public async Task<IActionResult> Edit(string id)
 		{
 			try
 			{
@@ -199,7 +199,7 @@ namespace Classware.Areas.Teacher.Controllers
 
 				var model = new EditRemarkViewModel()
 				{
-					Id = remark.Id,
+					Id = remark.Id.ToString(),
 					Title = remark.Title,
 					Description = remark.Description
 				};

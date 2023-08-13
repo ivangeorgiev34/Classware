@@ -5,7 +5,7 @@ namespace Classware.Areas.Teacher.Models.Grade
 {
 	public class EditGradeViewModel
 	{
-        public int Id { get; set; }
+        public string Id { get; set; } = null!;
 
 		[System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Grade is required")]
 		[Range(TeacherConstants.AddGradeViewModel.GRADE_TYPE_MIN_RANGE, TeacherConstants.AddGradeViewModel.GRADE_TYPE_MAX_RANGE, ErrorMessage = "Grade must be between 2 and 6")]

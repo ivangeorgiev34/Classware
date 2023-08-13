@@ -4,7 +4,7 @@ namespace Classware.Areas.Teacher.Models.Grade
 {
 	public class GradeInformationViewModel
 	{
-        public int Id { get; set; }
+		public string Id { get; set; } = null!;
 
         public int Grade { get; set; }
 

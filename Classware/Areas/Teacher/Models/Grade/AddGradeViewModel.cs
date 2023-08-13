@@ -7,7 +7,7 @@ namespace Classware.Areas.Teacher.Models.Grade
 {
 	public class AddGradeViewModel
 	{
-        public int StudentId { get; set; }
+        public string StudentId { get; set; } = null!;
 
         public ICollection<StudentViewModel>? Students { get; set; }
 

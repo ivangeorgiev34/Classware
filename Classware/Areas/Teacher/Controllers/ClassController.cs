@@ -43,7 +43,7 @@ namespace Classware.Areas.Teacher.Controllers
 			{
 				models.Add(new AllClassesViewModel()
 				{
-					Id = _class.Id,
+					Id = _class.Id.ToString(),
 					Name = _class.Name,
 					StudentsCount = _class.Students.Where(s => s.IsActive == true).Count(s => s.StudentSubjects
 					.Select(ss => ss.Subject.Name).Contains(teacher.Subject.Name))
@@ -59,7 +59,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		public async Task<IActionResult> ClassStudents(int id)
+		public async Task<IActionResult> ClassStudents(string id)
 		{
 			try
 			{
@@ -82,13 +82,13 @@ namespace Classware.Areas.Teacher.Controllers
 					{
 						studentSubjectGradesViewModels.Add(new StudentSubjectGradesViewModel()
 						{
-							Id = grade.Id,
+							Id = grade.Id.ToString(),
 							Type = grade.Type
 						});
 					}
 					studentViewModels.Add(new StudentViewModel()
 					{
-						Id = student.Id,
+						Id = student.Id.ToString(),
 						ProfilePicture = student.User.ProfilePicture == null ? null : Convert.ToBase64String(student.User.ProfilePicture),
 						FirstName = student.User.FirstName,
 						MiddleName = student.User.MiddleName,

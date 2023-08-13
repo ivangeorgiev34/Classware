@@ -5,7 +5,7 @@ namespace Classware.Areas.Teacher.Models.Remark
 {
 	public class EditRemarkViewModel
 	{
-        public int Id { get; set; }
+        public string Id { get; set; } = null!;
 
 		[Required(ErrorMessage = "Title is required")]
 		[StringLength(TeacherConstants.AddRemarkViewModel.TITLE_MAX_LENGTH, MinimumLength = TeacherConstants.AddRemarkViewModel.TITLE_MIN_LENGTH, ErrorMessage = "Title must be between 10 and 30 symbols")]

@@ -74,7 +74,7 @@ namespace Classware.Areas.Administrator.Controllers
 			{
 				models.Add(new AllClassesViewModel()
 				{
-					Id = _class.Id,
+					Id = _class.Id.ToString(),
 					Name = _class.Name,
 					StudentsCount = _class.Students.Where(s => s.IsActive == true).Count()
 				});
@@ -88,7 +88,7 @@ namespace Classware.Areas.Administrator.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		public async Task<IActionResult> Delete(int id)
+		public async Task<IActionResult> Delete(string id)
 		{
 			await classService.DeleteClassByIdAsync(id);
 

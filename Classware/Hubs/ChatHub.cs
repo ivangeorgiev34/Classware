@@ -24,7 +24,7 @@ namespace Classware.Hubs
 			await Groups.AddToGroupAsync(Context.ConnectionId, "Admin");
 		}
 
-		public async Task SetMessageToAnswered(int messageId)
+		public async Task SetMessageToAnswered(string messageId)
 		{
 			await messageService.SetMessageToAnsweredAsync(messageId);	
 		}

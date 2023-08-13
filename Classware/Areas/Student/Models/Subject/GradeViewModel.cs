@@ -2,7 +2,7 @@
 {
 	public class GradeViewModel
 	{
-        public int Id { get; set; }
+        public string Id { get; set; } = null!;
 
         public int Grade { get; set; }
     }

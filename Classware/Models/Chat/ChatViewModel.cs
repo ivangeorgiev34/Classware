@@ -2,7 +2,7 @@
 {
 	public class ChatViewModel
 	{
-		public int Id { get; set; }
+		public string Id { get; set; } = null!;
 
 		public string FullName { get; set; } = null!;
 

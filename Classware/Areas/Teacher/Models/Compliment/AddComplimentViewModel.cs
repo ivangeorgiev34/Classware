@@ -5,7 +5,7 @@ namespace Classware.Areas.Teacher.Models.Compliment
 {
 	public class AddComplimentViewModel
 	{
-		public int StudentId { get; set; }
+		public string StudentId { get; set; }
 
 		public ICollection<StudentViewModel>? Students { get; set; }
 

@@ -33,7 +33,7 @@ namespace Classware.Areas.Student.Controllers
 				{
 					complimentViewModels.Add(new ComplimentViewModel()
 					{
-						Id = compliment.Id,
+						Id = compliment.Id.ToString(),
 						Title = compliment.Title,
 						Description = compliment.Description
 					});
@@ -48,7 +48,7 @@ namespace Classware.Areas.Student.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> ComplimentInformation(int id)
+		public async Task<IActionResult> ComplimentInformation(string id)
 		{
 			try
 			{

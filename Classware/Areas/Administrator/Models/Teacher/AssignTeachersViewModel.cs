@@ -10,11 +10,11 @@ namespace Classware.Areas.Administrator.Models.Teacher
 {
 	public class AssignTeachersViewModel
 	{
-		public int TeacherId { get; set; }
+		public string TeacherId { get; set; }
 
 		public ICollection<TeacherViewModel>? Teachers { get; set; }
 
-		public int SubjectId { get; set; }
+		public string SubjectId { get; set; }
 
 		public ICollection<SubjectViewModel>? Subjects { get; set; }
 	}

@@ -5,7 +5,7 @@ namespace Classware.Areas.Administrator.Models.Teacher
 {
 	public class SubjectViewModel
 	{
-		public int Id { get; set; }
+		public string Id { get; set; }
 
 		public string Name { get; set; } = null!;
 

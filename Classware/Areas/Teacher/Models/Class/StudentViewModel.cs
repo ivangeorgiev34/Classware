@@ -2,7 +2,8 @@
 {
 	public class StudentViewModel
 	{
-        public int Id { get; set; }
+        public string Id { get; set; } = null!;
+
         public string? ProfilePicture { get; set; }
 
 		public string? FirstName { get; set; }

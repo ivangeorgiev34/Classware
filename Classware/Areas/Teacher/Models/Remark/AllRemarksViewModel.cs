@@ -10,7 +10,7 @@
 
 		public string? ClassName { get; set; }
 
-		public int StudentId { get; set; }
+		public string StudentId { get; set; } = null!;
 
         public ICollection<RemarkViewModel>? Remarks { get; set; }
     }

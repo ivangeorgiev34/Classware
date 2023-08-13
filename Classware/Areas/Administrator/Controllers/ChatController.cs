@@ -23,7 +23,7 @@ namespace Classware.Areas.Administrator.Controllers
 			{
 				model.Add(new ChatViewModel()
 				{
-					Id = message.Id,
+					Id = message.Id.ToString(),
 					Email = message.Email,
 					Description = message.Description,
 					FullName = message.FullName,

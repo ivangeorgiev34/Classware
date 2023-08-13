@@ -46,12 +46,9 @@ namespace Classware.Areas.Administrator.Controllers
 		[HttpGet]
         public IActionResult Add()
         {
-			
 				var model = new AddTeacherViewModel();
 
 				return View(model);
-		
-
         }
 
         [HttpPost]
@@ -137,10 +134,10 @@ namespace Classware.Areas.Administrator.Controllers
 					{
 						teacherViewModels.Add(new TeacherViewModel()
 						{
-							Id = teacher.Id,
+							Id = teacher.Id.ToString(),
 							UserId = teacher.UserId,
 							User = teacher.User,
-							SubjectId = teacher.SubjectId,
+							SubjectId = teacher.SubjectId.ToString(),
 							IsActive = teacher.IsActive
 						});
 					}
@@ -154,7 +151,7 @@ namespace Classware.Areas.Administrator.Controllers
 				{
 					subjectViewModels.Add(new SubjectViewModel()
 					{
-						Id = subject.Id,
+						Id = subject.Id.ToString(),
 						Name = subject.Name,
 						IsActive = subject.IsActive
 					});
@@ -211,7 +208,7 @@ namespace Classware.Areas.Administrator.Controllers
 
 					models.Add(new AllTeachersViewModel()
 					{
-						Id = teacher.Id,
+						Id = teacher.Id.ToString(),
 						ProfilePicture = image,
 						FirstName = teacher.User.FirstName,
 						MiddleName = teacher.User.MiddleName,
@@ -234,7 +231,7 @@ namespace Classware.Areas.Administrator.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<IActionResult> Delete(int id)
+		public async Task<IActionResult> Delete(string id)
 		{
 			try
 			{

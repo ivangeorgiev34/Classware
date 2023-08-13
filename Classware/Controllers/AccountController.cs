@@ -35,7 +35,7 @@ namespace Classware.Controllers
 			studentService = _studentService;
 		}
 
-		[Authorize(Roles = "Adminitrator")]
+		[Authorize("Admin")]
 		public async Task<IActionResult> SeedRoles()
 		{
 			await CreateRoles();

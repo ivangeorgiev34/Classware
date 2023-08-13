@@ -39,7 +39,7 @@ namespace Classware.Areas.Student.Controllers
 
 				foreach (var subject in subjects)
 				{
-					var grades = await gradeService.GetGradesByStudentIdAndSubjectName(student.Id, subject.Name);
+					var grades = await gradeService.GetGradesByStudentIdAndSubjectName(student.Id.ToString(), subject.Name);
 
 					ICollection<GradeViewModel> gradeViewModels = new List<GradeViewModel>();
 
@@ -47,14 +47,14 @@ namespace Classware.Areas.Student.Controllers
 					{
 						gradeViewModels.Add(new GradeViewModel()
 						{
-							Id = grade.Id,
+							Id = grade.Id.ToString(),
 							Grade = grade.Type
 						});
 					}
 
 					subjectViewModels.Add(new Models.Subject.SubjectViewModel()
 					{
-						Id = subject!.Id,
+						Id = subject!.Id.ToString(),
 						Name = subject!.Name,
 						Grades = gradeViewModels
 					});

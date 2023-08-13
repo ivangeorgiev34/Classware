@@ -1,44 +1,51 @@
 ﻿@using Classware.Areas.Teacher.Models.Grade;
 @model AddGradeViewModel
 
-<form class="row" method="post" asp-area="Teacher" asp-controller="Grade" asp-action="Add">
-	<div class="card">
-		<h3 class="text-center mt-3">Add a grade</h3>
-		<hr />
-		<div class="row mb-3" style="margin:auto;">
-			<label asp-for="@Model.StudentId" class="form-label">Student:</label>
-			<select asp-for="@Model.StudentId" class="form-control">
-				@foreach (var student in Model.Students)
-				{
-					<option value="@student.Id">@student.User?.FirstName @student.User?.MiddleName @student.User?.LastName @student.Class?.Name</option>
-				}
-			</select>
-		</div>
-		<div class="row mb-3" style="margin:auto; width:300px;">
-			<label asp-for="@Model.Type" class="form-label">Grade:</label>
-			<input asp-for="@Model.Type" value="2" />
-		</div>
-		<div style="margin:auto">
-			<ul style="list-style-type:none">
-				@foreach (var error in ViewContext.ViewData.ModelState.Values.SelectMany(v => v.Errors))
-				{
+@if (Model.Students?.Count == 0 || Model.Students == null)
+{
+	<h2 class="text-center mt-5">You don't have any students</h2>
+}
+else
+{
+	<form class="row" method="post" asp-area="Teacher" asp-controller="Grade" asp-action="Add">
+		<div class="card">
+			<h3 class="text-center mt-3">Add a grade</h3>
+			<hr />
+			<div class="row mb-3" style="margin:auto;">
+				<label asp-for="@Model.StudentId" class="form-label">Student:</label>
+				<select asp-for="@Model.StudentId" class="form-control">
+					@foreach (var student in Model.Students)
+					{
+						<option value="@student.Id">@student.User?.FirstName @student.User?.MiddleName @student.User?.LastName @student.Class?.Name</option>
+					}
+				</select>
+			</div>
+			<div class="row mb-3" style="margin:auto; width:300px;">
+				<label asp-for="@Model.Type" class="form-label">Grade:</label>
+				<input asp-for="@Model.Type" value="2" />
+			</div>
+			<div style="margin:auto">
+				<ul style="list-style-type:none">
+					@foreach (var error in ViewContext.ViewData.ModelState.Values.SelectMany(v => v.Errors))
+					{
+						<li>
+							<span class="text-danger">@error.ErrorMessage</span>
+						</li>
+					}
 					<li>
-						<span class="text-danger">@error.ErrorMessage</span>
+						<span class="text-danger" asp-validation-for="@Model.StudentId"></span>
 					</li>
-				}
-				<li>
-					<span class="text-danger" asp-validation-for="@Model.StudentId"></span>
-				</li>
-				<li>
-					<span class="text-danger" asp-validation-for="@Model.Type"></span>
-				</li>
-			</ul>
+					<li>
+						<span class="text-danger" asp-validation-for="@Model.Type"></span>
+					</li>
+				</ul>
+			</div>
+			<div class="row mb-3" style="margin:auto;">
+				<button class="btn btn-success" asp-area="Teacher" asp-controller="Grade" asp-action="Add">Add</button>
+			</div>
 		</div>
-		<div class="row mb-3" style="margin:auto;">
-			<button class="btn btn-success" asp-area="Teacher" asp-controller="Grade" asp-action="Add">Add</button>
-		</div>
-	</div>
-</form>
+	</form>
+}
 
 @section Scripts{
 	<partial name="_ValidationScriptsPartial" />

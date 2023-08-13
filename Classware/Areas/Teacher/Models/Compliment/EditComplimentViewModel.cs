@@ -5,7 +5,7 @@ namespace Classware.Areas.Teacher.Models.Compliment
 {
 	public class EditComplimentViewModel
 	{
-        public int Id { get; set; }
+        public string Id { get; set; }
 
 		[Required(ErrorMessage = "Title is required")]
 		[StringLength(TeacherConstants.AddComplimentViewModel.TITLE_MAX_LENGTH, MinimumLength = TeacherConstants.AddComplimentViewModel.TITLE_MIN_LENGTH, ErrorMessage = "Title must be between 10 and 30 symbols")]

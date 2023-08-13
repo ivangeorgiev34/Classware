@@ -57,7 +57,7 @@ namespace Classware.Areas.Administrator.Controllers
 				}
 				models.Add(new AllStudentsViewModel()
 				{
-					Id = student.Id,
+					Id = student.Id.ToString(),
 					FirstName = student.User.FirstName,
 					MiddleName = student.User.MiddleName,
 					LastName = student.User.LastName,
@@ -88,7 +88,7 @@ namespace Classware.Areas.Administrator.Controllers
 			{
 				classViewModels.Add(new ClassViewModel()
 				{
-					Id = _class.Id,
+					Id = _class.Id.ToString(),
 					Name = _class.Name,
 					IsActive = _class.IsActive
 				});
@@ -113,7 +113,7 @@ namespace Classware.Areas.Administrator.Controllers
 			{
 				classViewModels.Add(new ClassViewModel()
 				{
-					Id = _class.Id,
+					Id = _class.Id.ToString(),
 					Name = _class.Name,
 					IsActive = _class.IsActive
 				});
@@ -161,8 +161,8 @@ namespace Classware.Areas.Administrator.Controllers
 
 				var student = new Classware.Infrastructure.Models.Student()
 				{
-					Userid = userRole.Id,
-					ClassId = model.ClassId
+					UserId = userRole.Id,
+					ClassId = new Guid(model.ClassId)
 				};
 
 				await studentService.AddStudentAsync(student);
@@ -188,7 +188,7 @@ namespace Classware.Areas.Administrator.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		public async Task<IActionResult> Delete(int id)
+		public async Task<IActionResult> Delete(string id)
 		{
 
 			var student = await studentService.GetStudentByIdAsync(id);
@@ -225,9 +225,9 @@ namespace Classware.Areas.Administrator.Controllers
 			{
 				studentViewModels.Add(new StudentViewModel()
 				{
-					Id = student.Id,
+					Id = student.Id.ToString(),
 					User = student.User,
-					UserId = student.Userid
+					UserId = student.UserId
 				});
 			}
 
@@ -235,7 +235,7 @@ namespace Classware.Areas.Administrator.Controllers
 			{
 				subjectViewModels.Add(new SubjectViewModel()
 				{
-					Id = subject.Id,
+					Id = subject.Id.ToString(),
 					Name = subject.Name
 				});
 			}

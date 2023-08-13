@@ -4,7 +4,7 @@ namespace Classware.Areas.Administrator.Models.Teacher
 {
 	public class AllTeachersViewModel
 	{
-        public int Id { get; set; }
+        public string Id { get; set; } = null!;
 
         public string? ProfilePicture { get; set; }
 

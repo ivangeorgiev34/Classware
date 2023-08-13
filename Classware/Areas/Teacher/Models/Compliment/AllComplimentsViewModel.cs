@@ -12,7 +12,7 @@ namespace Classware.Areas.Teacher.Models.Compliment
 
 		public string? ClassName { get; set; }
 
-		public int StudentId { get; set; }
+		public string StudentId { get; set; } = null!;
 
 		public ICollection<ComplimentViewModel>? Compliments { get; set; }
 	}

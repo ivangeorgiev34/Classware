@@ -1,51 +1,58 @@
 ﻿@using Classware.Areas.Teacher.Models.Remark;
 @model AddRemarkViewModel
 
-<form class="row" method="post" asp-area="Teacher" asp-controller="Remark" asp-action="Add">
-	<div class="card">
-		<h3 class="text-center mt-3 mb-3">Add a remark</h3>
-		<hr />
-		<div class="row mt-3" style="margin:auto;  width:300px">
-			<label asp-for="@Model.StudentId">Student:</label>
-			<select asp-for="@Model.StudentId" class="form-control">
-				@foreach (var student in Model.Students)
-				{
-					<option value="@student.Id">@student.User?.FirstName @student.User?.MiddleName @student.User?.LastName @student.Class?.Name</option>
-				}
-			</select>
-		</div>
-		<div class="row mt-3" style="margin:auto;  width:300px">
-			<label asp-for="@Model.Title">Title:</label>
-			<input asp-for="@Model.Title" />
-		</div>
-		<div class="row mt-3" style="margin:auto;  width:300px">
-			<label asp-for="@Model.Description">Description:</label>
-			<textarea asp-for="@Model.Description" value="@Model.Description" style="height:150px;"></textarea>
-		</div>
-		<div class="row mt-3" style="margin:auto;  width:300px">
-			<ul style="list-style-type:none">
-				@foreach (var error in ViewContext.ViewData.ModelState.Values.SelectMany(v => v.Errors))
-				{
+@if (Model.Students?.Count == 0 || Model.Students == null)
+{
+	<h2 class="text-center mt-5">You don't have any students</h2>
+}
+else
+{
+	<form class="row" method="post" asp-area="Teacher" asp-controller="Remark" asp-action="Add">
+		<div class="card">
+			<h3 class="text-center mt-3 mb-3">Add a remark</h3>
+			<hr />
+			<div class="row mt-3" style="margin:auto;  width:300px">
+				<label asp-for="@Model.StudentId">Student:</label>
+				<select asp-for="@Model.StudentId" class="form-control">
+					@foreach (var student in Model.Students)
+					{
+						<option value="@student.Id">@student.User?.FirstName @student.User?.MiddleName @student.User?.LastName @student.Class?.Name</option>
+					}
+				</select>
+			</div>
+			<div class="row mt-3" style="margin:auto;  width:300px">
+				<label asp-for="@Model.Title">Title:</label>
+				<input asp-for="@Model.Title" />
+			</div>
+			<div class="row mt-3" style="margin:auto;  width:300px">
+				<label asp-for="@Model.Description">Description:</label>
+				<textarea asp-for="@Model.Description" value="@Model.Description" style="height:150px;"></textarea>
+			</div>
+			<div class="row mt-3" style="margin:auto;  width:300px">
+				<ul style="list-style-type:none">
+					@foreach (var error in ViewContext.ViewData.ModelState.Values.SelectMany(v => v.Errors))
+					{
+						<li>
+							<span class="text-danger">@error.ErrorMessage</span>
+						</li>
+					}
 					<li>
-						<span class="text-danger">@error.ErrorMessage</span>
+						<span class="text-danger" asp-validation-for="@Model.StudentId"></span>
 					</li>
-				}
-				<li>
-					<span class="text-danger" asp-validation-for="@Model.StudentId"></span>
-				</li>
-				<li>
-					<span class="text-danger" asp-validation-for="@Model.Title"></span>
-				</li>
-				<li>
-					<span class="text-danger" asp-validation-for="@Model.Description"></span>
-				</li>
-			</ul>
+					<li>
+						<span class="text-danger" asp-validation-for="@Model.Title"></span>
+					</li>
+					<li>
+						<span class="text-danger" asp-validation-for="@Model.Description"></span>
+					</li>
+				</ul>
+			</div>
+			<div class="row mt-3 mb-3" style="margin:auto;">
+				<button class="btn btn-success" asp-area="Teacher" asp-controller="Remark" asp-action="Add">Add</button>
+			</div>
 		</div>
-		<div class="row mt-3 mb-3" style="margin:auto;">
-			<button class="btn btn-success" asp-area="Teacher" asp-controller="Remark" asp-action="Add">Add</button>
-		</div>
-	</div>
-</form>
+	</form>
+}
 
 @section Scripts{
 	<partial name="_ValidationScriptsPartial" />

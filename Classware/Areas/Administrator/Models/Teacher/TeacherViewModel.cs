@@ -4,7 +4,7 @@ namespace Classware.Areas.Administrator.Models.Teacher
 {
 	public class TeacherViewModel
 	{
-        public int Id { get; set; }
+        public string Id { get; set; } = null!;
 
 		public string UserId { get; set; } = null!;
 
@@ -12,6 +12,6 @@ namespace Classware.Areas.Administrator.Models.Teacher
 
 		public bool IsActive { get; set; }
 
-		public int? SubjectId { get; set; }
+		public string? SubjectId { get; set; }
 	}
 }

@@ -21,7 +21,7 @@ namespace Classware.Areas.Administrator.Models.Student
 		[Required(ErrorMessage = "Gender is required")]
 		public string Gender { get; set; } = null!;
 
-        public int ClassId { get; set; }
+        public string ClassId { get; set; }
 
         public ICollection<ClassViewModel>? Classes { get; set; }
 

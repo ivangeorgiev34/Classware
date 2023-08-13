@@ -65,11 +65,11 @@ namespace Classware.Areas.Teacher.Controllers
 				{
 					studentViewModels.Add(new Models.Grade.StudentViewModel()
 					{
-						Id = student.Id,
+						Id = student.Id.ToString(),
 						User = student.User,
-						UserId = student.Userid,
+						UserId = student.UserId,
 						Class = student.Class,
-						ClassId = student.ClassId
+						ClassId = student.ClassId.ToString()
 					});
 				}
 			}
@@ -106,7 +106,7 @@ namespace Classware.Areas.Teacher.Controllers
 
 				var subject = await subjectService.GetSubjectByNameAsync(teacher.Subject.Name);
 
-				await gradeService.AddGradeAsync(student.Id, teacher.Id, subject.Id, model.Type);
+				await gradeService.AddGradeAsync(student.Id.ToString(), teacher.Id.ToString(), subject.Id.ToString(), model.Type);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Grade added successfully";
 
@@ -133,7 +133,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> GradeInformation(int id)
+		public async Task<IActionResult> GradeInformation(string id)
 		{
 			try
 			{
@@ -143,7 +143,7 @@ namespace Classware.Areas.Teacher.Controllers
 
 				var model = new GradeInformationViewModel()
 				{
-					Id = grade.Id,
+					Id = grade.Id.ToString(),
 					Grade = grade.Type,
 					FirstName = grade.Student?.User.FirstName,
 					MiddleName = grade.Student?.User.MiddleName,
@@ -170,7 +170,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<IActionResult> Delete(int id)
+		public async Task<IActionResult> Delete(string id)
 		{
 			try
 			{
@@ -195,7 +195,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> Edit(int id)
+		public async Task<IActionResult> Edit(string id)
 		{
 			try
 			{
@@ -203,7 +203,7 @@ namespace Classware.Areas.Teacher.Controllers
 
 				var model = new EditGradeViewModel()
 				{
-					Id = grade.Id,
+					Id = grade.Id.ToString(),
 					Grade = grade.Type
 				};
 

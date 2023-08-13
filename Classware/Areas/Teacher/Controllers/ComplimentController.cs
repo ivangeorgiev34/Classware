@@ -52,11 +52,11 @@ namespace Classware.Areas.Teacher.Controllers
 				{
 					studentViewModels.Add(new StudentViewModel
 					{
-						Id = student.Id,
+						Id = student.Id.ToString(),
 						User = student.User,
-						UserId = student.Userid,
+						UserId = student.UserId,
 						Class = student.Class,
-						ClassId = student.ClassId
+						ClassId = student.ClassId.ToString()
 					});
 				}
 			}
@@ -91,7 +91,7 @@ namespace Classware.Areas.Teacher.Controllers
 					return RedirectToAction("Index", "Home", new { area = "Teacher" });
 				}
 
-				await complimentService.AddComplimentAsync(student.Id, teacher.Id, teacher.Subject.Id, model.Title, model.Description ?? null);
+				await complimentService.AddComplimentAsync(student.Id.ToString(), teacher.Id.ToString(), teacher.Subject.Id.ToString(), model.Title, model.Description ?? null);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Compliment added successfully";
 
@@ -115,7 +115,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> All(int id)
+		public async Task<IActionResult> All(string id)
 		{
 			try
 			{
@@ -133,7 +133,7 @@ namespace Classware.Areas.Teacher.Controllers
 				{
 					complimentViewModels.Add(new ComplimentViewModel()
 					{
-						Id = compliment.Id,
+						Id = compliment.Id.ToString(),
 						Title = compliment.Title,
 						Description = compliment.Description
 					});
@@ -165,7 +165,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		public async Task<IActionResult> Delete(int id)
+		public async Task<IActionResult> Delete(string id)
 		{
 			try
 			{
@@ -189,7 +189,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> Edit(int id)
+		public async Task<IActionResult> Edit(string id)
 		{
 			try
 			{
@@ -197,7 +197,7 @@ namespace Classware.Areas.Teacher.Controllers
 
 				var model = new EditComplimentViewModel()
 				{
-					Id = compliment.Id,
+					Id = compliment.Id.ToString(),
 					Title = compliment.Title,
 					Description = compliment.Description
 				};

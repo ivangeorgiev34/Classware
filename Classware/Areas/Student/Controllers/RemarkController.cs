@@ -55,7 +55,7 @@ namespace Classware.Areas.Student.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> RemarkInformation(int id)
+		public async Task<IActionResult> RemarkInformation(string id)
 		{
 			try
 			{

@@ -22,7 +22,7 @@ namespace Classware.Areas.Student.Controllers
         }
 
         [HttpGet]
-		public async Task<IActionResult> GradeInformation(int id)
+		public async Task<IActionResult> GradeInformation(string id)
 		{
 			try
 			{
