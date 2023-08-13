@@ -32,6 +32,20 @@ namespace Classware
 				options.SuppressXFrameOptionsHeader = false;
 			});
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("Classware", builder =>
+                {
+                    builder.WithOrigins("https://localhost:7287")
+                    .WithMethods(HttpMethod.Get.Method,
+                    HttpMethod.Post.Method,
+                    HttpMethod.Put.Method,
+                    HttpMethod.Patch.Method,
+                    HttpMethod.Delete.Method)
+                    .AllowAnyHeader();
+                });
+            });
+
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -74,6 +88,7 @@ namespace Classware
 
             app.UseRouting();
 
+            app.UseCors("Classware");
 
             app.UseAuthentication();
             app.UseAuthorization();
