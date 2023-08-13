@@ -132,6 +132,12 @@ namespace Classware.Core.Services
 			return students;
 		}
 
+		public async Task<bool> StudentExistsByUserId(string id)
+		{
+			return await repo.AllReadonly<Student>()
+				.AnyAsync(c => c.IsActive == true && c.Id == new Guid(id));
+		}
+
 		public async Task<bool> StudentHasASubjectAsync(Student student, string subjectName)
 		{
 			if (student.StudentSubjects.Any(s => s.Subject.Name == subjectName))
