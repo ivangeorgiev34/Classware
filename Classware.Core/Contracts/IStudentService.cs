@@ -24,5 +24,7 @@ namespace Classware.Core.Contracts
 		Task<bool> StudentHasASubjectAsync(Student student,string subjectName);
 
 		Task<Student> GetStudentByUserIdAsync(string id);
+
+		Task<bool> StudentExistsByUserId(string id);
 	}
 }
