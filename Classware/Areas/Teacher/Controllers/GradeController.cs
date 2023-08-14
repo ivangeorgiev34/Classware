@@ -155,7 +155,7 @@ namespace Classware.Areas.Teacher.Controllers
 					LastName = grade.Student?.User.LastName,
 					SubjectName = grade.Subject!.Name!,
 					ClassName = grade.Student!.Class.Name,
-					TeacherName = $"{teacher.User.FirstName} {teacher.User.MiddleName}  {teacher.User.LastName}",
+					TeacherName = $"{grade?.Teacher?.User.FirstName} {grade?.Teacher?.User.MiddleName}  {grade?.Teacher?.User.LastName}",
 					TeacherId = teacher.Id.ToString(),
 					GradeTeacherId = grade.TeacherId.ToString(),
 				};
