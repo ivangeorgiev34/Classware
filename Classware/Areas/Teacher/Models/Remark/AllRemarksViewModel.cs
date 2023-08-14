@@ -12,6 +12,8 @@
 
 		public string StudentId { get; set; } = null!;
 
-        public ICollection<RemarkViewModel>? Remarks { get; set; }
+		public string TeacherId { get; set; } = null!;
+
+		public ICollection<RemarkViewModel>? Remarks { get; set; }
     }
 }
