@@ -56,6 +56,11 @@ namespace Classware.Areas.Student.Controllers
 
 				var student = await studentService.GetStudentByUserIdAsync(User.Id());
 
+				if (compliment.StudentId != student.Id)
+				{
+					return BadRequest();
+				}
+
 				var model = new ComplimentInformationViewModel()
 				{
 					Title = compliment.Title,
