@@ -186,6 +186,15 @@ namespace Classware.Areas.Teacher.Controllers
 		{
 			try
 			{
+				var remark = await remarkService.GetRemarkByIdAsync(id);
+
+				var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
+
+				if (remark.TeacherId != teacher.Id)
+				{
+					return BadRequest();
+				}
+
 				await remarkService.DeleteRemarkByIdAsync(id);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Remark removed successfully";
