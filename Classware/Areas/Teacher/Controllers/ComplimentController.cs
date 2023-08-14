@@ -218,7 +218,15 @@ namespace Classware.Areas.Teacher.Controllers
 		{
 			try
 			{
+				var teacher = await teacherService
+					.GetTeacherByUserIdAsync(User.Id());
+
 				var compliment = await complimentService.GetComplimentByIdAsync(id);
+
+				if (compliment.TeacherId != teacher.Id)
+				{
+					return BadRequest();
+				}
 
 				var model = new EditComplimentViewModel()
 				{
