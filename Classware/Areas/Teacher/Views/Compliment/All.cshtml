@@ -20,14 +20,28 @@
 					<td class="text-center">@Model.FirstName @Model.MiddleName @Model.LastName @Model.ClassName</td>
 					<td class="text-center">@compliment.Title</td>
 					<td class="text-center">@compliment.Description</td>
-					<td class="text-center">
-						<a class="btn btn-warning" asp-area="Teacher" asp-controller="Compliment" asp-action="Edit" asp-route-id="@compliment.Id">Edit</a>
-					</td>
-					<td class="text-center">
-						<form method="post" asp-area="Teacher" asp-controller="Compliment" asp-action="Delete">
-							<button class="btn btn-danger" asp-area="Teacher" asp-controller="Compliment" asp-action="Delete" asp-route-id="@compliment.Id">Delete</button>
-						</form>
-					</td>
+					@if (Model.TeacherId == compliment.ComplimentTeacherId)
+					{
+						<td class="text-center">
+							<a class="btn btn-warning" asp-area="Teacher" asp-controller="Compliment" asp-action="Edit" asp-route-id="@compliment.Id">Edit</a>
+						</td>
+						<td class="text-center">
+							<form method="post" asp-area="Teacher" asp-controller="Compliment" asp-action="Delete">
+								<button class="btn btn-danger" asp-area="Teacher" asp-controller="Compliment" asp-action="Delete" asp-route-id="@compliment.Id">Delete</button>
+							</form>
+						</td>
+					}
+					else
+					{
+						<td class="text-center">
+							<a style="pointer-events:none; opacity:0.6;" class="btn btn-warning" asp-area="Teacher" asp-controller="Compliment" asp-action="Edit" asp-route-id="@compliment.Id">Edit</a>
+						</td>
+						<td class="text-center">
+							<form method="post" asp-area="Teacher" asp-controller="Compliment" asp-action="Delete">
+								<button disabled="true" class="btn btn-danger" asp-area="Teacher" asp-controller="Compliment" asp-action="Delete" asp-route-id="@compliment.Id">Delete</button>
+							</form>
+						</td>
+					}
 				</tr>
 			}
 		</tbody>
