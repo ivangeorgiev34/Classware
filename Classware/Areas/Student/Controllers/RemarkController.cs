@@ -63,6 +63,11 @@ namespace Classware.Areas.Student.Controllers
 
 				var student = await studentService.GetStudentByUserIdAsync(User.Id());
 
+				if (remark.StudentId != student.Id)
+				{
+					return BadRequest();
+				}
+
 				var model = new RemarkInformationViewModel()
 				{
 					FirstName = student.User.FirstName,
