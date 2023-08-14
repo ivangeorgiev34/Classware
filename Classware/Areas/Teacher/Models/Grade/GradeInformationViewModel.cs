@@ -19,5 +19,9 @@ namespace Classware.Areas.Teacher.Models.Grade
 		public string? MiddleName { get; set; }
 
 		public string? LastName { get; set; }
+
+        public string TeacherId { get; set; }= null!;
+
+		public string GradeTeacherId { get; set; } = null!;
 	}
 }
