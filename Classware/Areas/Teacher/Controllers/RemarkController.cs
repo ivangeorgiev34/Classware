@@ -221,6 +221,13 @@ namespace Classware.Areas.Teacher.Controllers
 			{
 				var remark = await remarkService.GetRemarkByIdAsync(id);
 
+				var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
+
+				if (remark.TeacherId != teacher.Id)
+				{
+					return BadRequest();
+				}
+
 				var model = new EditRemarkViewModel()
 				{
 					Id = remark.Id.ToString(),
