@@ -35,6 +35,11 @@ namespace Classware.Areas.Teacher.Controllers
 
 			var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
 
+			if (teacher.Subject == null)
+			{
+				return BadRequest();
+			}
+
 			ICollection<AllClassesViewModel> models = new List<AllClassesViewModel>();
 
 			var classes = await classService.GetAllClassesAsync();
