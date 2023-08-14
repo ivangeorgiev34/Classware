@@ -137,7 +137,7 @@ namespace Classware.Areas.Teacher.Controllers
 				}
 
 				var compliments = student.Compliments
-					.Where(c => c.IsActive && c.Teacher.UserId == teacherUserId)
+					.Where(c => c.IsActive)
 					.ToList();
 
 				ICollection<ComplimentViewModel> complimentViewModels = new List<ComplimentViewModel>();
@@ -148,7 +148,8 @@ namespace Classware.Areas.Teacher.Controllers
 					{
 						Id = compliment.Id.ToString(),
 						Title = compliment.Title,
-						Description = compliment.Description
+						Description = compliment.Description,
+						ComplimentTeacherId = compliment.TeacherId.ToString()
 					});
 				}
 
@@ -159,6 +160,7 @@ namespace Classware.Areas.Teacher.Controllers
 					LastName = student.User.LastName,
 					ClassName = student.Class.Name,
 					StudentId = id,
+					TeacherId = teacher.Id.ToString(),
 					Compliments = complimentViewModels
 				};
 
@@ -182,6 +184,16 @@ namespace Classware.Areas.Teacher.Controllers
 		{
 			try
 			{
+				var teacher = await teacherService
+					.GetTeacherByUserIdAsync(User.Id());
+
+				var compliment = await complimentService.GetComplimentByIdAsync(id);
+
+				if (compliment.TeacherId != teacher.Id)
+				{
+					return BadRequest();
+				}
+
 				await complimentService.DeleteComplimentByIdAsync(id);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Compliment deleted successfully";
