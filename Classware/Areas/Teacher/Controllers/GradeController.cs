@@ -217,6 +217,13 @@ namespace Classware.Areas.Teacher.Controllers
 			{
 				var grade = await gradeService.GetGradeByIdAsync(id);
 
+				var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
+
+				if (teacher.Id != grade.TeacherId)
+				{
+					return BadRequest();
+				}
+
 				var model = new EditGradeViewModel()
 				{
 					Id = grade.Id.ToString(),
