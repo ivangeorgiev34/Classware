@@ -141,6 +141,11 @@ namespace Classware.Areas.Teacher.Controllers
 
 				var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
 
+				if (teacher.SubjectId != grade.SubjectId)
+				{
+					return BadRequest();
+				}
+
 				var model = new GradeInformationViewModel()
 				{
 					Id = grade.Id.ToString(),
@@ -150,7 +155,9 @@ namespace Classware.Areas.Teacher.Controllers
 					LastName = grade.Student?.User.LastName,
 					SubjectName = grade.Subject!.Name!,
 					ClassName = grade.Student!.Class.Name,
-					TeacherName = $"{teacher.User.FirstName} {teacher.User.MiddleName}  {teacher.User.LastName}"
+					TeacherName = $"{teacher.User.FirstName} {teacher.User.MiddleName}  {teacher.User.LastName}",
+					TeacherId = teacher.Id.ToString(),
+					GradeTeacherId = grade.TeacherId.ToString(),
 				};
 
 				return View(model);
