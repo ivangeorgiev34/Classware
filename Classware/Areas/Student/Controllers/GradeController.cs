@@ -30,6 +30,11 @@ namespace Classware.Areas.Student.Controllers
 
 				var student = await studentService.GetStudentByUserIdAsync(User.Id());
 
+				if (grade.StudentId != student.Id)
+				{
+					return BadRequest();
+				}
+
 				var model = new GradeInformationViewModel()
 				{
 					Grade = grade.Type,
