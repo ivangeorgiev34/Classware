@@ -140,7 +140,7 @@ namespace Classware.Areas.Teacher.Controllers
 				ICollection<RemarkViewModel> remarkViewModels = new List<RemarkViewModel>();
 
 				var remarks = student.Remarks
-					.Where(r => r.IsActive == true && r.Teacher.UserId == teacherUserId)
+					.Where(r => r.IsActive == true)
 					.ToList();
 
 				foreach (var remark in remarks)
@@ -149,7 +149,8 @@ namespace Classware.Areas.Teacher.Controllers
 					{
 						Id = remark.Id.ToString(),
 						Description = remark.Description,
-						Title = remark.Title
+						Title = remark.Title,
+						RemarkTeacherId = remark.TeacherId.ToString()
 					});
 				}
 
@@ -160,6 +161,7 @@ namespace Classware.Areas.Teacher.Controllers
 					LastName = student.User.LastName,
 					ClassName = student.Class.Name,
 					StudentId = id,
+					TeacherId = teacher.Id.ToString(),
 					Remarks = remarkViewModels
 				};
 
