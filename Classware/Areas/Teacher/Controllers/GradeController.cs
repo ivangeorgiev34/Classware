@@ -181,6 +181,15 @@ namespace Classware.Areas.Teacher.Controllers
 		{
 			try
 			{
+				var grade = await gradeService.GetGradeByIdAsync(id);
+
+				var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
+
+				if (grade.TeacherId != teacher.Id)
+				{
+					return BadRequest();
+				}
+
 				await gradeService.DeleteGradeByIdAsync(id);
 
 				TempData[UserMessagesConstants.SUCCESS_MESSAGE] = "Grade has been deleted successfuly";
