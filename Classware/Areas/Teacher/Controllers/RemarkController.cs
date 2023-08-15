@@ -116,7 +116,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> All(string id)
+		public async Task<IActionResult> All(string id, [FromQuery] int page = 1)
 		{
 			try
 			{
@@ -143,7 +143,12 @@ namespace Classware.Areas.Teacher.Controllers
 					.Where(r => r.IsActive == true)
 					.ToList();
 
-				foreach (var remark in remarks)
+				var paginatedRemarks = remarks
+					.Skip((page - 1) * 4)
+					.Take(4)
+					.ToList();
+
+				foreach (var remark in paginatedRemarks)
 				{
 					remarkViewModels.Add(new RemarkViewModel
 					{
@@ -162,6 +167,8 @@ namespace Classware.Areas.Teacher.Controllers
 					ClassName = student.Class.Name,
 					StudentId = id,
 					TeacherId = teacher.Id.ToString(),
+					TotalRemarks = remarks.Count(),
+					Page = page,
 					Remarks = remarkViewModels
 				};
 
