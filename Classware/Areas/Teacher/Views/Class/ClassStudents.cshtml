@@ -4,8 +4,37 @@
 }
 @model ClassStudentsViewModel
 
-@if(Model.Students.Count > 0)
+@if (Model.Students.Count > 0)
 {
+	@*<script>
+		function onSearchFormSubmit(e) {
+			e.preventDefault();
+
+			const searchValue = document.querySelector("#searchValue").textContent;
+			const searchOption = document.querySelector("#searchOption").value;
+
+			console.log(searchValue);
+			console.log(searchOption);
+
+			const classId = @Model.Id;
+
+			const url = `https://localhost:7287/Teacher/ClassStudents/${classId}?${searchOption}=${searchValue}`;
+
+			if (searchValue != "" && searchOption != "") {
+				window.location.href = url;
+			}
+
+		}
+	</script>
+	<form onsubmit="return onSearchFormSubmit(event)">
+		<input id="searchValue" type="text" placeholder="Search..." />
+		<select id="searchOption">
+			<option value="firstName">First name</option>
+			<option value="middleName">Middle name</option>
+			<option value="lastName">Last name</option>
+		</select>
+		<button type="submit">Search</button>
+	</form>*@
 	<table class="table table-light table-hover table-striped table-bordered">
 		<thead>
 			<tr>
@@ -73,6 +102,37 @@
 			}
 		</tbody>
 	</table>
+	<div class="text-center">
+		@{
+			var url = "";
+		}
+
+		@if (Model.Page == 1)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Previous</a>
+		}
+		else if (Model.Page == 2)
+		{
+			<a asp-area="Teacher" asp-controller="Class" asp-action="ClassStudents" asp-route-id="@Model.Id">Previous</a>
+		}
+		else
+		{
+			url = $"/Teacher/Class/ClassStudents/{@Model.Id}?page={Model.Page - 1}";
+
+			<a href="@url">Previous</a>
+		}
+		<span>@Model.Page</span>
+		@if (((Model.Page + 1) * 4) - Model.TotalProperties >= 4)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Next</a>
+		}
+		else
+		{
+			url = $"/Teacher/Class/ClassStudents/{@Model.Id}?page={Model.Page + 1}";
+
+			<a href="@url">Next</a>
+		}
+	</div>
 }
 else
 {
