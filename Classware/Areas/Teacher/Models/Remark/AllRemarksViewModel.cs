@@ -14,6 +14,10 @@
 
 		public string TeacherId { get; set; } = null!;
 
-		public ICollection<RemarkViewModel>? Remarks { get; set; }
+		public int TotalRemarks { get; set; }
+
+        public int Page { get; set; }
+
+        public ICollection<RemarkViewModel>? Remarks { get; set; }
     }
 }
