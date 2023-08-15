@@ -16,6 +16,10 @@ namespace Classware.Areas.Teacher.Models.Compliment
 
 		public string TeacherId { get; set; } = null!;
 
-		public ICollection<ComplimentViewModel>? Compliments { get; set; }
+        public int TotalCompliments { get; set; }
+
+        public int Page { get; set; }
+
+        public ICollection<ComplimentViewModel>? Compliments { get; set; }
 	}
 }
