@@ -18,7 +18,7 @@ namespace Classware.Areas.Student.Controllers
 			remarkService = _remarkService;
 		}
 		[HttpGet]
-		public async Task<IActionResult> All()
+		public async Task<IActionResult> All([FromQuery] int page = 1)
 		{
 			try
 			{
@@ -30,7 +30,12 @@ namespace Classware.Areas.Student.Controllers
 
 				ICollection<RemarkViewModel> remarkViewModels = new List<RemarkViewModel>();
 
-				foreach (var remark in remarks)
+				var paginatedRemarks = remarks
+					.Skip((page - 1) * 4)
+					.Take(4)
+					.ToList();
+
+				foreach (var remark in paginatedRemarks)
 				{
 					remarkViewModels.Add(new RemarkViewModel
 					{
@@ -42,6 +47,8 @@ namespace Classware.Areas.Student.Controllers
 
 				var model = new AllRemarksViewModel()
 				{
+					TotalRemarks = remarks.Count,
+					Page = page,
 					Remarks = remarkViewModels
 				};
 
