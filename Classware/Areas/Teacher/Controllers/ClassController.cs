@@ -30,7 +30,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> All()
+		public async Task<IActionResult> All([FromQuery] int page = 1)
 		{
 
 			var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
@@ -40,22 +40,25 @@ namespace Classware.Areas.Teacher.Controllers
 				return BadRequest();
 			}
 
-			ICollection<AllClassesViewModel> models = new List<AllClassesViewModel>();
+			var model = new AllClassesViewModel();
 
 			var classes = await classService.GetAllClassesAsync();
 
-			foreach (var _class in classes)
+			foreach (var _class in classes.Skip((page - 1) * 4).Take(4).ToList())
 			{
-				models.Add(new AllClassesViewModel()
+				model.Classes?.Add(new ClassViewModel()
 				{
 					Id = _class.Id.ToString(),
 					Name = _class.Name,
 					StudentsCount = _class.Students.Where(s => s.IsActive == true).Count(s => s.StudentSubjects
-					.Select(ss => ss.Subject.Name).Contains(teacher.Subject.Name))
+					.Select(ss => ss.Subject?.Name).Contains(teacher.Subject.Name))
 				});
 			}
 
-			return View(models);
+			model.Page = page;
+			model.TotalClasses = classes.Count();
+
+			return View(model);
 		}
 		/// <summary>
 		/// Gets all of the given class' students
