@@ -3,6 +3,7 @@ using Classware.Core.Constants;
 using Classware.Core.Contracts;
 using Classware.Core.Services;
 using Classware.Extensions;
+using Classware.Infrastructure.Dtos.Query;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Classware.Areas.Teacher.Controllers
@@ -67,7 +68,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		public async Task<IActionResult> ClassStudents(string id)
+		public async Task<IActionResult> ClassStudents(string id, [FromQuery] ClassStudentsQueryParams studentsQueryParams)
 		{
 			try
 			{
@@ -82,8 +83,12 @@ namespace Classware.Areas.Teacher.Controllers
 
 				ICollection<StudentViewModel>? studentViewModels = new List<StudentViewModel>();
 
+				var paginatedStudents = students
+					.Skip((studentsQueryParams.Page - 1) * 4)
+					.Take(4)
+					.ToList();
 
-				foreach (var student in students)
+				foreach (var student in paginatedStudents)
 				{
 					ICollection<StudentSubjectGradesViewModel>? studentSubjectGradesViewModels = new List<StudentSubjectGradesViewModel>();
 
@@ -114,6 +119,9 @@ namespace Classware.Areas.Teacher.Controllers
 
 				var model = new ClassStudentsViewModel()
 				{
+					Id = id,
+					TotalProperties = students.Count(),
+					Page = studentsQueryParams.Page,
 					Students = studentViewModels
 				};
 
