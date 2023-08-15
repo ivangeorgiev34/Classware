@@ -2,10 +2,16 @@
 {
 	public class AllClassesViewModel
 	{
-        public string Id { get; set; } = null!;
+        public AllClassesViewModel()
+        {
+            this.Classes = new List<ClassViewModel>();
 
-        public string Name { get; set; } = null!;
+		}
 
-        public int StudentsCount { get; set; }
+        public int Page { get; set; }
+
+        public int TotalClasses { get; set; }
+
+        public List<ClassViewModel>? Classes { get; set; }
     }
 }
