@@ -66,6 +66,11 @@ namespace Classware.Areas.Student.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(string id)
 		{
+			if (User.Id() != id)
+			{
+				return BadRequest();
+			}
+
 			var student = await studentService.GetStudentByUserIdAsync(id);
 
 			var model = new EditProfileViewModel()
