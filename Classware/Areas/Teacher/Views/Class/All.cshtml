@@ -1,4 +1,4 @@
-﻿dd pagin@using Classware.Areas.Teacher.Models.Class;
+﻿@using Classware.Areas.Teacher.Models.Class;
 @model AllClassesViewModel
 
 @if (Model.Classes?.Count == 0)
@@ -42,19 +42,19 @@ else
 		}
 		else
 		{
-			url = $"/teacher/class/all?page={Model.Page - 1}";
+			url = $"/Teacher/Class/All?page={Model.Page - 1}";
 
 			<a href="@url">Previous</a>
 		}
 
 		<span class="mr-5 ml-5">@Model.Page</span>
-		@if (Model.TotalClasses % (@Model.Page * 4) == 0)
+		@if (((Model.Page + 1) * 4) - Model.TotalClasses >= 4)
 		{
 			<a style="opacity:0.4; pointer-events:none;">Next</a>
 		}
 		else
 		{
-			url = $"/teacher/class/all?page={Model.Page + 1}";
+			url = $"/Teacher/Class/All?page={Model.Page + 1}";
 
 			<a href="@url">Next</a>
 		}
