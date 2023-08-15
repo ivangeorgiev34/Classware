@@ -14,37 +14,44 @@ namespace Classware.Areas.Student.Controllers
 
 		public ComplimentController(IStudentService _studentService,
 			IComplimentService _complimentService)
-        {
-            studentService = _studentService;
-			complimentService = _complimentService;
-        }
-        [HttpGet]
-		public async Task<IActionResult> All()
 		{
-				var student = await studentService.GetStudentByUserIdAsync(User.Id());
+			studentService = _studentService;
+			complimentService = _complimentService;
+		}
+		[HttpGet]
+		public async Task<IActionResult> All([FromQuery] int page = 1)
+		{
+			var student = await studentService.GetStudentByUserIdAsync(User.Id());
 
-				ICollection<ComplimentViewModel> complimentViewModels = new List<ComplimentViewModel>();
+			ICollection<ComplimentViewModel> complimentViewModels = new List<ComplimentViewModel>();
 
-				var compliments = student.Compliments
-					.Where(c => c.IsActive == true)
-					.ToList();
+			var compliments = student.Compliments
+				.Where(c => c.IsActive == true)
+				.ToList();
 
-				foreach (var compliment in compliments)
+			var paginatedCompliments = compliments
+				.Skip((page - 1) * 4)
+				.Take(4)
+				.ToList();
+
+			foreach (var compliment in paginatedCompliments)
+			{
+				complimentViewModels.Add(new ComplimentViewModel()
 				{
-					complimentViewModels.Add(new ComplimentViewModel()
-					{
-						Id = compliment.Id.ToString(),
-						Title = compliment.Title,
-						Description = compliment.Description
-					});
-				}
+					Id = compliment.Id.ToString(),
+					Title = compliment.Title,
+					Description = compliment.Description
+				});
+			}
 
-				var model = new AllComplimentsViewModel()
-				{
-					Compliments = complimentViewModels
-				};
+			var model = new AllComplimentsViewModel()
+			{
+				TotalCompliments  = compliments.Count,
+				Page = page,
+				Compliments = complimentViewModels
+			};
 
-				return View(model);
+			return View(model);
 		}
 
 		[HttpGet]
