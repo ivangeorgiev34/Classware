@@ -46,6 +46,39 @@
 			}
 		</tbody>
 	</table>
+	<div class="text-center">
+
+		@{
+			string url = "";
+		}
+
+		@if (@Model.Page == 1)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Previous</a>
+		}
+		else if (@Model.Page == 2)
+		{
+			<a asp-area="Teacher" asp-controller="Remark" asp-action="All" asp-route-id="@Model.StudentId">Previous</a>
+		}
+		else
+		{
+			url = $"/Teacher/Remark/All/{Model.StudentId}?page={Model.Page - 1}";
+
+			<a href="@url">Previous</a>
+		}
+
+		<span class="mr-5 ml-5">@Model.Page</span>
+		@if (((Model.Page + 1) * 4) - Model.TotalRemarks >= 4)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Next</a>
+		}
+		else
+		{
+			url = $"/Teacher/Remark/All/{Model.StudentId}?page={Model.Page + 1}";
+
+			<a href="@url">Next</a>
+		}
+	</div>
 }		
 else
 {
