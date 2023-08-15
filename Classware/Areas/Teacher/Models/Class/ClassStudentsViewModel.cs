@@ -2,7 +2,7 @@
 {
 	public class ClassStudentsViewModel
 	{
-        public string Id { get; set; }
+        public string Id { get; set; } = null!;
         public int TotalProperties { get; set; }
 
         public int Page { get; set; }
