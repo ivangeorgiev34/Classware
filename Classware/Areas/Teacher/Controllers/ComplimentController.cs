@@ -115,7 +115,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> All(string id)
+		public async Task<IActionResult> All(string id, [FromQuery] int page = 1)
 		{
 			try
 			{
@@ -142,7 +142,12 @@ namespace Classware.Areas.Teacher.Controllers
 
 				ICollection<ComplimentViewModel> complimentViewModels = new List<ComplimentViewModel>();
 
-				foreach (var compliment in compliments)
+				var paginatedCompliments = compliments
+					.Skip((page - 1) * 4)
+					.Take(4)
+					.ToList();
+
+				foreach (var compliment in paginatedCompliments)
 				{
 					complimentViewModels.Add(new ComplimentViewModel()
 					{
@@ -161,6 +166,8 @@ namespace Classware.Areas.Teacher.Controllers
 					ClassName = student.Class.Name,
 					StudentId = id,
 					TeacherId = teacher.Id.ToString(),
+					TotalCompliments = compliments.Count,
+					Page = page,
 					Compliments = complimentViewModels
 				};
 
