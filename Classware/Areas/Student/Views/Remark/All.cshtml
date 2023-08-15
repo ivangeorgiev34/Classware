@@ -1,7 +1,7 @@
 ﻿@using Classware.Areas.Student.Models.Remark;
 @model AllRemarksViewModel
 
-@if(Model.Remarks.Count > 0)
+@if (Model.Remarks.Count > 0)
 {
 	<table class="table table-light table-hover table-striped table-bordered">
 		<thead>
@@ -22,6 +22,37 @@
 			}
 		</tbody>
 	</table>
+	<div class="text-center">
+		@{
+			var url = "";
+		}
+
+		@if (Model.Page == 1)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Previous</a>
+		}
+		else if (Model.Page == 2)
+		{
+			<a asp-area="Student" asp-controller="Remark" asp-action="All">Previous</a>
+		}
+		else
+		{
+			url = $"/Student/Remark/All?page={Model.Page - 1}";
+
+			<a href="@url">Previous</a>
+		}
+		<span>@Model.Page</span>
+		@if (((Model.Page + 1) * 4) - Model.TotalRemarks >= 4)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Next</a>
+		}
+		else
+		{
+			url = $"/Student/Remark/All?page={Model.Page + 1}";
+
+			<a href="@url">Next</a>
+		}
+	</div>
 }
 else
 {
