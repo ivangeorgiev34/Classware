@@ -1,22 +1,62 @@
 ﻿@using Classware.Areas.Teacher.Models.Class;
-@model ICollection<AllClassesViewModel>
+@model AllClassesViewModel
 
-<table class="table table-light table-hover table-striped table-bordered">
-	<thead>
-		<tr>
-			<th class="text-center" scope="col">Name</th>
-			<th class="text-center" scope="col">StudentsCount</th>
-		</tr>
-	</thead>
-	<tbody>
+@if (Model.Classes?.Count == 0)
+{
+	<h1 class="text-center mt-4">There are no registered classes in the syste</h1>
+}
+else
+{
+	<table class="table table-light table-hover table-striped table-bordered">
+		<thead>
+			<tr>
+				<th class="text-center" scope="col">Name</th>
+				<th class="text-center" scope="col">StudentsCount</th>
+			</tr>
+		</thead>
+		<tbody>
 
-			@foreach (var item in Model)
+			@foreach (var item in Model.Classes)
 			{
 				<tr>
-				<td class="text-center" scope="col">@item.Name</td>
-				<td class="text-center" scope="col">@item.StudentsCount</td>
-				<td class="text-center" scope="col"><a class="btn btn-secondary" style="margin:auto;" asp-area="Teacher" asp-controller="Class" asp-action="ClassStudents" asp-route-id="@item.Id">View all students</a></td>
+					<td class="text-center" scope="col">@item.Name</td>
+					<td class="text-center" scope="col">@item.StudentsCount</td>
+					<td class="text-center" scope="col"><a class="btn btn-secondary" style="margin:auto;" asp-area="Teacher" asp-controller="Class" asp-action="ClassStudents" asp-route-id="@item.Id">View all students</a></td>
 				</tr>
 			}
-	</tbody>
-</table>
+		</tbody>
+	</table>
+	<div class="text-center">
+
+		@{
+			string url = "";
+		}
+
+		@if (@Model.Page == 1)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Previous</a>
+		}
+		else if (@Model.Page == 2)
+		{
+			<a asp-area="Teacher" asp-controller="Class" asp-action="All">Previous</a>
+		}
+		else
+		{
+			url = $"/teacher/class/all?page={Model.Page - 1}";
+
+			<a href="@url">Previous</a>
+		}
+
+		<span class="mr-5 ml-5">@Model.Page</span>
+		@if (Model.TotalClasses % (@Model.Page * 4) == 0)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Next</a>
+		}
+		else
+		{
+			url = $"/teacher/class/all?page={Model.Page + 1}";
+
+			<a href="@url">Next</a>
+		}
+	</div>
+}
