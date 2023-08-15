@@ -46,6 +46,39 @@
 			}
 		</tbody>
 	</table>
+	<div class="text-center">
+		@{
+			string url = "";
+		}
+
+		@if (Model.Page == 1)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Previous</a>
+		}
+		else if (Model.Page == 2)
+		{
+			url = $"/Teacher/Compliment/All/{Model.StudentId}";
+
+			<a href="@url">Previous</a>
+		}
+		else
+		{
+			url = $"/Teacher/Compliment/All/{Model.StudentId}?page={Model.Page - 1}";
+
+			<a href="@url">Previous</a>
+		}
+		<span>@Model.Page</span>
+		@if (((Model.Page + 1) * 4) - Model.TotalCompliments >= 4)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Next</a>
+		}
+		else
+		{
+			url = $"/Teacher/Compliment/All/{Model.StudentId}?page={Model.Page + 1}";
+
+			<a href="@url">Next</a>
+		}
+	</div>
 }
 else
 {
