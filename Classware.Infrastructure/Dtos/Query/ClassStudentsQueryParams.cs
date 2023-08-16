@@ -10,10 +10,8 @@ namespace Classware.Infrastructure.Dtos.Query
 	{
 		public int Page { get; set; } = 1;
 
-        public string? FirstName { get; set; }
+        public string? SearchOption { get; set; }
 
-		public string? MiddleName { get; set; }
-
-		public string? LastName { get; set; }
+		public string? SearchValue { get; set; }
 	}
 }
