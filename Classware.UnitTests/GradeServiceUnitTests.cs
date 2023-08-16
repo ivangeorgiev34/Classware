@@ -38,7 +38,7 @@ namespace Classware.UnitTests
 			repo = new Repository(dbContext);
 			gradeService = new GradeService(repo);
 
-			await gradeService.AddGradeAsync("cd121bd1-f3a0-4042-b9fe-97355fd8a1fd", "a284b28d-e540-45db-a1ff-3ddf6a9cb986", "fa88e808-4423-403e-8ec6-4e7a6eb25a16", 6);
+			await gradeService.AddGradeAsync("cd121bd1-f3a0-4042-b9fe-97355fd8a1fd", "a284b28d-e540-45db-a1ff-3ddf6a9cb986", "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
 
 			Assert.That(repo.All<Grade>().First()?.Type, Is.EqualTo(6));
 		}
@@ -49,7 +49,7 @@ namespace Classware.UnitTests
 			repo = new Repository(dbContext);
 			gradeService = new GradeService(repo);
 
-			await gradeService.AddGradeAsync("8e27b970-bbb5-4f55-b102-9c33caf7e1b2", "27be7717-6478-4ff2-8448-4a0b7de518eb", "a582b781-46cf-43dd-9a9b-857241418fda", 6);
+			await gradeService.AddGradeAsync("8e27b970-bbb5-4f55-b102-9c33caf7e1b2", "27be7717-6478-4ff2-8448-4a0b7de518eb", "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
 
 			Assert.ThrowsAsync<NullReferenceException>(async () => await gradeService.DeleteGradeByIdAsync("a582b781-46cf-43dd-9a9b-857241418fdd"));
 		}
@@ -60,7 +60,7 @@ namespace Classware.UnitTests
 			repo = new Repository(dbContext);
 			gradeService = new GradeService(repo);
 
-			await gradeService.AddGradeAsync("1f72e0c4-f53d-4942-97ed-76d7440c154a", "49520b08-6ec6-4d7d-a978-8766154c766a", "fff3f772-3714-40fc-ba95-bffd96cc8463", 6);
+			await gradeService.AddGradeAsync("1f72e0c4-f53d-4942-97ed-76d7440c154a", "49520b08-6ec6-4d7d-a978-8766154c766a", "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
 
 			var gradeId = repo.All<Grade>().First().Id.ToString();
 
@@ -100,7 +100,7 @@ namespace Classware.UnitTests
 			await repo.AddAsync(student);
 			await repo.AddAsync(teacher);
 
-			await gradeService.AddGradeAsync("e12d12b5-2210-437c-a5e0-e7622060cdfd", "c524a0fb-cdb4-4233-b075-336bb59ed372", "b2aadb92-f6ee-4e3c-bf2d-fba0454ee83f", 6);
+			await gradeService.AddGradeAsync(student.Id.ToString(), teacher.Id.ToString(), "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
 
 			var gradeId = repo.All<Grade>().First().Id.ToString();
 
@@ -140,7 +140,7 @@ namespace Classware.UnitTests
 			await repo.AddAsync(student);
 			await repo.AddAsync(teacher);
 
-			await gradeService.AddGradeAsync("402b95ee-ed6c-4cf0-bb6f-505643020167", "4ccbd970-aecd-4fc4-8e7b-e06d4ee055f4", "0b9d3765-da85-423e-9b72-2ddad199177b", 6);
+			await gradeService.AddGradeAsync(student.Id.ToString(), teacher.Id.ToString(), "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
 
 			Assert.ThrowsAsync<NullReferenceException>(async () => await gradeService.GetGradeByIdAsync("fa5369d5-bd37-46a4-9593-41821af72453"));
 		}
@@ -176,7 +176,7 @@ namespace Classware.UnitTests
 			await repo.AddAsync(student);
 			await repo.AddAsync(teacher);
 
-			await gradeService.AddGradeAsync("07dd2b1b-c80c-412b-a624-c65a602c7660", "ded1cfd3-2d86-4c0b-8bc7-dade140e3818", "04ac4c58-25f8-429e-a545-5bc5e2349e39", 6);
+			await gradeService.AddGradeAsync(student.Id.ToString(), teacher.Id.ToString(), "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
 
 			var gradeId = repo.All<Grade>().First().Id.ToString();
 
@@ -214,15 +214,15 @@ namespace Classware.UnitTests
 			await repo.AddAsync(student);
 			await repo.AddAsync(teacher);
 
-			await gradeService.AddGradeAsync("8f1f910e-1c89-42a5-bbf3-a0d6afc5461a", "4dd73806-aacc-4cde-a93e-472ba5ea5efd", "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
-			await gradeService.AddGradeAsync("493750c6-09d2-4c82-b100-debb616496af", "8d8b5992-563e-4365-9b01-17f667928bf3", "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
-			await gradeService.AddGradeAsync("c14108ab-5dd5-4c0d-bd66-6c4489f9d68b", "6cb4f8a5-8161-4856-bdd5-ff4528b7cfa6", "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
+			await gradeService.AddGradeAsync(student.Id.ToString(), teacher.Id.ToString(), "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
+			await gradeService.AddGradeAsync(student.Id.ToString(), teacher.Id.ToString(), "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
+			await gradeService.AddGradeAsync(student.Id.ToString(), teacher.Id.ToString(), "e60f5411-9d93-458c-82c6-1e45cc1888a6", 6);
 
 			var gradeId = repo.All<Grade>().First().Id.ToString();
 
-			var result = (await gradeService.GetGradesByStudentIdAndSubjectName(gradeId, "English language")).Count;
+			var result = (await gradeService.GetGradesByStudentIdAndSubjectName(student.Id.ToString(), "English language")).Count;
 
-			Assert.That(result, Is.EqualTo(1));
+			Assert.That(result, Is.EqualTo(3));
 		}
 
 		[TearDown]
