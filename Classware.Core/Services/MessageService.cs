@@ -22,7 +22,6 @@ namespace Classware.Core.Services
 		{
 			var message = new Message()
 			{
-				//chekc if id should be included as guid explicitly
 				Email = email,
 				FullName = fullName,
 				Description = description,
