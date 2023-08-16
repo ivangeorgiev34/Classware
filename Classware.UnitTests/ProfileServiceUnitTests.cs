@@ -67,12 +67,10 @@ namespace Classware.UnitTests
                 await userManager.CreateAsync(user);
             }
 
-            var user2Id = "49529761-1248-4739-a965-5a25cc410967";
-
             repo = new Repository(dbContext);
             profileService = new ProfileService(userManager,repo);
 
-            Assert.ThrowsAsync<NullReferenceException>(async () => await profileService.EditProfileInformationAsync("", new byte[1], null, null, null, null, null));
+            Assert.ThrowsAsync<NullReferenceException>(async () => await profileService.EditProfileInformationAsync("ee09c288-e78e-4be7-85e0-c5c537d46022", new byte[1], null, null, null, null, null));
         }
 
         [Test]
@@ -105,14 +103,12 @@ namespace Classware.UnitTests
                 await userManager.CreateAsync(user);
             }
 
-            var user2Id = "49529761-1248-4739-a965-5a25cc410967";
-
             repo = new Repository(dbContext);
             profileService = new ProfileService(userManager, repo);
 
-            await profileService.EditProfileInformationAsync(user2Id, new byte[1], "EditedUser2", null, null, null, null);
+            await profileService.EditProfileInformationAsync("49529761-1248-4739-a965-5a25cc410967", new byte[1], "EditedUser2", null, null, null, null);
 
-            Assert.That((await userManager.FindByIdAsync(user2Id)).FirstName, Is.EqualTo("EditedUser2"));
+            Assert.That((await userManager.FindByIdAsync("49529761-1248-4739-a965-5a25cc410967")).FirstName, Is.EqualTo("EditedUser2"));
         }
 
         [Test]
