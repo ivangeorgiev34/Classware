@@ -5,6 +5,7 @@ using Classware.Core.Services;
 using Classware.Extensions;
 using Classware.Infrastructure.Dtos.Query;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Classware.Areas.Teacher.Controllers
 {
@@ -79,14 +80,51 @@ namespace Classware.Areas.Teacher.Controllers
 
 				var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
 
-				var students = await studentService.GetStudentsByClassIdAndSubjectName(id, teacher.Subject?.Name ?? "");
+				var students = await studentService
+						.GetStudentsByClassIdAndSubjectName(id, teacher.Subject?.Name ?? "");
+
+				var filteredStudents = new List<Infrastructure.Models.Student>();
+
+				if (studentsQueryParams.SearchOption == "firstName")
+				{
+					filteredStudents = students
+						.Where(s => s.User.FirstName!.ToLower()
+						.Contains(studentsQueryParams.SearchValue == null ? "" : studentsQueryParams.SearchValue.ToLower()))
+						.ToList();
+				}
+				else if (studentsQueryParams.SearchOption == "middleName")
+				{
+					filteredStudents = students
+						.Where(s => s.User.MiddleName!.ToLower()
+						.Contains(studentsQueryParams.SearchValue == null ? "" : studentsQueryParams.SearchValue.ToLower()))
+						.ToList();
+				}
+				else if (studentsQueryParams.SearchOption == "lastName")
+				{
+					filteredStudents = students
+						.Where(s => s.User.LastName!.ToLower()
+						.Contains(studentsQueryParams.SearchValue == null ? "" : studentsQueryParams.SearchValue.ToLower()))
+						.ToList();
+				}
 
 				ICollection<StudentViewModel>? studentViewModels = new List<StudentViewModel>();
 
-				var paginatedStudents = students
-					.Skip((studentsQueryParams.Page - 1) * 4)
-					.Take(4)
-					.ToList();
+				var paginatedStudents = new List<Infrastructure.Models.Student>();
+
+				if (filteredStudents.Count == 0)
+				{
+					paginatedStudents = students
+				   .Skip((studentsQueryParams.Page - 1) * 4)
+				   .Take(4)
+				   .ToList();
+				}
+				else
+				{
+					paginatedStudents = filteredStudents
+				   .Skip((studentsQueryParams.Page - 1) * 4)
+				   .Take(4)
+				   .ToList();
+				}
 
 				foreach (var student in paginatedStudents)
 				{
@@ -120,8 +158,10 @@ namespace Classware.Areas.Teacher.Controllers
 				var model = new ClassStudentsViewModel()
 				{
 					Id = id,
-					TotalProperties = students.Count(),
+					TotalProperties = filteredStudents.Count == 0 ? students.Count() : filteredStudents.Count,
 					Page = studentsQueryParams.Page,
+					SearchOption = filteredStudents.Count > 0 ? studentsQueryParams.SearchOption : null,
+					SearchValue = filteredStudents.Count > 0 ? studentsQueryParams.SearchValue : null,
 					Students = studentViewModels
 				};
 
