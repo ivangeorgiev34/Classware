@@ -4,37 +4,24 @@
 }
 @model ClassStudentsViewModel
 
+<head>
+	<link rel="stylesheet" href="~/css/imports.css" type="text/css" />
+</head>
 @if (Model.Students.Count > 0)
 {
-	@*<script>
-		function onSearchFormSubmit(e) {
-			e.preventDefault();
-
-			const searchValue = document.querySelector("#searchValue").textContent;
-			const searchOption = document.querySelector("#searchOption").value;
-
-			console.log(searchValue);
-			console.log(searchOption);
-
-			const classId = @Model.Id;
-
-			const url = `https://localhost:7287/Teacher/ClassStudents/${classId}?${searchOption}=${searchValue}`;
-
-			if (searchValue != "" && searchOption != "") {
-				window.location.href = url;
-			}
-
-		}
-	</script>
-	<form onsubmit="return onSearchFormSubmit(event)">
-		<input id="searchValue" type="text" placeholder="Search..." />
-		<select id="searchOption">
+	<form class="mb-4" style="display:flex; flex-flow: row nowrap; justify-content: center; align-items: stretch; height:40px;"
+		  method="get"
+		  asp-area="Teacher" asp-controller="Class" asp-action="ClassStudents">
+		<input id="searchValue" type="text" name="searchValue" placeholder="Search..." />
+		<select id="searchOption" name="searchOption">
 			<option value="firstName">First name</option>
 			<option value="middleName">Middle name</option>
 			<option value="lastName">Last name</option>
 		</select>
-		<button type="submit">Search</button>
-	</form>*@
+		<button id="searchBtn" type="submit">
+			<i class="fas fa-search"></i>
+		</button>
+	</form>
 	<table class="table table-light table-hover table-striped table-bordered">
 		<thead>
 			<tr>
@@ -113,11 +100,20 @@
 		}
 		else if (Model.Page == 2)
 		{
-			<a asp-area="Teacher" asp-controller="Class" asp-action="ClassStudents" asp-route-id="@Model.Id">Previous</a>
+			url = $"/Teacher/Class/ClassStudents/{@Model.Id}?searchValue={Model.SearchValue}&searchOption={Model.SearchOption}";
+
+			<a href="@url">Previous</a>
 		}
 		else
 		{
-			url = $"/Teacher/Class/ClassStudents/{@Model.Id}?page={Model.Page - 1}";
+			@if (Model.SearchOption != null)
+			{
+				url = $"/Teacher/Class/ClassStudents/{@Model.Id}?searchValue={Model.SearchValue}&searchOption={Model.SearchOption}&page={Model.Page - 1}";
+			}
+			else
+			{
+				url = $"/Teacher/Class/ClassStudents/{@Model.Id}?page={Model.Page - 1}";
+			}
 
 			<a href="@url">Previous</a>
 		}
@@ -128,7 +124,14 @@
 		}
 		else
 		{
-			url = $"/Teacher/Class/ClassStudents/{@Model.Id}?page={Model.Page + 1}";
+			@if (Model.SearchOption != null)
+			{
+				url = $"/Teacher/Class/ClassStudents/{@Model.Id}?searchValue={Model.SearchValue}&searchOption={Model.SearchOption}&page={Model.Page + 1}";
+			}
+			else
+			{
+				url = $"/Teacher/Class/ClassStudents/{@Model.Id}?page={Model.Page + 1}";
+			}
 
 			<a href="@url">Next</a>
 		}
