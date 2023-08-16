@@ -1,22 +1,61 @@
-﻿@using Classware.Models.Chat;
-@model List<ChatViewModel>
+﻿@using Classware.Areas.Administrator.Models.Chat;
+@using Classware.Models.Chat;
+@model AllMessagesViewModel
 
-<ul class="messagesList">
-	@if (Model.Count > 0)
-	{
-		@foreach (var message in Model)
+@if (Model.Messages.Count > 0)
+{
+	<ul class="messagesList">
+		@if (Model.Messages.Count > 0)
 		{
-			<li class="messageListItem">
-				<h2 class="messageTitle">@message.Title</h2>
-				<p class="messageDescription">Description: @message.Description</p>
-				<span class="messageFullName">Full name: @message.FullName</span>
-				<span class="messageEmail">@message.Email</span>
-				<span class="messageId">Message Id: @message.Id</span>
-				<button type="button" class="isAnsweredBtn">Is Answered</button>
-			</li>
+			@foreach (var message in Model.Messages)
+			{
+				<li class="messageListItem">
+					<h2 class="messageTitle">@message.Title</h2>
+					<p class="messageDescription">Description: @message.Description</p>
+					<span class="messageFullName">Full name: @message.FullName</span>
+					<span class="messageEmail">@message.Email</span>
+					<span class="messageId">Message Id: @message.Id</span>
+					<button type="button" class="isAnsweredBtn">Is Answered</button>
+				</li>
+			}
 		}
-	}
-</ul>
+	</ul>
+	<div class="text-center">
+		@{
+			var url = "";
+		}
+
+		@if (Model.Page == 1)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Previous</a>
+		}
+		else if (Model.Page == 2)
+		{
+			<a asp-area="Administrator" asp-controller="Chat" asp-action="AllMessages">Previous</a>
+		}
+		else
+		{
+			url = $"/administrator/chat/allmessages?page={Model.Page - 1}";
+
+			<a href="@url">Previous</a>
+		}
+		<span>@Model.Page</span>
+		@if (((Model.Page + 1) * 4) - Model.TotalMessages >= 4)
+		{
+			<a style="opacity:0.4; pointer-events:none;">Next</a>
+		}
+		else
+		{
+			url = $"/administrator/chat/allmessages?page={Model.Page + 1}";
+
+			<a href="@url">Next</a>
+		}
+	</div>
+}
+else
+{
+	<h1 class="text-center">No messages!</h1>
+}
 
 @section Scripts{
 	<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
