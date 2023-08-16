@@ -82,7 +82,7 @@ namespace Classware.UnitTests
         }
 
         [Test]
-        public async Task Test_MethodGetSubjectByNameAsyncShouldThrowExceptionWhenCannotFindSubject()
+        public void Test_MethodGetSubjectByNameAsyncShouldThrowExceptionWhenCannotFindSubject()
         {
             repo = new Repository(dbContext);
             subjectService = new SubjectService(repo);
