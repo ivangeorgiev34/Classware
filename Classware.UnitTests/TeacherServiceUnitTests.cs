@@ -183,7 +183,7 @@ namespace Classware.UnitTests
 
             await teacherService.AddTeacher(teacher);
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await teacherService.AssignSubjectToTeacherAsync(teacherId.ToString(), subjectId));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await teacherService.AssignSubjectToTeacherAsync("e60f5411-9d93-458c-82c6-1e45cc1888a6", subjectId));
 
         }
 
