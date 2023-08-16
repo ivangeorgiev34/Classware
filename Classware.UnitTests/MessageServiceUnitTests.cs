@@ -41,7 +41,7 @@ namespace Classware.UnitTests
 
 			var message = new Message()
 			{
-				Id = new Guid("59087313-acf6-4321-80c1-79561fdb7cce"),
+				Id= new Guid("46a48bdb-8c97-400a-9479-00dbe54472f5"),
 				Email = "example@abv.bg",
 				Description = "",
 				Title = "",
@@ -51,9 +51,9 @@ namespace Classware.UnitTests
 
 			await messageService.AddMessageAsync(message.FullName, message.Email, message.Title, message.Description);
 
-			var expectedMessage = await repo.All<Message>().FirstOrDefaultAsync(m => m.Id == message.Id);
+			var expectedMessage = await repo.All<Message>().FirstOrDefaultAsync();
 
-			Assert.That(message.Id, Is.EqualTo(expectedMessage?.Id));
+			Assert.That(message.Email, Is.EqualTo(expectedMessage?.Email));
 		}
 
 		[Test]
@@ -77,7 +77,7 @@ namespace Classware.UnitTests
 
 			var allMessages = await messageService.GetAllMessagesAsync();
 
-			await messageService.SetMessageToAnsweredAsync("c3b94935-1cbc-4d56-9e03-540fafc3ddf6");
+			await messageService.SetMessageToAnsweredAsync(allMessages.First().Id.ToString());
 
 			Assert.That(allMessages[0].IsAnswered, Is.True);
 
@@ -141,7 +141,9 @@ namespace Classware.UnitTests
 
 			await messageService.AddMessageAsync(secondMessage.FullName, secondMessage.Email, secondMessage.Title, secondMessage.Description);
 
-			await messageService.SetMessageToAnsweredAsync(firstMessage.Id.ToString());
+			await messageService.SetMessageToAnsweredAsync(repo
+				.AllReadonly<Message>()
+				.First().Id.ToString());
 
 			var allMessages = await messageService.GetAllMessagesAsync();
 
