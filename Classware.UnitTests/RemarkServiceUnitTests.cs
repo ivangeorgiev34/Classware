@@ -39,7 +39,7 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             remarkService = new RemarkService(repo);
 
-            await remarkService.AddRemarkAsync("31a1f859-2295-4bb3-9bc2-874ee47e8ef7", "4b514cf9-5fe6-40c8-af4c-1ab9ad494dc1", "101dd43a-8e24-4a79-bf8e-d2dfdec2a1b4", "test", "");
+            await remarkService.AddRemarkAsync("31a1f859-2295-4bb3-9bc2-874ee47e8ef7", "4b514cf9-5fe6-40c8-af4c-1ab9ad494dc1", "e60f5411-9d93-458c-82c6-1e45cc1888a6", "test", "");
 
             Assert.That( repo.All<Remark>().First()?.Title, Is.EqualTo("test"));
         }
@@ -50,7 +50,7 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             remarkService = new RemarkService(repo);
 
-            await remarkService.AddRemarkAsync("45b4c09f-d583-467c-8980-f9f25f680f93", "7108c9bc-3e1a-418e-967a-3a5d42b23fd3", "d6a30476-b960-4395-ab2f-46f021ebbcfe", "test", "");
+            await remarkService.AddRemarkAsync("45b4c09f-d583-467c-8980-f9f25f680f93", "7108c9bc-3e1a-418e-967a-3a5d42b23fd3", "e60f5411-9d93-458c-82c6-1e45cc1888a6", "test", "");
 
             Assert.ThrowsAsync<NullReferenceException>(async () => await remarkService.DeleteRemarkByIdAsync("d6a30476-b960-4395-ab2f-46f021ebbcff"));
         }
@@ -61,7 +61,7 @@ namespace Classware.UnitTests
             repo = new Repository(dbContext);
             remarkService = new RemarkService(repo);
 
-            await remarkService.AddRemarkAsync("eb4526d8-5814-4497-8479-98c71ee15fce", "065665f1-a3fc-43e8-b6c8-7aba8764bdae", "71ecc233-dc0d-452c-9265-0f6b4f70f9ff", "test", "");
+            await remarkService.AddRemarkAsync("eb4526d8-5814-4497-8479-98c71ee15fce", "065665f1-a3fc-43e8-b6c8-7aba8764bdae", "e60f5411-9d93-458c-82c6-1e45cc1888a6", "test", "");
 
             var remarkId = repo.All<Remark>().First().Id.ToString();
 
@@ -104,9 +104,9 @@ namespace Classware.UnitTests
 
 			await remarkService.EditRemarkByIdAsync(remarkId, "edited title", "edited description");
 
-            Assert.That( repo.All<Remark>().First()?.Title, Is.EqualTo("edited title"));
+            Assert.That(repo.All<Remark>().First()?.Title, Is.EqualTo("edited title"));
 
-            Assert.That( repo.All<Remark>().First()?.Description, Is.EqualTo("edited description"));
+            Assert.That(repo.All<Remark>().First()?.Description, Is.EqualTo("edited description"));
         }
 
         [Test]
