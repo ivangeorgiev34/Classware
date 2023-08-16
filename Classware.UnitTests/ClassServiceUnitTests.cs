@@ -68,7 +68,7 @@ namespace Classware.UnitTests
 
             var result = await classService.ClassExistsByNameAsync(_class.Name);
 
-           Assert.That(result, Is.True);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -207,10 +207,52 @@ namespace Classware.UnitTests
 
             var result = await classService.GetClassByIdAsync(_class.Id.ToString());
 
-            Assert.That(_class,Is.SameAs(result));
+            Assert.That(_class, Is.SameAs(result));
         }
 
-        [TearDown]
+        [Test]
+        public async Task Test_MethodClassExistsByIdAsyncShouldReturnTrueIfClassExists()
+        {
+			var repo = new Repository(dbContext);
+
+			classService = new ClassService(repo);
+
+			var _class = new Class()
+			{
+				Id = new Guid("f4050641-d83b-42d8-b442-92508b2a256c"),
+				Name = "Test"
+			};
+
+            await classService.AddClassAsync(_class);
+
+            var actualResult = await classService.ClassExistsByIdAsync(_class.Id.ToString());
+
+            Assert.That(actualResult, Is.True);
+		}
+
+		[Test]
+		public async Task Test_MethodClassExistsByIdAsyncShouldReturnFalseIfClassDoesNotExists()
+		{
+			var repo = new Repository(dbContext);
+
+			classService = new ClassService(repo);
+
+			var _class = new Class()
+			{
+				Id = new Guid("f4050641-d83b-42d8-b442-92508b2a256c"),
+				Name = "Test"
+			};
+
+			await classService.AddClassAsync(_class);
+
+            await classService.DeleteClassByIdAsync(_class.Id.ToString());
+
+            var actualResult = await classService.ClassExistsByIdAsync(_class.Id.ToString());
+
+			Assert.That(actualResult, Is.False);
+		}
+
+		[TearDown]
         public void TearDown()
         {
             dbContext.Dispose();
