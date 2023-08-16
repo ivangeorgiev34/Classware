@@ -1,3 +1,20 @@
 ﻿h2 {
     margin-top: 50px;
 }
+
+#searchValue {
+    width: 30%;
+}
+
+#searchBtn {
+    all: unset;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 10px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+i {
+    font-size: 20px;
+}
