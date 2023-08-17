@@ -100,7 +100,15 @@
 		}
 		else if (Model.Page == 2)
 		{
-			url = $"/Teacher/Class/ClassStudents/{@Model.Id}?searchValue={Model.SearchValue}&searchOption={Model.SearchOption}";
+			@if (Model.SearchOption != null)
+			{
+				url = $"/Teacher/Class/ClassStudents/{@Model.Id}?searchValue={Model.SearchValue}&searchOption={Model.SearchOption}";
+
+			}
+			else
+			{
+				url = $"/Teacher/Class/ClassStudents/{@Model.Id}";
+			}
 
 			<a href="@url">Previous</a>
 		}
@@ -108,7 +116,7 @@
 		{
 			@if (Model.SearchOption != null)
 			{
-				url = $"/Teacher/Class/ClassStudents/{@Model.Id}?searchValue={Model.SearchValue}&searchOption={Model.SearchOption}&page={Model.Page - 1}";
+				url = $"/Teacher/Class/ClassStudents/{@Model.Id}?page={Model.Page - 1}&searchValue={Model.SearchValue}&searchOption={Model.SearchOption}";
 			}
 			else
 			{
@@ -126,7 +134,7 @@
 		{
 			@if (Model.SearchOption != null)
 			{
-				url = $"/Teacher/Class/ClassStudents/{@Model.Id}?searchValue={Model.SearchValue}&searchOption={Model.SearchOption}&page={Model.Page + 1}";
+				url = $"/Teacher/Class/ClassStudents/{@Model.Id}?page={Model.Page + 1}&searchValue={Model.SearchValue}&searchOption={Model.SearchOption}";
 			}
 			else
 			{
