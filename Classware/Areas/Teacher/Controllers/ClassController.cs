@@ -4,6 +4,7 @@ using Classware.Core.Contracts;
 using Classware.Core.Services;
 using Classware.Extensions;
 using Classware.Infrastructure.Dtos.Query;
+using Classware.Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -32,7 +33,7 @@ namespace Classware.Areas.Teacher.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> All([FromQuery] int page = 1)
+		public async Task<IActionResult> All([FromQuery] string sortBy, string sortStyle, int page = 1)
 		{
 
 			var teacher = await teacherService.GetTeacherByUserIdAsync(User.Id());
@@ -46,7 +47,36 @@ namespace Classware.Areas.Teacher.Controllers
 
 			var classes = await classService.GetAllClassesAsync();
 
-			foreach (var _class in classes.Skip((page - 1) * 4).Take(4).ToList())
+			var paginatedClasses = new List<Class>();
+
+			if (sortBy == "studentsCount")
+			{
+				if (sortStyle == "ascending")
+				{
+					paginatedClasses = classes
+						.OrderBy(c => c.Students.Count)
+						.Skip((page - 1) * 4)
+						.Take(4)
+						.ToList();
+				}
+				else if (sortStyle == "descending")
+				{
+					paginatedClasses = classes
+						.OrderByDescending(c => c.Students.Count)
+						.Skip((page - 1) * 4)
+						.Take(4)
+						.ToList();
+				}
+			}
+			else
+			{
+				paginatedClasses = classes
+						.Skip((page - 1) * 4)
+						.Take(4)
+						.ToList();
+			}
+
+			foreach (var _class in paginatedClasses)
 			{
 				model.Classes?.Add(new ClassViewModel()
 				{
@@ -57,6 +87,8 @@ namespace Classware.Areas.Teacher.Controllers
 				});
 			}
 
+			model.SortBy = sortBy;
+			model.SortingStyle = sortStyle;
 			model.Page = page;
 			model.TotalClasses = classes.Count();
 
