@@ -7,11 +7,29 @@
 }
 else
 {
+	<form class="text-center">
+		<div style="display:flex; justify-content:center;column-gap:10px; margin-bottom:10px;">
+			<div>
+				<label style="display:block;">Sort by:</label>
+				<select name="sortBy">
+					<option value="studentsCount">Students count</option>
+				</select>
+			</div>
+			<div>
+				<label style="display:block;">Sort style:</label>
+				<select name="sortStyle">
+					<option value="ascending">Ascending</option>
+					<option value="descending">Descending</option>
+				</select>
+			</div>
+		</div>
+		<button class="btn btn-primary mb-3" type="submit">Sort</button>
+	</form>
 	<table class="table table-light table-hover table-striped table-bordered">
 		<thead>
 			<tr>
 				<th class="text-center" scope="col">Name</th>
-				<th class="text-center" scope="col">StudentsCount</th>
+				<th class="text-center" scope="col">Students Count</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,31 +50,66 @@ else
 			string url = "";
 		}
 
-		@if (@Model.Page == 1)
+		@if (Model.SortingStyle != null && Model.SortBy != null)
 		{
-			<a style="opacity:0.4; pointer-events:none;">Previous</a>
-		}
-		else if (@Model.Page == 2)
-		{
-			<a asp-area="Teacher" asp-controller="Class" asp-action="All">Previous</a>
+			@if (@Model.Page == 1)
+			{
+				<a style="opacity:0.4; pointer-events:none;">Previous</a>
+			}
+			else if (@Model.Page == 2)
+			{
+				url = $"/Teacher/Class/All?sortBy={Model.SortBy}&sortStyle={Model.SortingStyle}";
+
+				<a href="@url">Previous</a>
+			}
+			else
+			{
+				url = $"/Teacher/Class/All?page={Model.Page - 1}&sortBy={Model.SortBy}&sortStyle={Model.SortingStyle}";
+
+				<a href="@url">Previous</a>
+			}
+
+			<span class="mr-5 ml-5">@Model.Page</span>
+			@if (((Model.Page + 1) * 4) - Model.TotalClasses >= 4)
+			{
+				<a style="opacity:0.4; pointer-events:none;">Next</a>
+			}
+			else
+			{
+				url = $"/Teacher/Class/All?page={Model.Page + 1}&sortBy={Model.SortBy}&sortStyle={Model.SortingStyle}";
+
+				<a href="@url">Next</a>
+			}
 		}
 		else
 		{
-			url = $"/Teacher/Class/All?page={Model.Page - 1}";
+			@if (@Model.Page == 1)
+			{
+				<a style="opacity:0.4; pointer-events:none;">Previous</a>
+			}
+			else if (@Model.Page == 2)
+			{
+				<a asp-area="Teacher" asp-controller="Class" asp-action="All">Previous</a>
+			}
+			else
+			{
+				url = $"/Teacher/Class/All?page={Model.Page - 1}";
 
-			<a href="@url">Previous</a>
+				<a href="@url">Previous</a>
+			}
+
+			<span class="mr-5 ml-5">@Model.Page</span>
+			@if (((Model.Page + 1) * 4) - Model.TotalClasses >= 4)
+			{
+				<a style="opacity:0.4; pointer-events:none;">Next</a>
+			}
+			else
+			{
+				url = $"/Teacher/Class/All?page={Model.Page + 1}";
+
+				<a href="@url">Next</a>
+			}
 		}
 
-		<span class="mr-5 ml-5">@Model.Page</span>
-		@if (((Model.Page + 1) * 4) - Model.TotalClasses >= 4)
-		{
-			<a style="opacity:0.4; pointer-events:none;">Next</a>
-		}
-		else
-		{
-			url = $"/Teacher/Class/All?page={Model.Page + 1}";
-
-			<a href="@url">Next</a>
-		}
 	</div>
 }
