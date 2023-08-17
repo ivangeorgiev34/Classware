@@ -12,6 +12,10 @@
 
         public int TotalClasses { get; set; }
 
-        public List<ClassViewModel>? Classes { get; set; }
+        public string? SortBy { get; set; }
+
+		public string? SortingStyle { get; set; }
+
+		public List<ClassViewModel>? Classes { get; set; }
     }
 }
