@@ -10,7 +10,7 @@ connection.start().then(function () {
 
 function onIsAnsweredButtonHandler(e) {
     let tokens = e.currentTarget.previousElementSibling.textContent.split(": ");
-    connection.invoke("SetMessageToAnswered", Number.parseInt(tokens[tokens.length - 1])).catch(function (error) {
+    connection.invoke("SetMessageToAnswered", tokens[tokens.length - 1]).catch(function (error) {
         return console.error(error.toString());
     })
 
